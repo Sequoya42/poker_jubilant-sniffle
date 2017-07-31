@@ -32,12 +32,7 @@
 
 <script>
 export default {
-  name: 'game',
-  data() {
-    return {
-      msg: 'Welcome to Your Vue.js App'
-    };
-  }
+  name: 'game'
 };
 </script>
 
