@@ -4,35 +4,55 @@
   <md-input-container>
     <md-icon>euro_symbol</md-icon>
     <label>Money stack</label>
-    <md-input type="text"></md-input>
+    <md-input :value="stack" @input="setStack" type="text"></md-input>
     <md-icon>attach_money</md-icon>
   </md-input-container>
 
   <md-input-container>
     <md-icon>people</md-icon>
     <label>Number of players</label>
-    <md-input type="text"></md-input>
+    <md-input :value="nPlayers" @input="setMockPlayers" type="text"> </md-input>
   </md-input-container>
 
   <md-input-container>
     <md-icon>done</md-icon>
     <label>Small blind</label>
-    <md-input type="text"></md-input>
+    <md-input :value="smallBlind" @input="setSmallBlind" type="text"></md-input>
   </md-input-container>
 
 
   <md-input-container>
     <md-icon>done_all</md-icon>
     <label>Big blind</label>
-    <md-input type="text"></md-input>
+    <md-input :value="bigBlind" @input="setBigBlind" type="text"></md-input>
   </md-input-container>
 </form>
+<div v-if="nPlayers > 1">
+<namedPlayers></namedPlayers>
+</div>
   </div>
+
+
 </template>
 
 <script>
+import { mapGetters, mapMutations } from 'vuex';
 export default {
-  name: 'game'
+  name: 'game',
+  computed: {
+    ...mapGetters(['smallBlind', 'bigBlind', 'stack', 'nPlayers'])
+  },
+  methods: {
+    ...mapMutations([
+      'setBigBlind',
+      'setSmallBlind',
+      'setStack',
+      'setMockPlayers'
+    ])
+  },
+  components: {
+    namedPlayers: require('./namedPlayers')
+  }
 };
 </script>
 
