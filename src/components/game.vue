@@ -43,12 +43,7 @@ export default {
     ...mapGetters(['smallBlind', 'bigBlind', 'stack', 'nPlayers'])
   },
   methods: {
-    ...mapMutations([
-      'setBigBlind',
-      'setSmallBlind',
-      'setStack',
-      'setMockPlayers'
-    ])
+    ...mapMutations(['setBigBlind', 'setSmallBlind', 'setStack', 'setPlayers'])
   },
   components: {
     namedPlayers: require('./namedPlayers')
