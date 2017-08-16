@@ -4,27 +4,27 @@
   <md-input-container>
     <md-icon>euro_symbol</md-icon>
     <label>Money stack</label>
-    <md-input :value="stack" @input="setStack" type="text"></md-input>
+    <md-input :value="stack" @input="setStack" type="number"></md-input>
     <md-icon>attach_money</md-icon>
   </md-input-container>
 
   <md-input-container>
     <md-icon>people</md-icon>
     <label>Number of players</label>
-    <md-input :value="nPlayers" @input="setMockPlayers" type="text"> </md-input>
+      <md-input :value="nPlayers" @input="setPlayers" type="number"> </md-input>
   </md-input-container>
 
   <md-input-container>
     <md-icon>done</md-icon>
     <label>Small blind</label>
-    <md-input :value="smallBlind" @input="setSmallBlind" type="text"></md-input>
+    <md-input :value="smallBlind" @input="setSmallBlind" type="number"></md-input>
   </md-input-container>
 
 
   <md-input-container>
     <md-icon>done_all</md-icon>
     <label>Big blind</label>
-    <md-input :value="bigBlind" @input="setBigBlind" type="text"></md-input>
+    <md-input :value="bigBlind" @input="setBigBlind" type="number"></md-input>
   </md-input-container>
 </form>
 <div v-if="nPlayers > 1">
@@ -46,7 +46,7 @@ export default {
     ...mapMutations(['setBigBlind', 'setSmallBlind', 'setStack', 'setPlayers'])
   },
   components: {
-    namedPlayers: require('./namedPlayers')
+    namedPlayers: require('./namedPlayers.vue')
   }
 };
 </script>

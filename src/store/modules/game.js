@@ -1,9 +1,9 @@
 const state = {
-  stack: 0,
-  numberOfPlayers: 0,
+  stack: null,
+  numberOfPlayers: null,
   players: [],
-  smallBlind: 0,
-  bigBlind: 0
+  smallBlind: null,
+  bigBlind: null
 };
 
 const getters = {
@@ -20,9 +20,13 @@ const mutations = {
   setBigBlind: (state, d) => (state.bigBlind = d),
   setPlayers: (state, d) => (state.players = d),
   // setNPlayers: (state, d) => (state.numberOfPlayers = d),
-  setMockPlayers: (state, d) => {
-    state.numberOfPlayers = d;
-    for (let i = 0; i < d; i++) state.players.push(`Player_${i + 1}`);
+  setPlayers: (state, d) => {
+    if (d > 1) {
+      state.numberOfPlayers = d;
+      state.players = [];
+      //set up rules, when changing that number, to keep names of players etc
+      for (let i = 0; i < d; i++) state.players.push(`Player_${i + 1}`);
+    }
   }
 };
 

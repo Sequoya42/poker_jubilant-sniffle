@@ -1,8 +1,17 @@
 <template>
   <div>
-    <li v-for="p in players">
-      {{p}}
-    </li>
+    <md-list v-for="p in players" :key='p.id'>
+      <md-list-item>
+        <md-input-container>
+        <md-icon>people</md-icon>
+        <label>name</label>
+        <md-input :value="p"  type="text"> </md-input>
+      </md-input-container>
+      </md-list-item>
+    </md-list>
+    <!-- <li v-for="p in players"> -->
+
+    <!-- </li> -->
 
   </div>
 </template>
@@ -16,10 +25,10 @@ export default {
   },
   methods: {
     ...mapMutations(['setPlayers'])
-  },
-  components: {
-    namedPlayers: require('./namedPlayers')
   }
+  // components: {
+  //   namedPlayers: require('./namedPlayers')
+  // }
 };
 </script>
 
