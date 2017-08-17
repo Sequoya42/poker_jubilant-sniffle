@@ -27,11 +27,11 @@
     <md-input :value="bigBlind" @input="setBigBlind" type="number"></md-input>
   </md-input-container>
 </form>
-<div v-if="nPlayers > 1">
+<div v-if="nPlayers > 1" id="players">
 <namedPlayers></namedPlayers>
 </div>
-  </div>
 
+</div>
 
 </template>
 
@@ -70,4 +70,10 @@ li {
 a {
   color: #42b983;
 }
+#players {
+  width: 30%;
+  display: inline-flex;
+  /*align: center;*/
+}
+
 </style>

@@ -1,9 +1,9 @@
 const state = {
-  stack: null,
-  numberOfPlayers: null,
-  players: [],
-  smallBlind: null,
-  bigBlind: null
+  stack: 500,
+  numberOfPlayers: 2,
+  players: ['Player_1', 'Player_2'],
+  smallBlind: 10,
+  bigBlind: 20
 };
 
 const getters = {
@@ -14,18 +14,21 @@ const getters = {
   players: state => state.players
 };
 const actions = {};
+
 const mutations = {
   setStack: (state, d) => (state.stack = d),
   setSmallBlind: (state, d) => (state.smallBlind = d),
   setBigBlind: (state, d) => (state.bigBlind = d),
-  setPlayers: (state, d) => (state.players = d),
-  // setNPlayers: (state, d) => (state.numberOfPlayers = d),
   setPlayers: (state, d) => {
-    if (d > 1) {
+    //set up rules, when changing that number, to keep names of players etc
+    if (d > 0) {
+      if (d > state.numberOfPlayers) {
+        for (let i = state.numberOfPlayers; i < d; i++)
+          state.players.push(`Player_${+i + 1}`);
+      } else if (d < state.numberOfPlayers) {
+        state.players.splice(d, +(state.numberOfPlayers - d));
+      }
       state.numberOfPlayers = d;
-      state.players = [];
-      //set up rules, when changing that number, to keep names of players etc
-      for (let i = 0; i < d; i++) state.players.push(`Player_${i + 1}`);
     }
   }
 };
