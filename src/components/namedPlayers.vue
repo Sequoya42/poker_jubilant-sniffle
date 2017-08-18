@@ -1,12 +1,12 @@
 <template>
   <div>
     <draggable v-model='players'>
-    <md-list v-for="p in players" :key='p.id'>
+    <md-list v-for="(p, index) in players" :key='p.id'>
       <md-list-item>
         <md-input-container>
         <md-icon>people</md-icon>
         <label>name</label>
-        <md-input :value="p.name"  type="text"> </md-input>
+        <md-input :value="p.name" @input="change_name({$event, index})" type="text"> </md-input>
       </md-input-container>
       </md-list-item>
     </md-list>
@@ -22,7 +22,7 @@
 </template>
 
 <script>
-import { mapGetters, mapMutations } from 'vuex';
+import { mapGetters, mapActions } from 'vuex';
 import draggable from 'vuedraggable';
 
 export default {
@@ -43,7 +43,7 @@ export default {
     // ...mapGetters(['players'])
   },
   methods: {
-    ...mapMutations(['setPlayers'])
+    ...mapActions(['change_name'])
   }
   // components: {
   //   namedPlayers: require('./namedPlayers')

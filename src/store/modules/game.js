@@ -17,6 +17,10 @@ const getters = {
 const actions = {
   update_players: ({ commit }, d) => {
     commit('updatePlayers', d);
+  },
+  change_name: ({ commit }, d) => {
+    console.log('IN action', d);
+    commit('changeName', d);
   }
 };
 
@@ -39,6 +43,12 @@ const mutations = {
   updatePlayers: (state, d) => {
     console.log(d);
     state.players = d;
+  },
+  changeName: (state, d) => {
+    console.log('new', d.$event);
+    state.players[d.index].name = d.$event;
+    console.log('Player:', state.players);
+    console.log(d);
   }
 };
 
