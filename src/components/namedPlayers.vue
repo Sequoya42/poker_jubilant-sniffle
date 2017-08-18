@@ -10,13 +10,7 @@
       </md-input-container>
       </md-list-item>
     </md-list>
-    <!-- <li v-for="p in players"> -->
   </draggable>
-
-    <!-- </li> -->
-    <div @dragover.prevent height=50px>
-      drop here
-    </div>
 
   </div>
 </template>

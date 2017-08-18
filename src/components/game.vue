@@ -11,7 +11,7 @@
   <md-input-container>
     <md-icon>people</md-icon>
     <label>Number of players</label>
-      <md-input :value="nPlayers" @input="setPlayers" type="number"> </md-input>
+      <md-input :value="nPlayers" @input="setPlayers" type="number" min=2 max=5> </md-input>
   </md-input-container>
 
   <md-input-container>
@@ -30,6 +30,9 @@
 <div v-if="nPlayers > 1" id="players">
 <namedPlayers></namedPlayers>
 </div>
+<md-layout md-align="center">
+  <router-link :to="{name: 'Home'}" tag="md-button" class="md-raised md-primary">Start game</router-link>
+</md-layout>
 
 </div>
 
@@ -72,8 +75,15 @@ a {
 }
 #players {
   width: 30%;
+  padding-top: 5%;
   display: inline-flex;
   /*align: center;*/
+}
+
+.game {
+  width:80%;
+  padding-top: 5%;
+  display: inline-block;
 }
 
 </style>
