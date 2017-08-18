@@ -1,4 +1,8 @@
+//put stack inside players? when? how?
+//dealer as state.dealer with index of players ?
+
 const state = {
+  dealer: 0,
   stack: 500,
   numberOfPlayers: 2,
   players: [{ name: 'Player_1' }, { name: 'Player_2' }],

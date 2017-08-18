@@ -1,7 +1,14 @@
 <template>
   <div class="home">
     {{msg}}
+    <div id="buttonLink">
+
+    <md-layout md-align="center">
+      <router-link :to="{name: 'Game'}" tag="md-button" class="md-raised md-primary">Start game</router-link>
+    </md-layout>
   </div>
+  </div>
+
 </template>
 
 <script>
@@ -33,5 +40,10 @@ li {
 
 a {
   color: #42b983;
+}
+
+#buttonLink {
+  /*border: 5px solid;*/
+  padding: 100px;
 }
 </style>
