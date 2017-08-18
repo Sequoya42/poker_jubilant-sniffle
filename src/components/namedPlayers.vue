@@ -6,7 +6,7 @@
         <md-input-container>
         <md-icon>people</md-icon>
         <label>name</label>
-        <md-input :value="p"  type="text"> </md-input>
+        <md-input :value="p.name"  type="text"> </md-input>
       </md-input-container>
       </md-list-item>
     </md-list>
@@ -37,7 +37,7 @@ export default {
         return this.$store.getters.players;
       },
       set(value) {
-        this.$store.commit('update players', value);
+        this.$store.commit('updatePlayers', value);
       }
     }
     // ...mapGetters(['players'])
