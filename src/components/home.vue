@@ -4,7 +4,7 @@
     <div id="buttonLink">
 
     <md-layout md-align="center">
-      <router-link :to="{name: 'Game'}" tag="md-button" class="md-raised md-primary">Start game</router-link>
+      <router-link :to="{name: 'Settings'}" tag="md-button" class="md-raised md-primary">Settings</router-link>
     </md-layout>
   </div>
   </div>

@@ -4,8 +4,6 @@ import Vue from 'vue';
 import Vuex from 'vuex';
 import VueMaterial from 'vue-material';
 import App from './App';
-import Game from './components/game';
-import namedPlayers from './components/namedPlayers';
 import router from './router';
 import store from './store';
 

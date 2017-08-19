@@ -1,89 +1,59 @@
 <template>
-  <div class="game">
-    <form novalidate @submit.stop.prevent="submit">
-  <md-input-container>
-    <md-icon>euro_symbol</md-icon>
-    <label>Money stack</label>
-    <md-input :value="stack" @input="setStack" type="number"></md-input>
-    <md-icon>attach_money</md-icon>
-  </md-input-container>
+<div id="choices">
 
-  <md-input-container>
-    <md-icon>people</md-icon>
-    <label>Number of players</label>
-      <md-input :value="nPlayers" @input="setPlayers" type="number" min=2 max=5> </md-input>
-  </md-input-container>
-
-  <md-input-container>
-    <md-icon>done</md-icon>
-    <label>Small blind</label>
-    <md-input :value="smallBlind" @input="setSmallBlind" type="number"></md-input>
-  </md-input-container>
-
-
-  <md-input-container>
-    <md-icon>done_all</md-icon>
-    <label>Big blind</label>
-    <md-input :value="bigBlind" @input="setBigBlind" type="number"></md-input>
-  </md-input-container>
-</form>
-<div v-if="nPlayers > 1" id="players">
-<namedPlayers></namedPlayers>
-</div>
-<md-layout md-align="center">
-  <router-link :to="{name: 'Home'}" tag="md-button" class="md-raised md-primary">Start game</router-link>
-</md-layout>
-
+<h1>
+  {{currentPlayer}} to play:
+</h1>
+  <div>
+  <md-card>
+  <md-card-actions>
+    <md-button md-label="Fold" @click="next_player('fold')">Fold</md-button>
+    <md-button md-label="Knock" @click="next_player('knock')">Knock</md-button>
+    <md-button md-label="Follow" @click="next_player('follow')">Follow</md-button>
+    <md-button md-label="Raise" @click="next_player('raise')">Raise</md-button>
+  </md-card-actions>
+</md-card>
 </div>
 
+<br />
+<div>
+<md-card>
+<md-table v-for="p in players" :key="p.name">
+  <md-table-header>
+    <md-table-row>
+      <md-table-head>{{p.name}}</md-table-head>
+      <md-table-head>{{p.stack}}</md-table-head>
+    </md-table-row>
+  </md-table-header>
+</md-table>
+</md-card>
+</div>
+
+</div>
 </template>
 
 <script>
-import { mapGetters, mapMutations } from 'vuex';
+import { mapGetters, mapMutations, mapActions } from 'vuex';
+
 export default {
-  name: 'game',
+  name: 'play',
+
+  components: {},
   computed: {
-    ...mapGetters(['smallBlind', 'bigBlind', 'stack', 'nPlayers'])
+    ...mapGetters(['players', 'dealer']),
+    currentPlayer() {
+      return this.players[this.dealer].name;
+    }
   },
   methods: {
-    ...mapMutations(['setBigBlind', 'setSmallBlind', 'setStack', 'setPlayers'])
-  },
-  components: {
-    namedPlayers: require('./namedPlayers.vue')
+    ...mapActions(['next_player'])
   }
 };
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
-h1, h2 {
-  font-weight: normal;
-}
-
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-
-li {
-  display: inline-block;
-  margin: 0 10px;
-}
-
-a {
-  color: #42b983;
-}
-#players {
-  width: 30%;
-  padding-top: 5%;
-  display: inline-flex;
-  /*align: center;*/
-}
-
-.game {
-  width:80%;
-  padding-top: 5%;
+<style>
+#choices {
+  margin: 2%;
   display: inline-block;
 }
-
 </style>

@@ -7,6 +7,7 @@
   <md-menu-content>
     <md-menu-item @click="redirect('Game')">le game </md-menu-item>
     <md-menu-item @click="redirect('Home')"> le home </md-menu-item>
+    <md-menu-item @click="redirect('Settings')"> le settings </md-menu-item>
   </md-menu-content>
 </md-menu>
 
