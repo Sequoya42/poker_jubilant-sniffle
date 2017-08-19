@@ -2,7 +2,7 @@
   <div class="game">
     <form novalidate @submit.stop.prevent="submit">
   <md-input-container>
-    <md-icon>euro_symbol</md-icon>
+    <md-icon>eur</md-icon>
     <label>Money stack</label>
     <md-input :value="stack" @input="setStack" type="number"></md-input>
     <md-icon>attach_money</md-icon>

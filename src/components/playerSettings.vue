@@ -34,14 +34,10 @@ export default {
         this.$store.commit('updatePlayers', value);
       }
     }
-    // ...mapGetters(['players'])
   },
   methods: {
     ...mapActions(['change_name'])
   }
-  // components: {
-  //   playerSettings: require('./playerSettings')
-  // }
 };
 </script>
 

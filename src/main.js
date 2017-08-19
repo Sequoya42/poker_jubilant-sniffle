@@ -10,6 +10,7 @@ import store from './store';
 Vue.config.productionTip = false;
 
 require('../node_modules/vue-material/dist/vue-material.css');
+// require('../node_modules/bulma/css/bulma.css');
 
 Vue.use(Vuex);
 Vue.use(VueMaterial);
