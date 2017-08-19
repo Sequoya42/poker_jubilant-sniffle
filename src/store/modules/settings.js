@@ -9,7 +9,6 @@ Find a way to architecture the game loop
 [each user action, and the end of a "hand" [reset folded attributes etc]]
 */
 const state = {
-  dealer: 0,
   stack: 500,
   numberOfPlayers: 2,
   players: [{ name: 'Player_1', stack: 500 }, { name: 'Player_2', stack: 500 }],
@@ -22,8 +21,7 @@ const getters = {
   nPlayers: state => state.numberOfPlayers,
   smallBlind: state => state.smallBlind,
   bigBlind: state => state.bigBlind,
-  players: state => state.players,
-  dealer: state => state.dealer
+  players: state => state.players
 };
 
 const actions = {};

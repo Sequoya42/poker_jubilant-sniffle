@@ -37,7 +37,6 @@ import { mapGetters, mapMutations, mapActions } from 'vuex';
 
 export default {
   name: 'play',
-
   components: {},
   computed: {
     ...mapGetters(['players', 'dealer']),
