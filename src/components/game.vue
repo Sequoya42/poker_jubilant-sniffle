@@ -39,10 +39,7 @@ export default {
   name: 'play',
   components: {},
   computed: {
-    ...mapGetters(['players', 'dealer']),
-    currentPlayer() {
-      return this.players[this.dealer].name;
-    }
+    ...mapGetters(['players', 'dealer', 'currentPlayer'])
   },
   methods: {
     ...mapActions(['next_player'])

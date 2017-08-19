@@ -1,9 +1,13 @@
 const state = {
-  dealer: 0
+  dealer: 0,
+  currentPlayer: 1
 };
 
 const getters = {
-  dealer: state => state.dealer
+  dealer: state => state.dealer,
+  currentPlayer: (state, getters) => {
+    return getters.players[state.currentPlayer].name;
+  }
 };
 
 const actions = {
@@ -16,12 +20,24 @@ const actions = {
 const mutations = {
   nextPlayer: (state, { d, settingsState }) => {
     console.log('d', d);
-    console.log('settingsState', settingsState);
-    console.log('settingsState', settingsState);
-    let currentPlayer = settingsState.players[state.dealer];
-    console.log(currentPlayer.name, ': ', d);
-    // while(currentPlayer.folded = true )
-    state.dealer = (state.dealer + 1) % settingsState.numberOfPlayers;
+    console.log('settingsState.players', settingsState.players);
+    const moveDealer = () => {
+      state.dealer = (state.dealer + 1) % settingsState.numberOfPlayers;
+    };
+
+    const fold = () => {};
+
+    const knock = () => {};
+
+    const follow = () => {};
+
+    const raise = () => {};
+
+    state.currentPlayer =
+      (state.currentPlayer + 1) % settingsState.numberOfPlayers;
+    console.log('state.currentPlayer', state.currentPlayer);
+    let currentPlayer = settingsState.players[state.currentPlayer];
+    console.log('currentPlayer', currentPlayer);
   }
 };
 
