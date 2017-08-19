@@ -2,7 +2,7 @@
 <div id="choices">
 
 <h1>
-  {{currentPlayer}} to play:
+  {{currentPlayer.name}} to play:
 </h1>
   <div>
   <md-card>

@@ -6,7 +6,7 @@ const state = {
 const getters = {
   dealer: state => state.dealer,
   currentPlayer: (state, getters) => {
-    return getters.players[state.currentPlayer].name;
+    return getters.players[state.currentPlayer];
   }
 };
 
@@ -32,6 +32,24 @@ const mutations = {
     const follow = () => {};
 
     const raise = () => {};
+
+    switch (d) {
+      case 'fold':
+        fold();
+        break;
+      case 'knock':
+        knock();
+        break;
+      case 'follow':
+        follow();
+        break;
+      case 'raise':
+        raise();
+        break;
+      default:
+        console.log(d);
+        break;
+    }
 
     state.currentPlayer =
       (state.currentPlayer + 1) % settingsState.numberOfPlayers;
