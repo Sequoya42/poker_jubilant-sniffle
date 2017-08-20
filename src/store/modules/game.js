@@ -1,6 +1,8 @@
 const state = {
   dealer: 0,
-  currentPlayer: 1
+  currentPlayer: 1,
+  pot: 0,
+  betAmount: 10
 };
 
 const getters = {
@@ -10,55 +12,52 @@ const getters = {
   }
 };
 
+// p for payload
 const actions = {
-  next_player: ({ commit, rootState }, d) => {
+  next_player: ({ commit, rootState, getters }, p) => {
     console.log('rootState action', rootState.settings);
-    commit('nextPlayer', { d: d, settingsState: rootState['settings'] });
+    switch (p.type) {
+      case 'fold':
+        commit('fold', { p, player: getters.currentPlayer });
+        break;
+      case 'follow':
+        commit('follow', { p, player: getters.currentPlayer });
+        break;
+      case 'raise':
+        commit('raise', { p, player: getters.currentPlayer });
+        break;
+      default:
+        console.log('Should be "knock" : ', p);
+        break;
+    }
+    commit('nextPlayer', { settings: rootState['settings'] });
   }
 };
 
 const mutations = {
-  nextPlayer: (state, { d, settingsState }) => {
-    console.log('d', d);
-    console.log('settingsState.players', settingsState.players);
-    const moveDealer = () => {
-      state.dealer = (state.dealer + 1) % settingsState.numberOfPlayers;
-    };
-
-    const fold = () => {};
-
-    const knock = () => {};
-
-    const follow = () => {};
-
-    const raise = () => {};
-
-    switch (d) {
-      case 'fold':
-        fold();
-        break;
-      case 'knock':
-        knock();
-        break;
-      case 'follow':
-        follow();
-        break;
-      case 'raise':
-        raise();
-        break;
-      default:
-        console.log(d);
-        break;
-    }
-
-    state.currentPlayer =
-      (state.currentPlayer + 1) % settingsState.numberOfPlayers;
-    console.log('state.currentPlayer', state.currentPlayer);
-    let currentPlayer = settingsState.players[state.currentPlayer];
-    console.log('currentPlayer', currentPlayer);
+  nextPlayer: (state, { settings }) => {
+    state.currentPlayer = (state.currentPlayer + 1) % settings.numberOfPlayers;
+    // state.betAmount = 0;
+  },
+  fold: (state, { player }) => {
+    console.log('state.currentPlayer', player);
+    player.folded = true;
+  },
+  follow: (state, { player }) => {
+    state.pot += state.betAmount;
+    player.stack -= state.betAmount;
+  },
+  raise: (state, { player }) => {
+    state.pot += state.betAmount;
+    player.stack -= state.betAmount;
   }
 };
 
+// console.log('d', d);
+// console.log('settings.players', settings.players);
+// const moveDealer = () => {
+//   state.dealer = (state.dealer + 1) % settings.numberOfPlayers;
+// };
 export default {
   state,
   getters,

@@ -7,10 +7,10 @@
   <div>
   <md-card>
   <md-card-actions>
-    <md-button md-label="Fold" @click="next_player('fold')">Fold</md-button>
-    <md-button md-label="Knock" @click="next_player('knock')">Knock</md-button>
-    <md-button md-label="Follow" @click="next_player('follow')">Follow</md-button>
-    <md-button md-label="Raise" @click="next_player('raise')">Raise</md-button>
+    <md-button md-label="Fold" @click="next_player({type: 'fold'})">Fold</md-button>
+    <md-button md-label="Knock" @click="next_player({type: 'knock'})">Knock</md-button>
+    <md-button md-label="Follow" @click="next_player({type: 'follow'})">Follow</md-button>
+    <md-button md-label="Raise" @click="next_player({type: 'raise'})">Raise</md-button>
   </md-card-actions>
 </md-card>
 </div>
