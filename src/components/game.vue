@@ -1,9 +1,9 @@
 <template>
-<v-layout id="choices">
+<div id="choices">
 
-<h1>
+<h4>
   {{currentPlayer.name}} to play:
-</h1>
+</h4>
   <div>
     <v-btn label="Fold" @click.prevent="next_player({type: 'fold'})">Fold</v-btn>
     <v-btn label="Knock" @click.prevent="next_player({type: 'knock'})">Knock</v-btn>
@@ -12,10 +12,10 @@
 <div>
   "AMOUNT TO BET " {{betAmount}}
 </div>
-<v-dialog v-model="dialog">
-  <v-card>
+<v-dialog  v-model="dialog">
+  <v-card id="ledialog">
+    <v-text-field :value="betAmount" @input="bet_amount" type="number"></v-text-field>
    <v-slider label="Bet"  :max="stack" :value="betAmount" @input="bet_amount"></v-slider>
-   <v-text-field :value="betAmount" @input="bet_amount" type="number"></v-text-field>
    <v-btn @click.prevent="next_player({type: 'raise'})" @click.stop="dialog=false">Bet</v-btn>
  </v-card>
  </v-dialog>
@@ -23,19 +23,17 @@
 
 <br />
 
-<div>
-  <li v-for="p in players" :key="p.name">
-    <ul>
-    name:  {{p.name}}
-    </ul>
-    <ul>
-
-      stack: {{p.stack}}
-    </ul>
-  </li>
+<v-data-table
+:headers="headers"
+:items="players"
+hide-actions
+>
+<template slot="items" scope="props">
+     <td class="text-xs-left">{{ props.item.name }}</td>
+     <td class="text-xs-right">{{ props.item.stack}}</td>
+   </template>
+</v-data-table>
 </div>
-
-</v-layout>
 </template>
 
 <script>
@@ -45,7 +43,19 @@ export default {
   name: 'play',
   data: function() {
     return {
-      dialog: false
+      dialog: false,
+      headers: [
+        {
+          text: 'name',
+          align: 'left',
+          sortable: false,
+          value: 'name'
+        },
+        {
+          text: 'stack',
+          value: 'stack'
+        }
+      ]
     };
   },
 
@@ -63,5 +73,9 @@ export default {
 #choices {
   margin: 2%;
   display: inline-block;
+}
+#ledialog {
+  margin: 4px;
+  padding: 8px;
 }
 </style>

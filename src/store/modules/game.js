@@ -34,7 +34,7 @@ const actions = {
         console.log('Should be "knock" : ', p);
         break;
     }
-    commit('nextPlayer', { settings: rootState['settings'] });
+    commit('nextPlayer', { p, settings: rootState['settings'] });
   }
 };
 
@@ -42,9 +42,13 @@ const mutations = {
   betAmount: (state, p) => {
     state.betAmount = p;
   },
-  nextPlayer: (state, { settings }) => {
+  nextPlayer: (state, { p, settings }) => {
     state.currentPlayer = (state.currentPlayer + 1) % settings.numberOfPlayers;
-    // state.betAmount = 0;
+    console.log('p', p);
+    state.betAmount = settings.smallBlind;
+    if (state.currentPlayer === state.dealer)
+      state.betAmount = settings.smallBlind;
+    // if (p.type !== 'raise') state.betAmount = settings.smallBlind;
   },
   fold: (state, { player }) => {
     console.log('state.currentPlayer', player);
