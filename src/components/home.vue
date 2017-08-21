@@ -3,9 +3,7 @@
     {{msg}}
     <div id="buttonLink">
 
-    <md-layout md-align="center">
-      <router-link :to="{name: 'Settings'}" tag="md-button" class="md-raised md-primary">Settings</router-link>
-    </md-layout>
+      <router-link :to="{name: 'Settings'}">Settings</router-link>
   </div>
   </div>
 

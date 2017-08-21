@@ -11,10 +11,10 @@ import store from './store';
 Vue.config.productionTip = false;
 
 require('../node_modules//vuetify/dist/vuetify.min.css');
-require('../node_modules/vue-material/dist/vue-material.css');
+// require('../node_modules/vue-material/dist/vue-material.css');
+// Vue.use(VueMaterial);
 
 Vue.use(Vuex);
-Vue.use(VueMaterial);
 Vue.use(Vuetify);
 /* eslint-disable no-new */
 new Vue({

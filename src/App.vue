@@ -1,5 +1,5 @@
 <template>
-  <v-app toolbar footer>
+  <v-app>
   <div id="app" class="test">
     <my-header></my-header>
       <router-view></router-view>
