@@ -1,5 +1,5 @@
 <template>
-  <v-toolbar dark class="primary teal darken-1">
+  <v-toolbar dark class="primary">
     <v-menu>
   <v-btn primary dark slot="activator">
       Routes <v-icon>home</v-icon>

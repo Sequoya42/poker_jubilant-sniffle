@@ -1,42 +1,51 @@
 <template>
   <div class="game">
-    <form novalidate @submit.stop.prevent="submit">
-  <md-input-container>
-    <md-icon>eur</md-icon>
-    <label>Money stack</label>
-    <md-input :value="stack" @input="setStack" type="number"></md-input>
-    <md-icon>attach_money</md-icon>
-  </md-input-container>
+<v-container>
+<v-text-field
+  label="Money Stack"
+  type="number"
+  :value="stack"
+  @input="setStack"
+  prepend-icon="money"
+></v-text-field>
+<v-text-field
+  label="People"
+  type="number"
+  :value="nPlayers"
+  @input="setPlayers"
+  prepend-icon="people"
+></v-text-field>
+<v-text-field
+  label="small Blind"
+  min="1"
+  max="1000"
+  type="number"
+  :value="smallBlind"
+  @input="setSmallBlind"
+  prepend-icon="attach_money"
+></v-text-field>
+<v-text-field
+  label="big Blind"
+  min="2"
+  max="2000"
+  type="number"
+  :value="bigBlind"
+  @input="setBigBlind"
+  prepend-icon="attach_money"
+></v-text-field>
+</v-container>
 
-  <md-input-container>
-    <md-icon>people</md-icon>
-    <label>Number of players</label>
-      <md-input :value="nPlayers" @input="setPlayers" type="number" min=2 max=5> </md-input>
-  </md-input-container>
-
-  <md-input-container>
-    <md-icon>done</md-icon>
-    <label>Small blind</label>
-    <md-input :value="smallBlind" @input="setSmallBlind" type="number"></md-input>
-  </md-input-container>
-
-
-  <md-input-container>
-    <md-icon>done_all</md-icon>
-    <label>Big blind</label>
-    <md-input :value="bigBlind" @input="setBigBlind" type="number"></md-input>
-  </md-input-container>
-</form>
 <div v-if="nPlayers > 1" id="players">
-<playerSettings></playerSettings>
+  <playerSettings></playerSettings>
 </div>
-<md-layout md-align="center">
-  <router-link :to="{name: 'Game'}" tag="md-button" class="md-raised md-primary">
+
+<v-layout>
+  <router-link :to="{name: 'Game'}">
   <span @click="setPlayersStack">
     Start Game
   </span>
   </router-link>
-</md-layout>
+</v-layout>
 
 </div>
 

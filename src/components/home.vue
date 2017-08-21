@@ -1,10 +1,23 @@
 <template>
   <div class="home">
-    {{msg}}
-    <div id="buttonLink">
+    <v-card>
+      <v-card-title>
+        First try at VUEJS
+      </v-card-title>
+      <v-card-text>
+      Using vuex
+    </v-card-text>
+    </v-card>
+    <!-- <div id="buttonLink"> -->
+    <!-- <v-btn class="centerStuff"> -->
 
-      <router-link :to="{name: 'Settings'}">Settings</router-link>
-  </div>
+    <div class="centerStuff">
+      <span>
+      <v-btn>
+        <router-link :to="{name: 'Settings'}">Settings</router-link>
+      </v-btn>
+    </span>
+    </div>
   </div>
 
 </template>
@@ -22,26 +35,9 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-h1, h2 {
-  font-weight: normal;
-}
-
-ul {
-  list-style-type: none;
-  padding: 0;
-}
-
-li {
-  display: inline-block;
-  margin: 0 10px;
-}
-
-a {
-  color: #42b983;
-}
-
-#buttonLink {
-  /*border: 5px solid;*/
-  padding: 100px;
+.centerStuff {
+  background-color: red;
+  margin-top: 20%;
+  display: inline-flex;
 }
 </style>
