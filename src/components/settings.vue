@@ -6,11 +6,13 @@
   type="number"
   :value="stack"
   @input="setStack"
-  prepend-icon="money"
+  prepend-icon="account_balance"
 ></v-text-field>
 <v-text-field
   label="People"
   type="number"
+  min="2"
+  max="5"
   :value="nPlayers"
   @input="setPlayers"
   prepend-icon="people"
@@ -39,13 +41,15 @@
   <playerSettings></playerSettings>
 </div>
 
-<v-layout>
+<v-container>
+  <!-- <v-btn> -->
   <router-link :to="{name: 'Game'}">
-  <span @click="setPlayersStack">
-    Start Game
-  </span>
+    <v-btn @click="setPlayersStack">
+      Start Game
+    </v-btn>
   </router-link>
-</v-layout>
+<!-- </v-btn> -->
+</v-container>
 
 </div>
 
@@ -75,7 +79,7 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-h1, h2 {
+/*h1, h2 {
   font-weight: normal;
 }
 
@@ -92,12 +96,18 @@ li {
 a {
   color: #42b983;
 }
+
+
+
+*/
 #players {
   width: 30%;
   padding-top: 5%;
+  /*align: left;*/
   display: inline-flex;
   /*align: center;*/
 }
+
 
 .game {
   width:80%;

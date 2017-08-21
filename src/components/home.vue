@@ -12,11 +12,13 @@
     <!-- <v-btn class="centerStuff"> -->
 
     <div class="centerStuff">
-      <span>
-      <v-btn>
-        <router-link :to="{name: 'Settings'}">Settings</router-link>
-      </v-btn>
-    </span>
+      <!-- <span> -->
+        <router-link :to="{name: 'Settings'}">
+          <v-btn>
+          Settings
+          </v-btn>
+        </router-link>
+    <!-- </span> -->
     </div>
   </div>
 
@@ -36,7 +38,6 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 .centerStuff {
-  background-color: red;
   margin-top: 20%;
   display: inline-flex;
 }

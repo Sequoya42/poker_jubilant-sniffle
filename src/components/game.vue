@@ -1,46 +1,41 @@
 <template>
-<div id="choices">
+<v-layout id="choices">
 
 <h1>
   {{currentPlayer.name}} to play:
 </h1>
   <div>
-  <md-card>
-  <md-card-actions>
-    <md-button md-label="Fold" @click="next_player({type: 'fold'})">Fold</md-button>
-    <md-button md-label="Knock" @click="next_player({type: 'knock'})">Knock</md-button>
-    <md-button md-label="Follow" @click="next_player({type: 'follow'})">Follow</md-button>
-    <md-button md-label="Raise" @click="next_player({type: 'raise'})">Raise</md-button>
-  </md-card-actions>
-</md-card>
+    <v-btn label="Fold" @click.prevent="next_player({type: 'fold'})">Fold</v-btn>
+    <v-btn label="Knock" @click.prevent="next_player({type: 'knock'})">Knock</v-btn>
+    <v-btn label="Follow" @click.prevent="next_player({type: 'follow'})">Follow</v-btn>
+    <v-btn label="Raise" @click.stop="dialog=true">Raise</v-btn>
 <div>
-  "AMOUNT OF BET " {{betAmount}}
+  "AMOUNT TO BET " {{betAmount}}
 </div>
-<v-layout>
-<v-flex xs9>
-   <v-slider label="B"  :max="255" :value="betAmount" @input="bet_amount"></v-slider>
- </v-flex>
- <v-flex xs3>
+<v-dialog v-model="dialog">
+  <v-card>
+   <v-slider label="Bet"  :max="stack" :value="betAmount" @input="bet_amount"></v-slider>
    <v-text-field :value="betAmount" @input="bet_amount" type="number"></v-text-field>
- </v-flex>
-</v-layout>
+   <v-btn @click.prevent="next_player({type: 'raise'})" @click.stop="dialog=false">Bet</v-btn>
+ </v-card>
+ </v-dialog>
 </div>
 
 <br />
+
 <div>
-<md-card>
-<md-table v-for="p in players" :key="p.name">
-  <md-table-header>
-    <md-table-row>
-      <md-table-head>{{p.name}}</md-table-head>
-      <md-table-head>{{p.stack}}</md-table-head>
-    </md-table-row>
-  </md-table-header>
-</md-table>
-</md-card>
+  <li v-for="p in players" :key="p.name">
+    <ul>
+    name:  {{p.name}}
+    </ul>
+    <ul>
+
+      stack: {{p.stack}}
+    </ul>
+  </li>
 </div>
 
-</div>
+</v-layout>
 </template>
 
 <script>
@@ -48,9 +43,15 @@ import { mapGetters, mapMutations, mapActions } from 'vuex';
 
 export default {
   name: 'play',
+  data: function() {
+    return {
+      dialog: false
+    };
+  },
+
   components: {},
   computed: {
-    ...mapGetters(['players', 'dealer', 'currentPlayer', 'betAmount'])
+    ...mapGetters(['players', 'dealer', 'currentPlayer', 'betAmount', 'stack'])
   },
   methods: {
     ...mapActions(['next_player', 'bet_amount'])

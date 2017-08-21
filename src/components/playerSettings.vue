@@ -1,15 +1,14 @@
 <template>
   <div>
+    <h4>Players names</h4>
     <draggable v-model='players'>
-    <v-list v-for="(p, index) in players" :key='p.id'>
-      <v-list-tile>
+    <div v-for="(p, index) in players" :key='p.id'>
         <v-text-field
         type="text"
         :value="p.name"
         @input="change_name({$event, index})"
         ></v-text-field>
-      </v-list-tile>
-  </v-list>
+  </div>
   </draggable>
 
   </div>

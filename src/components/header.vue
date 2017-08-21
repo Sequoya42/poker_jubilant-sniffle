@@ -12,8 +12,7 @@
   </v-list>
 
 </v-menu>
-
-    <h2 class="v-title" style="flex: 1">Poker jubilant sniffle</h2>
+    <h4 style="flex: 1">Poker jubilant sniffle</h4>
   </v-toolbar>
 </template>
 
