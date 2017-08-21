@@ -7,6 +7,7 @@ const state = {
 
 const getters = {
   dealer: state => state.dealer,
+  betAmount: state => state.betAmount,
   currentPlayer: (state, getters) => {
     return getters.players[state.currentPlayer];
   }
@@ -14,6 +15,9 @@ const getters = {
 
 // p for payload
 const actions = {
+  bet_amount: ({ commit }, p) => {
+    commit('betAmount', p);
+  },
   next_player: ({ commit, rootState, getters }, p) => {
     console.log('rootState action', rootState.settings);
     switch (p.type) {
@@ -35,6 +39,9 @@ const actions = {
 };
 
 const mutations = {
+  betAmount: (state, p) => {
+    state.betAmount = p;
+  },
   nextPlayer: (state, { settings }) => {
     state.currentPlayer = (state.currentPlayer + 1) % settings.numberOfPlayers;
     // state.betAmount = 0;

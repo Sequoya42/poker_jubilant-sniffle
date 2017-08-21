@@ -1,8 +1,10 @@
 <template>
+  <v-app toolbar footer>
   <div id="app" class="test">
     <my-header></my-header>
       <router-view></router-view>
   </div>
+</v-app>
 </template>
 
 <script>

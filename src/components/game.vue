@@ -13,6 +13,17 @@
     <md-button md-label="Raise" @click="next_player({type: 'raise'})">Raise</md-button>
   </md-card-actions>
 </md-card>
+<div>
+  "AMOUNT OF BET " {{betAmount}}
+</div>
+<v-layout>
+<v-flex xs9>
+   <v-slider label="B"  :max="255" :value="betAmount" @input="bet_amount"></v-slider>
+ </v-flex>
+ <v-flex xs3>
+   <v-text-field :value="betAmount" @input="bet_amount" type="number"></v-text-field>
+ </v-flex>
+</v-layout>
 </div>
 
 <br />
@@ -39,10 +50,10 @@ export default {
   name: 'play',
   components: {},
   computed: {
-    ...mapGetters(['players', 'dealer', 'currentPlayer'])
+    ...mapGetters(['players', 'dealer', 'currentPlayer', 'betAmount'])
   },
   methods: {
-    ...mapActions(['next_player'])
+    ...mapActions(['next_player', 'bet_amount'])
   }
 };
 </script>
