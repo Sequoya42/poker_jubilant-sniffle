@@ -7,7 +7,7 @@
         {{realDialog}}
       </p>
       <v-text-field :value="betAmount" @input="bet_amount" type="number"></v-text-field>
-     <v-slider label="Bet"  :max="stack" :value="betAmount" @input="bet_amount"></v-slider>
+     <v-slider label="Bet"  :max="currentPlayer.stack" :value="betAmount" @input="bet_amount"></v-slider>
      <v-btn @click.prevent="next_player({type: 'raise'})" @click.stop="realDialog=!realDialog">Bet</v-btn>
    </v-card>
    </v-dialog>
@@ -21,7 +21,7 @@ export default {
   props: ['dialog'],
   name: 'raiseDialog',
   computed: {
-    ...mapGetters(['betAmount', 'stack']),
+    ...mapGetters(['betAmount', 'currentPlayer']),
     realDialog: {
       get: function() {
         return this.dialog;

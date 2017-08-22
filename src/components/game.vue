@@ -1,28 +1,23 @@
 <template>
-<div id="choices">
+  <div>
+
+<v-container id="choices">
 
 <h4>
   {{currentPlayer.name}} to play:
 </h4>
-  <div>
     <v-btn label="Fold" @click.prevent="next_player({type: 'fold'})">Fold</v-btn>
     <v-btn label="Knock" @click.prevent="next_player({type: 'knock'})">Knock</v-btn>
     <v-btn label="Follow" @click.prevent="next_player({type: 'follow'})">Follow</v-btn>
     <v-btn label="Raise" @click.stop="dialog=!dialog">Raise</v-btn>
-<div>
-  "AMOUNT TO BET " {{betAmount}}
-  {{dialog}}
-</div>
-
-</div>
 <raiseDialog :dialog="dialog" @closeDialog="dialog=!dialog"></raiseDialog>
-
-<br />
-
 <playerStack></playerStack>
+</v-container>
+
+
+<pokerTable></pokerTable>
+
 </div>
-
-
 </template>
 
 <script>
@@ -43,7 +38,8 @@ export default {
   },
   components: {
     playerStack: require('./playerStack.vue'),
-    raiseDialog: require('./raiseDialog.vue')
+    raiseDialog: require('./raiseDialog.vue'),
+    pokerTable: require('./pokerTable.vue')
   }
 };
 </script>
@@ -53,5 +49,4 @@ export default {
   margin: 2%;
   display: inline-block;
 }
-
 </style>
