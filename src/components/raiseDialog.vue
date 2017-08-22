@@ -1,6 +1,6 @@
 <template>
 <div>
-  <v-dialog  :value="dialog" @input="realDialog=false">
+  <v-dialog  v-model="realDialog">
     <v-card id="ledialog">
       <p>
         {{dialog}}
@@ -20,22 +20,17 @@ import { mapGetters, mapMutations, mapActions } from 'vuex';
 export default {
   props: ['dialog'],
   name: 'raiseDialog',
-  data: function() {
-    return {
-      realDialog: this.dialog === 'true'
-    };
-  },
   computed: {
-    ...mapGetters(['betAmount', 'stack'])
-    // realDialog: {
-    //   get: function() {
-    //     return this.dialog;
-    //   },
-    //   set: function() {
-    //     console.log('this', this.dialog, this.realDialog);
-    //     this.realDialog = false;
-    //   }
-    // }
+    ...mapGetters(['betAmount', 'stack']),
+    realDialog: {
+      get: function() {
+        return this.dialog;
+      },
+      set: function() {
+        console.log('this', this.dialog, this.realDialog);
+        this.$emit('closeDialog');
+      }
+    }
   },
   methods: {
     ...mapActions(['next_player', 'bet_amount'])

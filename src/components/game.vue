@@ -15,7 +15,7 @@
 </div>
 
 </div>
-<raiseDialog :dialog="dialog"></raiseDialog>
+<raiseDialog :dialog="dialog" @closeDialog="dialog=!dialog"></raiseDialog>
 
 <br />
 
