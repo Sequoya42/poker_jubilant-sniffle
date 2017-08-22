@@ -6,7 +6,7 @@
   </v-btn>
 
   <v-list>
-      <v-list-tile @click="redirect(Game)"> Le game </v-list-tile>
+      <v-list-tile @click="redirect('Game')"> Le game </v-list-tile>
     <v-list-tile @click="redirect('Home')"> le home </v-list-tile>
     <v-list-tile @click="redirect('Settings')"> le settings </v-list-tile>
   </v-list>
