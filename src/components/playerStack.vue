@@ -11,6 +11,7 @@
        <td class="text-xs-left">{{ props.item.name }}</td>
        <td class="text-xs-right">{{ props.item.stack }}</td>
        <td class="text-xs-right">
+         {{dealer}}
          <v-icon v-if="dealer === props.item.name" label="ni">
            donut_small
          </v-icon>

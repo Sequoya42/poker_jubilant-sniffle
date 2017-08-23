@@ -10,6 +10,9 @@
   <p>
     Dealer is : {{dealerChip.name}}
   </p>
+  <p>
+    Amount to bet: {{betAmount}}
+  </p>
   {{currentPlayer.name}} to play:
 </h4>
     <v-btn label="Fold" @click.prevent="next_player({type: 'fold'})">Fold</v-btn>

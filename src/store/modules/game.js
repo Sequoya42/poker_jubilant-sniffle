@@ -20,16 +20,30 @@ const actions = {
   bet_amount: ({ commit }, p) => {
     commit('betAmount', p);
   },
-  next_player: ({ commit, rootState, getters }, p) => {
-    console.log('NEXT PLAER');
+  next_card: ({ commit, getters }, p) => {
     if (state.cards === 0) {
-      commit('flop', { p, player: getters.currentPlayer });
+      return commit('flop', {
+        p,
+        player: getters.currentPlayer,
+        smallBlind: getters.smallBlind
+      });
     } else if (state.cards === 5) {
-      commit('clearHand', { p, player: getters.currentPlayer });
+      commit('clearHand', {
+        p,
+        players: getters.players,
+        numberOfPlayers: getters.nPlayers,
+        smallBlind: getters.smallBlind
+      });
     } else {
-      commit('turnRiver', { p, player: getters.currentPlayer });
+      commit('turnRiver', {
+        p,
+        player: getters.currentPlayer,
+        smallBlind: getters.smallBlind
+      });
     }
-    console.log('rootState action', rootState.settings);
+  },
+  next_player: ({ dispatch, commit, rootState, getters }, p) => {
+    console.log('NEXT PLAYER', p);
     switch (p.type) {
       case 'fold':
         commit('fold', { p, player: getters.currentPlayer });
@@ -45,6 +59,7 @@ const actions = {
         break;
     }
     commit('nextPlayer', { p, settings: rootState['settings'] });
+    return dispatch('next_card');
   }
 };
 
@@ -58,7 +73,6 @@ const mutations = {
     state.betAmount = settings.smallBlind;
     if (state.currentPlayer === state.dealer)
       state.betAmount = settings.smallBlind;
-    // if (p.type !== 'raise') state.betAmount = settings.smallBlind;
   },
   fold: (state, { player }) => {
     console.log('state.currentPlayer', player);
@@ -73,25 +87,22 @@ const mutations = {
     player.stack -= state.betAmount;
   },
   // ******** ********  Hand stuff  ******** ********
-  flop: (state, { player }) => {
+  flop: (state, { player, smallBlind }) => {
     state.cards = 3;
-    state.betAmount = 0;
+    state.betAmount = smallBlind;
   },
-  turnRiver: (state, { player }) => {
+  turnRiver: (state, { player, smallBlind }) => {
     state.cards += 1;
-    state.betAmount = 0;
+    state.betAmount = smallBlind;
   },
-  clearHand: (state, { player }) => {
+  clearHand: (state, { players, numberOfPlayers, smallBlind }) => {
     state.cards = 0;
-    state.betAmount = 0;
+    state.betAmount = smallBlind;
+    let pastDealer = players.shift();
+    players.push(pastDealer);
   }
 };
 
-// console.log('d', d);
-// console.log('settings.players', settings.players);
-// const moveDealer = () => {
-//   state.dealer = (state.dealer + 1) % settings.numberOfPlayers;
-// };
 export default {
   state,
   getters,
