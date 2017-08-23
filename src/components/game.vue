@@ -4,6 +4,12 @@
 <v-container id="choices">
 
 <h4>
+  <p>
+    Number of card dealt: {{cards}}
+  </p>
+  <p>
+    Dealer is : {{dealerChip.name}}
+  </p>
   {{currentPlayer.name}} to play:
 </h4>
     <v-btn label="Fold" @click.prevent="next_player({type: 'fold'})">Fold</v-btn>
@@ -11,7 +17,7 @@
     <v-btn label="Follow" @click.prevent="next_player({type: 'follow'})">Follow</v-btn>
     <v-btn label="Raise" @click.stop="dialog=!dialog">Raise</v-btn>
 <raiseDialog :dialog="dialog" @closeDialog="dialog=!dialog"></raiseDialog>
-<playerStack></playerStack>
+<playerStack :dealer="dealerChip.name"></playerStack>
 </v-container>
 
 
@@ -31,7 +37,17 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(['players', 'dealer', 'currentPlayer', 'betAmount', 'stack'])
+    ...mapGetters([
+      'players',
+      'dealer',
+      'currentPlayer',
+      'betAmount',
+      'stack',
+      'cards'
+    ]),
+    dealerChip: function() {
+      return this.players[this.dealer];
+    }
   },
   methods: {
     ...mapActions(['next_player', 'bet_amount'])

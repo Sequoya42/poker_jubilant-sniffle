@@ -1,4 +1,5 @@
 const state = {
+  cards: 0,
   dealer: 0,
   currentPlayer: 1,
   pot: 0,
@@ -8,6 +9,7 @@ const state = {
 const getters = {
   dealer: state => state.dealer,
   betAmount: state => state.betAmount,
+  cards: state => state.cards,
   currentPlayer: (state, getters) => {
     return getters.players[state.currentPlayer];
   }
@@ -19,6 +21,14 @@ const actions = {
     commit('betAmount', p);
   },
   next_player: ({ commit, rootState, getters }, p) => {
+    console.log('NEXT PLAER');
+    if (state.cards === 0) {
+      commit('flop', { p, player: getters.currentPlayer });
+    } else if (state.cards === 5) {
+      commit('clearHand', { p, player: getters.currentPlayer });
+    } else {
+      commit('turnRiver', { p, player: getters.currentPlayer });
+    }
     console.log('rootState action', rootState.settings);
     switch (p.type) {
       case 'fold':
@@ -61,6 +71,19 @@ const mutations = {
   raise: (state, { player }) => {
     state.pot += state.betAmount;
     player.stack -= state.betAmount;
+  },
+  // ******** ********  Hand stuff  ******** ********
+  flop: (state, { player }) => {
+    state.cards = 3;
+    state.betAmount = 0;
+  },
+  turnRiver: (state, { player }) => {
+    state.cards += 1;
+    state.betAmount = 0;
+  },
+  clearHand: (state, { player }) => {
+    state.cards = 0;
+    state.betAmount = 0;
   }
 };
 
