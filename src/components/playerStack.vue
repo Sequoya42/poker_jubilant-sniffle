@@ -12,7 +12,7 @@
        <td class="text-xs-right">{{ props.item.stack }}</td>
        <td class="text-xs-right">
          {{dealer}}
-         <v-icon v-if="dealer === props.item.name" label="ni">
+         <v-icon v-if="players[0] === props.item" label="ni">
            donut_small
          </v-icon>
        </td>
@@ -26,7 +26,6 @@ import { mapGetters, mapMutations } from 'vuex';
 
 export default {
   name: 'playerStack',
-  props: ['dealer'],
   data: function() {
     return {
       headers: [
@@ -49,7 +48,7 @@ export default {
   },
   components: {},
   computed: {
-    ...mapGetters(['players'])
+    ...mapGetters(['players', 'dealer'])
   },
   methods: {}
 };

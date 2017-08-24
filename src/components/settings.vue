@@ -44,7 +44,7 @@
 <v-container>
   <!-- <v-btn> -->
   <router-link :to="{name: 'Game'}">
-    <v-btn @click="setPlayersStack">
+    <v-btn>
       Start Game
     </v-btn>
   </router-link>
@@ -68,7 +68,7 @@ export default {
       'setSmallBlind',
       'setStack',
       'setPlayers',
-      'setPlayersStack'
+      'setPlayersStack' //put in a before create
     ])
   },
   components: {

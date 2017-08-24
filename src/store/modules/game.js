@@ -10,6 +10,7 @@ const getters = {
   dealer: state => state.dealer,
   betAmount: state => state.betAmount,
   cards: state => state.cards,
+  currentPlayerPosition: state => state.currentPlayer,
   currentPlayer: (state, getters) => {
     return getters.players[state.currentPlayer];
   }
@@ -42,8 +43,7 @@ const actions = {
       });
     }
   },
-  next_player: ({ dispatch, commit, rootState, getters }, p) => {
-    console.log('NEXT PLAYER', p);
+  next_player: ({ state, dispatch, commit, rootState, getters }, p) => {
     switch (p.type) {
       case 'fold':
         commit('fold', { p, player: getters.currentPlayer });
@@ -55,11 +55,11 @@ const actions = {
         commit('raise', { p, player: getters.currentPlayer });
         break;
       default:
-        console.log('Should be "knock" : ', p);
         break;
     }
     commit('nextPlayer', { p, settings: rootState['settings'] });
-    return dispatch('next_card');
+    if (state.currentPlayer === getters.nPlayers - 1)
+      return dispatch('next_card');
   }
 };
 
@@ -69,13 +69,11 @@ const mutations = {
   },
   nextPlayer: (state, { p, settings }) => {
     state.currentPlayer = (state.currentPlayer + 1) % settings.numberOfPlayers;
-    console.log('p', p);
     state.betAmount = settings.smallBlind;
     if (state.currentPlayer === state.dealer)
       state.betAmount = settings.smallBlind;
   },
   fold: (state, { player }) => {
-    console.log('state.currentPlayer', player);
     player.folded = true;
   },
   follow: (state, { player }) => {
@@ -86,7 +84,7 @@ const mutations = {
     state.pot += state.betAmount;
     player.stack -= state.betAmount;
   },
-  // ******** ********  Hand stuff  ******** ********
+  // ******** ********  next_card stuff  ******** ********
   flop: (state, { player, smallBlind }) => {
     state.cards = 3;
     state.betAmount = smallBlind;
@@ -100,6 +98,7 @@ const mutations = {
     state.betAmount = smallBlind;
     let pastDealer = players.shift();
     players.push(pastDealer);
+    state.dealer = state.dealer === numberOfPlayers - 1 ? 0 : state.dealer + 1;
   }
 };
 

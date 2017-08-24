@@ -1,26 +1,14 @@
 <template>
   <div>
-
+    {{players}}
 <v-container id="choices">
-
-<h4>
-  <p>
-    Number of card dealt: {{cards}}
-  </p>
-  <p>
-    Dealer is : {{dealerChip.name}}
-  </p>
-  <p>
-    Amount to bet: {{betAmount}}
-  </p>
-  {{currentPlayer.name}} to play:
-</h4>
+  <gameInfos></gameInfos>
     <v-btn label="Fold" @click.prevent="next_player({type: 'fold'})">Fold</v-btn>
     <v-btn label="Knock" @click.prevent="next_player({type: 'knock'})">Knock</v-btn>
     <v-btn label="Follow" @click.prevent="next_player({type: 'follow'})">Follow</v-btn>
     <v-btn label="Raise" @click.stop="dialog=!dialog">Raise</v-btn>
 <raiseDialog :dialog="dialog" @closeDialog="dialog=!dialog"></raiseDialog>
-<playerStack :dealer="dealerChip.name"></playerStack>
+<playerStack></playerStack>
 </v-container>
 
 
@@ -34,6 +22,10 @@ import { mapGetters, mapMutations, mapActions } from 'vuex';
 
 export default {
   name: 'play',
+  beforeMount: function() {
+    console.log('BEFORE CREaTE IN GAME VUE');
+    this.$store.commit('setPlayersStack');
+  },
   data: function() {
     return {
       dialog: false
@@ -44,6 +36,7 @@ export default {
       'players',
       'dealer',
       'currentPlayer',
+      'currentPlayerPosition',
       'betAmount',
       'stack',
       'cards'
@@ -58,7 +51,8 @@ export default {
   components: {
     playerStack: require('./playerStack.vue'),
     raiseDialog: require('./raiseDialog.vue'),
-    pokerTable: require('./pokerTable.vue')
+    pokerTable: require('./pokerTable.vue'),
+    gameInfos: require('./gameInfos')
   }
 };
 </script>
@@ -67,5 +61,7 @@ export default {
 #choices {
   margin: 2%;
   display: inline-block;
+  min-width: 360px;
+  width: 100%;
 }
 </style>
