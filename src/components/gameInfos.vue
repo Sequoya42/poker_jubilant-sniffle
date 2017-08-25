@@ -12,6 +12,7 @@
        <td class="text-xs-left">{{ cards }}</td>
        <td class="text-xs-right">{{ dealer }}</td>
        <td class="text-xs-right">{{ currentPlayer.name }}</td>
+       <td class="text-xs-right">{{playersInHand}} </td>
        <td class="text-xs-right">{{ betAmount }}</td>
      </template>
   </v-data-table>
@@ -41,6 +42,10 @@ export default {
           value: 'currentPlayer'
         },
         {
+          text: 'Player in hand',
+          value: 'playerInHands'
+        },
+        {
           text: 'bet Amount',
           value: 'betAmount'
         }
@@ -49,7 +54,14 @@ export default {
   },
   components: {},
   computed: {
-    ...mapGetters(['players', 'currentPlayer', 'betAmount', 'cards', 'dealer'])
+    ...mapGetters([
+      'players',
+      'currentPlayer',
+      'betAmount',
+      'cards',
+      'dealer',
+      'playersInHand'
+    ])
   },
   methods: {}
 };

@@ -5,7 +5,7 @@
     <div  class="playingCard Deck">
     </div>
     <transition-group name="list">
-      <div v-for="card in cards" class="playingCard">
+      <div v-for="card in cards" class="playingCard" :key="card">
       </div>
     </transition-group>
 </div>

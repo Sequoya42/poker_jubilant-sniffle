@@ -1,6 +1,7 @@
 const state = {
   cards: 0,
   dealer: 0,
+  playersInHand: 0,
   currentPlayer: 1,
   pot: 0,
   betAmount: 10
@@ -10,6 +11,7 @@ const getters = {
   dealer: state => state.dealer,
   betAmount: state => state.betAmount,
   cards: state => state.cards,
+  playersInHand: state => state.playersInHand,
   currentPlayerPosition: state => state.currentPlayer,
   currentPlayer: (state, getters) => {
     return getters.players[state.currentPlayer];
@@ -18,6 +20,9 @@ const getters = {
 
 // p for payload
 const actions = {
+  playersInHand: ({ commit, getters }) => {
+    commit('playersInHand', { players: getters.players });
+  },
   bet_amount: ({ commit }, p) => {
     commit('betAmount', p);
   },
@@ -47,12 +52,16 @@ const actions = {
     switch (p.type) {
       case 'fold':
         commit('fold', { p, player: getters.currentPlayer });
+        commit('playersInHand', { players: getters.players });
         break;
       case 'follow':
         commit('follow', { p, player: getters.currentPlayer });
         break;
       case 'raise':
         commit('raise', { p, player: getters.currentPlayer });
+        break;
+      case 'allIn':
+        commit('allIn', { p, player: getters.currentPlayer });
         break;
       default:
         break;
@@ -69,9 +78,6 @@ const mutations = {
   },
   nextPlayer: (state, { p, settings }) => {
     state.currentPlayer = (state.currentPlayer + 1) % settings.numberOfPlayers;
-    state.betAmount = settings.smallBlind;
-    if (state.currentPlayer === state.dealer)
-      state.betAmount = settings.smallBlind;
   },
   fold: (state, { player }) => {
     player.folded = true;
@@ -83,6 +89,10 @@ const mutations = {
   raise: (state, { player }) => {
     state.pot += state.betAmount;
     player.stack -= state.betAmount;
+  },
+  allIn: (state, { player }) => {
+    state.pot += player.stack;
+    player.stack = 0;
   },
   // ******** ********  next_card stuff  ******** ********
   flop: (state, { player, smallBlind }) => {
@@ -99,6 +109,13 @@ const mutations = {
     let pastDealer = players.shift();
     players.push(pastDealer);
     state.dealer = state.dealer === numberOfPlayers - 1 ? 0 : state.dealer + 1;
+  },
+  playersInHand: (state, { players, numberOfPlayers }) => {
+    state.playersInHand = players
+      .map(p => p.folded)
+      .reduce((a, b) => (a += !b), 0);
+    console.log('CALLED PLAYER HAND', players.map(p => p.folded));
+    console.log('state.playersInHand', state.playersInHand);
   }
 };
 

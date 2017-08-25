@@ -26,9 +26,7 @@ export default {
       let p = step * this.index + Math.PI * 2 / 12;
       let leftPos = `${Math.cos(p) * 276 + 450 - 35}px`;
       let topPos = ` ${Math.sin(p) * 150 + 300 - 50}px`;
-      console.log(step, leftPos, topPos);
       return {
-        // prependIcon: 'people',
         position: 'absolute',
         backgroundColor:
           this.index === this.currentPlayerPosition ? '#D80B00' : '#AA0800',
@@ -56,40 +54,39 @@ export default {
 
 <style>
 .mainDiv {
-    border: 1px solid black;
-    border-radius: 4px;
-    background-color: rgb(81, 129, 76);
-    padding: 10px;
-    display: inline-block;
-    height: 100px;
+  display          : inline-block;
+  height           : 100px;
+  padding          : 10px;
+  border           : 1px solid black;
+  border-radius    : 4px;
+  background-color : rgb(81, 129, 76);
 }
 
 .myDealer {
-  width: 22px;
-  height: 22px;
-  background-color: #749728;
+  width            : 22px;
+  height           : 22px;
+  background-color : #749728;
 }
 
 .name {
-  color: white;
-  font-weight: 900;
-  line-height: 2;
+  color       : white;
+  font-weight : 900;
+  line-height : 2;
 }
 
 .stack {
-  color:white;
-  font-weight: 900;
-  line-height: 2;
+  color       : white;
+  font-weight : 900;
+  line-height : 2;
 }
 
 .playerOne {
-  /*background-color: orange;*/
-order: 1
+  /* background-color: orange; */
+  order : 1;
 }
+
 .playerTwo {
-/*background-color: red;*/
-order: 3
+  /* background-color: red; */
+  order : 3;
 }
-
-
 </style>
