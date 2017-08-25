@@ -6,9 +6,9 @@
   <div class="stack">
     {{player.stack}}
   </div>
-  <div v-if="index === dealer">
-    <v-icon>people</v-icon>
-  </div>
+  {{player.folded}}
+    <v-icon v-if="index === dealer">people</v-icon>
+    <v-icon v-if="player.folded">visibility_off</v-icon>
 </div>
 </template>
 
@@ -28,24 +28,12 @@ export default {
       let topPos = ` ${Math.sin(p) * 150 + 300 - 50}px`;
       return {
         position: 'absolute',
-        backgroundColor:
-          this.index === this.currentPlayerPosition ? '#D80B00' : '#AA0800',
+        backgroundColor: this.player.folded
+          ? '#3D1255'
+          : this.index === this.currentPlayerPosition ? '#D80B00' : '#AA0800',
         top: topPos,
         left: leftPos
       };
-    },
-    playerOrder: function() {
-      if (this.index === 0) {
-        return 'playerOne';
-      } else if (this.index === 1) {
-        return 'playerTwo';
-      } else if (this.index === 2) {
-        return 'playerThree';
-      } else if (this.index === 3) {
-        return 'playerFour';
-      } else if (this.index === 4) {
-        return 'playerFive';
-      }
     }
   },
   methods: {}
@@ -78,15 +66,5 @@ export default {
   color       : white;
   font-weight : 900;
   line-height : 2;
-}
-
-.playerOne {
-  /* background-color: orange; */
-  order : 1;
-}
-
-.playerTwo {
-  /* background-color: red; */
-  order : 3;
 }
 </style>

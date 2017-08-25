@@ -52,7 +52,7 @@ const actions = {
     switch (p.type) {
       case 'fold':
         commit('fold', { p, player: getters.currentPlayer });
-        commit('playersInHand', { players: getters.players });
+        // commit('playersInHand', { players: getters.players });
         break;
       case 'follow':
         commit('follow', { p, player: getters.currentPlayer });
@@ -76,7 +76,9 @@ const mutations = {
   betAmount: (state, p) => {
     state.betAmount = p;
   },
+  //find a way to access players[index].folded
   nextPlayer: (state, { p, settings }) => {
+    console.log('state.currentPlayer.folded', state.currentPlayer);
     state.currentPlayer = (state.currentPlayer + 1) % settings.numberOfPlayers;
   },
   fold: (state, { player }) => {
@@ -104,6 +106,7 @@ const mutations = {
     state.betAmount = smallBlind;
   },
   clearHand: (state, { players, numberOfPlayers, smallBlind }) => {
+    players.forEach(e => (e.folded = false));
     state.cards = 0;
     state.betAmount = smallBlind;
     let pastDealer = players.shift();
@@ -114,8 +117,6 @@ const mutations = {
     state.playersInHand = players
       .map(p => p.folded)
       .reduce((a, b) => (a += !b), 0);
-    console.log('CALLED PLAYER HAND', players.map(p => p.folded));
-    console.log('state.playersInHand', state.playersInHand);
   }
 };
 

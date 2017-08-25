@@ -6,7 +6,7 @@
           {{cards}}
           CHOOSE WINNER
         </p>
-       <v-btn @click.stop="toggleShit=!toggleShit">Bet</v-btn>
+       <v-btn @click.native.stop="toggleShit=!toggleShit">Bet</v-btn>
      </v-card>
      </v-dialog>
 </div>
@@ -16,7 +16,7 @@
 // import { mapGetters, mapMutations } from 'vuex';
 
 export default {
-  props: ['cards'],
+  props: ['cards', 'timing'],
   name: 'chooseWinner',
 
   data: function() {
@@ -25,7 +25,9 @@ export default {
   computed: {
     toggleShit: {
       get: function() {
-        return this.cards === 5;
+        console.log('this.cards', this.cards);
+        console.log('this.timing', this.timing);
+        return this.cards === 5 && this.timing;
       },
       set: function() {
         console.log('no set needed', this.toggleShit);
@@ -33,11 +35,7 @@ export default {
     }
   },
   components: {},
-  methods: {
-    toggleFalse: function() {
-      this.toggleShit = false;
-    }
-  }
+  methods: {}
 };
 </script>
 

@@ -1,18 +1,21 @@
+//TODO
+// Implements small and big Blind [when cards 0 remove money blabla]
+
 <template>
   <div>
 <v-container class="choices">
   <gameInfos></gameInfos>
-    <v-btn label="Fold" @click.prevent="next_player({type: 'fold'})">Fold</v-btn>
-    <v-btn label="Knock" @click.prevent="next_player({type: 'knock'})">Knock</v-btn>
-    <v-btn label="Follow" @click.prevent="next_player({type: 'follow'})">Follow</v-btn>
+    <v-btn label="Fold" @click.prevent="next_player({type: currentPlayer.folded ? 'folded' : 'fold'})">Fold</v-btn>
+    <v-btn label="Knock" @click.prevent="next_player({type: currentPlayer.folded ? 'folded' : 'knock'})">Knock</v-btn>
+    <v-btn label="Follow" @click.prevent="next_player({type: currentPlayer.folded ? 'folded' : 'follow'})">Follow</v-btn>
     <v-btn label="Raise" @click.stop="dialog=!dialog">Raise</v-btn>
-    <v-btn label="AllIn" @click.prevent="next_player({type: 'allIn'})">All-In</v-btn>
+    <v-btn label="AllIn" @click.prevent="next_player({type: currentPlayer.folded ? 'folded' : 'allIn'})">All-In</v-btn>
 <raiseDialog :dialog="dialog" @closeDialog="dialog=!dialog"></raiseDialog>
 <playerStack></playerStack>
 </v-container>
 <pokerTable></pokerTable>
 
-<chooseWinner :cards="cards"></chooseWinner>
+<!-- <chooseWinner :cards="cards" :timing="currentPlayerPosition === playersInHand - 1"></chooseWinner> -->
 
 </div>
 </template>
@@ -21,7 +24,6 @@ import { mapGetters, mapMutations, mapActions } from 'vuex';
 export default {
   name: 'play',
   beforeMount: function() {
-    console.log('BEFORE CREaTE IN GAME VUE');
     this.$store.commit('setPlayersStack');
     this.$store.dispatch('playersInHand');
   },
@@ -36,6 +38,7 @@ export default {
       'dealer',
       'currentPlayer',
       'currentPlayerPosition',
+      'playersInHand',
       'betAmount',
       'stack',
       'cards'
