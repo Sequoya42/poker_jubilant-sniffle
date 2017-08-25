@@ -1,22 +1,15 @@
 <template>
-
-  <div class="wrapperTable">
-      <playerFace  v-for="(player, index) in players" :player="player" :index="index"></playerFace>
+  <div class="wrapperTable debug">
   <div class="pokerTable">
 
-    <div class="playingCard Deck">
+    <div  class="playingCard Deck">
     </div>
-    <div class="playingCard">
-    </div>
-    <div class="playingCard">
-    </div>
-    <div class="playingCard">
-    </div>
-    <div class="playingCard">
-    </div>
-    <div class="playingCard">
-    </div>
+    <transition-group name="list">
+      <div v-for="card in cards" class="playingCard">
+      </div>
+    </transition-group>
 </div>
+<playerFace v-for="(player, index) in players" :key="index" :player="player" :index="index"></playerFace>
 </div>
 </template>
 
@@ -30,7 +23,7 @@ export default {
     playerFace: require('./playerFace.vue')
   },
   computed: {
-    ...mapGetters(['nPlayers', 'players'])
+    ...mapGetters(['nPlayers', 'players', 'cards'])
   },
   methods: {}
 };
@@ -42,6 +35,7 @@ export default {
 }
 
 .wrapperTable {
+  position: relative;
   display: flex;
   flex-direction: row;
   justify-content: center;
@@ -90,4 +84,26 @@ export default {
   /*position: absolute;*/
 }
 
+.debug {
+  border: 1px solid black;
+}
+
+.fade-enter-active, .fade-leave-active {
+  transition: opacity .5s
+}
+.fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+  opacity: 0
+}
+
+.list-item {
+  display: inline-block;
+  margin-right: 10px;
+}
+.list-enter-active, .list-leave-active {
+  transition: all 1s;
+}
+.list-enter, .list-leave-to /* .list-leave-active below version 2.1.8 */ {
+  opacity: 0;
+  transform: translateY(30px);
+}
 </style>
