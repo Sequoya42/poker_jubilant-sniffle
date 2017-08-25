@@ -14,7 +14,7 @@
          {{dealer}}
          <v-icon v-if="players[0] === props.item" label="ni">
            donut_small
-         </v-icon>
+       </v-icon>
        </td>
      </template>
   </v-data-table>

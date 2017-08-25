@@ -1,6 +1,5 @@
 <template>
   <div>
-    {{players}}
 <v-container id="choices">
   <gameInfos></gameInfos>
     <v-btn label="Fold" @click.prevent="next_player({type: 'fold'})">Fold</v-btn>
