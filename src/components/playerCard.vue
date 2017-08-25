@@ -17,7 +17,7 @@ import { mapGetters, mapMutations } from 'vuex';
 
 export default {
   props: ['player', 'index'],
-  name: 'playerFace',
+  name: 'playerCard',
   components: {},
   computed: {
     ...mapGetters(['nPlayers', 'currentPlayerPosition', 'dealer']),

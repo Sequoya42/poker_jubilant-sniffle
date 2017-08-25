@@ -67,7 +67,7 @@ const actions = {
         break;
     }
     commit('nextPlayer', { p, settings: rootState['settings'] });
-    if (state.currentPlayer === getters.nPlayers - 1)
+    if (state.currentPlayer === getters.playersInHand - 1)
       return dispatch('next_card');
   }
 };

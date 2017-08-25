@@ -9,7 +9,7 @@
       </div>
     </transition-group>
 </div>
-<playerFace v-for="(player, index) in players" :key="index" :player="player" :index="index"></playerFace>
+<playerCard v-for="(player, index) in players" :key="index" :player="player" :index="index"></playerCard>
 </div>
 </template>
 
@@ -20,7 +20,7 @@ export default {
   name: 'pokerTable',
 
   components: {
-    playerFace: require('./playerFace.vue')
+    playerCard: require('./playerCard.vue')
   },
   computed: {
     ...mapGetters(['nPlayers', 'players', 'cards'])

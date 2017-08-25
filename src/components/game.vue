@@ -11,6 +11,9 @@
 <playerStack></playerStack>
 </v-container>
 <pokerTable></pokerTable>
+
+<chooseWinner :cards="cards"></chooseWinner>
+
 </div>
 </template>
 <script>
@@ -48,7 +51,8 @@ export default {
     playerStack: require('./playerStack.vue'),
     raiseDialog: require('./raiseDialog.vue'),
     pokerTable: require('./pokerTable.vue'),
-    gameInfos: require('./gameInfos')
+    gameInfos: require('./gameInfos.vue'),
+    chooseWinner: require('./chooseWinner.vue')
   }
 };
 </script>
