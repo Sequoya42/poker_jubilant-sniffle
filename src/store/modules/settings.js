@@ -10,8 +10,12 @@ Find a way to architecture the game loop
 */
 const state = {
   stack: 500,
-  numberOfPlayers: 2,
-  players: [{ name: 'Player_1', stack: 500 }, { name: 'Player_2', stack: 500 }],
+  numberOfPlayers: 3,
+  players: [
+    { name: 'Player_1', stack: 500 },
+    { name: 'Player_2', stack: 500 },
+    { name: 'Player_3', stack: 500 }
+  ],
   smallBlind: 10,
   bigBlind: 20
 };

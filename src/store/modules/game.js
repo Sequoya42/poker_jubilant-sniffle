@@ -66,7 +66,8 @@ const actions = {
       default:
         break;
     }
-    commit('nextPlayer', { p, settings: rootState['settings'] });
+    commit('nextPlayer', { nPlayers: getters.nPlayers });
+    commit('skipFolded', { players: getters.players });
     if (state.currentPlayer === getters.playersInHand - 1)
       return dispatch('next_card');
   }
@@ -76,13 +77,22 @@ const mutations = {
   betAmount: (state, p) => {
     state.betAmount = p;
   },
-  //find a way to access players[index].folded
-  nextPlayer: (state, { p, settings }) => {
-    console.log('state.currentPlayer.folded', state.currentPlayer);
-    state.currentPlayer = (state.currentPlayer + 1) % settings.numberOfPlayers;
+  skipFolded: (state, { players }) => {
+    let isFolded = players[state.currentPlayer].folded;
+    while (isFolded) {
+      console.log('inWhile', isFolded);
+      state.currentPlayer = isFolded
+        ? (state.currentPlayer + 1) % state.playersInHand
+        : state.currentPlayer;
+      isFolded = players[state.currentPlayer].folded;
+    }
+  },
+  nextPlayer: (state, { nPlayers }) => {
+    state.currentPlayer = (state.currentPlayer + 1) % nPlayers;
   },
   fold: (state, { player }) => {
     player.folded = true;
+    state.playersInHand -= 1;
   },
   follow: (state, { player }) => {
     state.pot += state.betAmount;
@@ -108,15 +118,25 @@ const mutations = {
   clearHand: (state, { players, numberOfPlayers, smallBlind }) => {
     players.forEach(e => (e.folded = false));
     state.cards = 0;
+    state.playersInHand = numberOfPlayers;
+    console.log('reset', state.playersInHand);
     state.betAmount = smallBlind;
     let pastDealer = players.shift();
     players.push(pastDealer);
     state.dealer = state.dealer === numberOfPlayers - 1 ? 0 : state.dealer + 1;
+    console.log('inclearhand');
+    console.log(smallBlind);
+    console.log(players[(state.dealer + 1) % numberOfPlayers].stack);
+    console.log((state.dealer + 1) % numberOfPlayers);
+    players[(state.dealer + 1) % numberOfPlayers].stack - smallBlind;
+    console.log(players[(state.dealer + 1) % numberOfPlayers].stack);
+    players[(state.dealer + 2) % numberOfPlayers].stack - smallBlind * 2;
   },
   playersInHand: (state, { players, numberOfPlayers }) => {
     state.playersInHand = players
       .map(p => p.folded)
       .reduce((a, b) => (a += !b), 0);
+    console.log('init', state.playersInHand);
   }
 };
 
