@@ -18,8 +18,6 @@ const getters = {
   }
 };
 
-// p for payload
-// p for payload
 const actions = require('./actions');
 const mutations = require('./mutations');
 
