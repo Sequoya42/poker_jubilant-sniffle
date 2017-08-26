@@ -2,11 +2,14 @@ module.exports = {
   playersInHand: ({ commit, getters }) => {
     commit('playersInHand', { players: getters.players });
   },
+
   bet_amount: ({ commit }, p) => {
     commit('betAmount', p);
   },
+
   next_card: ({ commit, getters }, p) => {
     console.log('getters.cards', getters.cards);
+    console.log('getters.playersInHand', getters.playersInHand);
     if (getters.cards === 0) {
       return commit('flop', {
         p,
@@ -28,6 +31,7 @@ module.exports = {
       });
     }
   },
+
   next_player: ({ dispatch, commit, rootState, getters }, p) => {
     switch (p.type) {
       case 'fold':
@@ -46,8 +50,10 @@ module.exports = {
       default:
         break;
     }
-    commit('nextPlayer', { nPlayers: getters.nPlayers });
-    commit('skipFolded', { players: getters.players });
+    commit('nextPlayer', { nPlayers: getters.playersInHand });
+    // commit('skipFolded', { players: getters.players });
+    // if (getters.playersInHand < 2)
+    // commit('endGame')
     if (getters.currentPlayerPos === getters.playersInHand - 1)
       return dispatch('next_card');
   }

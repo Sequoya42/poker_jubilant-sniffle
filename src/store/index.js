@@ -3,8 +3,6 @@ import Vuex from 'vuex';
 import game from './modules/game/game.js';
 import settings from './modules/settings';
 import playerSettings from './modules/playerSettings';
-// import * as actions from './actions';
-// import * as getters from './getters';
 
 Vue.use(Vuex);
 
@@ -15,13 +13,9 @@ export default new Vuex.Store({
   state: {
     players: []
   },
-  // actions,
-  // getters,
   modules: {
     game,
     settings,
     playerSettings
   }
-  // strict: debug,
-  // plugins: debug ? [createLogger()] : []
 });
