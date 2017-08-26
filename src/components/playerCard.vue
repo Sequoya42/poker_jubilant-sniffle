@@ -21,7 +21,7 @@ export default {
   name: 'playerCard',
   components: {},
   computed: {
-    ...mapGetters(['nPlayers', 'currentPlayerPosition']),
+    ...mapGetters(['nPlayers', 'currentPlayerPos']),
     orderPlayer: function() {
       let step = Math.PI * 2 / this.nPlayers;
       let p = step * this.index + Math.PI * 2 / 12;
@@ -31,7 +31,7 @@ export default {
         position: 'absolute',
         backgroundColor: this.player.folded
           ? '#3D1255'
-          : this.index === this.currentPlayerPosition ? '#D80B00' : '#AA0800',
+          : this.index === this.currentPlayerPos ? '#D80B00' : '#AA0800',
         top: topPos,
         left: leftPos
       };

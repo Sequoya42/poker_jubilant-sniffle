@@ -10,7 +10,7 @@
 
     <!-- <v-icon>eur</v-icon> -->
        <td class="text-xs-left">{{ cards }}</td>
-       <td class="text-xs-right">{{ dealer }}</td>
+       <td class="text-xs-right">{{ players[dealer].name }}</td>
        <td class="text-xs-right">{{ currentPlayer.name }}</td>
        <td class="text-xs-right">{{playersInHand}} </td>
        <td class="text-xs-right">{{ betAmount }}</td>

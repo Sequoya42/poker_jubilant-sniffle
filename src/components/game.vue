@@ -14,7 +14,7 @@
 <playerStack></playerStack>
 </v-container>
 <pokerTable></pokerTable>
-<!-- <chooseWinner :cards="cards" :timing="currentPlayerPosition === playersInHand - 1"></chooseWinner> -->
+<!-- <chooseWinner :cards="cards" :timing="currentPlayerPos === playersInHand - 1"></chooseWinner> -->
 
 </div>
 </template>
@@ -36,7 +36,7 @@ export default {
       'players',
       'dealer',
       'currentPlayer',
-      'currentPlayerPosition',
+      'currentPlayerPos',
       'playersInHand',
       'betAmount',
       'stack',

@@ -1,6 +1,6 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
-import game from './modules/game';
+import game from './modules/game/game.js';
 import settings from './modules/settings';
 import playerSettings from './modules/playerSettings';
 // import * as actions from './actions';
