@@ -8,15 +8,7 @@ module.exports = {
   },
 
   next_card: ({ commit, getters }, p) => {
-    console.log('getters.cards', getters.cards);
-    console.log('getters.playersInHand', getters.playersInHand);
-    if (getters.cards === 0) {
-      return commit('flop', {
-        p,
-        player: getters.currentPlayer,
-        smallBlind: getters.smallBlind
-      });
-    } else if (getters.cards === 5) {
+    if (getters.cards === 5) {
       commit('clearHand', {
         p,
         players: getters.players,
@@ -24,37 +16,29 @@ module.exports = {
         smallBlind: getters.smallBlind
       });
     } else {
-      commit('turnRiver', {
-        p,
-        player: getters.currentPlayer,
-        smallBlind: getters.smallBlind
+      commit('nextCard', {
+        cards: getters.cards === 0 ? 3 : 1,
+        betAmount: getters.smallBlind
       });
     }
   },
 
-  next_player: ({ dispatch, commit, rootState, getters }, p) => {
-    switch (p.type) {
-      case 'fold':
-        commit('fold', { p, player: getters.currentPlayer });
-        // commit('playersInHand', { players: getters.players });
-        break;
-      case 'follow':
-        commit('follow', { p, player: getters.currentPlayer });
-        break;
-      case 'raise':
-        commit('raise', { p, player: getters.currentPlayer });
-        break;
-      case 'allIn':
-        commit('allIn', { p, player: getters.currentPlayer });
-        break;
-      default:
-        break;
-    }
+  next_player: ({ dispatch, commit, state, getters }, p) => {
+    let player = getters.currentPlayer;
+    let players = getters.players;
+    if (p.type === 'fold') commit('fold', { player });
+    else if (p.type === 'follow') commit('follow', { player });
+    else if (p.type === 'raise') commit('raise', { player });
+    else if (p.type === 'allIn') commit('allIn', { player });
     commit('nextPlayer', { nPlayers: getters.playersInHand });
-    // commit('skipFolded', { players: getters.players });
+    commit('skipFolded', {
+      players: getters.players,
+      nPlayers: getters.nPlayers
+    });
     // if (getters.playersInHand < 2)
     // commit('endGame')
-    if (getters.currentPlayerPos === getters.playersInHand - 1)
+    if (players[state.currentPlayerPos] === players[state.playersInHand - 1]) {
       return dispatch('next_card');
+    }
   }
 };
