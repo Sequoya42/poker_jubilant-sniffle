@@ -7,7 +7,8 @@
     {{player.stack}}
   </div>
   {{player.folded}}
-    <v-icon v-if="index === dealer">people</v-icon>
+  <!--  game.js in function clearHand : we reorder the array of players, dealer always on top -->
+    <v-icon v-if="index === 0">people</v-icon>
     <v-icon v-if="player.folded">visibility_off</v-icon>
 </div>
 </template>
@@ -20,7 +21,7 @@ export default {
   name: 'playerCard',
   components: {},
   computed: {
-    ...mapGetters(['nPlayers', 'currentPlayerPosition', 'dealer']),
+    ...mapGetters(['nPlayers', 'currentPlayerPosition']),
     orderPlayer: function() {
       let step = Math.PI * 2 / this.nPlayers;
       let p = step * this.index + Math.PI * 2 / 12;
