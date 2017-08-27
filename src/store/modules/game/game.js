@@ -1,7 +1,6 @@
 const state = {
   end: false,
   cards: 0,
-  dealer: 0,
   playersInHand: 0,
   currentPlayerPos: 1,
   pot: 0,
@@ -13,7 +12,6 @@ const state = {
 const getters = {
   pot: state => state.pot,
   end: state => state.end,
-  dealer: state => state.dealer,
   betAmount: state => state.betAmount,
   cards: state => state.cards,
   playersInHand: state => state.playersInHand,
