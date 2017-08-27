@@ -1,44 +1,56 @@
 module.exports = {
-  playersInHand: ({ commit, getters }) => {
-    commit('playersInHand', { players: getters.players });
+  reset: ({ commit }) => commit('reset'),
+
+  bet_amount: ({ commit }, p) => commit('betAmount', p),
+
+  new_hand: ({ commit, getters, state }, first) => {
+    commit('newHand', {
+      first,
+      players: getters.players,
+      numberOfPlayers: getters.nPlayers,
+      smallBlind: getters.smallBlind
+    });
   },
 
-  bet_amount: ({ commit }, p) => {
-    commit('betAmount', p);
-  },
-
-  next_card: ({ commit, getters }, p) => {
-    if (getters.cards === 5) {
-      commit('clearHand', {
-        p,
+  next_card: ({ commit, state, getters }) => {
+    if (state.cards === 5) {
+      commit('newHand', {
         players: getters.players,
         numberOfPlayers: getters.nPlayers,
         smallBlind: getters.smallBlind
       });
     } else {
       commit('nextCard', {
-        cards: getters.cards === 0 ? 3 : 1,
-        betAmount: getters.smallBlind
+        cards: state.cards === 0 ? 3 : 1,
+        amount: state.betAmount
       });
     }
   },
 
   next_player: ({ dispatch, commit, state, getters }, p) => {
-    let player = getters.currentPlayer;
-    let players = getters.players;
-    if (p.type === 'fold') commit('fold', { player });
-    else if (p.type === 'follow') commit('follow', { player });
-    else if (p.type === 'raise') commit('raise', { player });
-    else if (p.type === 'allIn') commit('allIn', { player });
     commit('nextPlayer', { nPlayers: getters.playersInHand });
-    commit('skipFolded', {
-      players: getters.players,
-      nPlayers: getters.nPlayers
-    });
-    // if (getters.playersInHand < 2)
-    // commit('endGame')
-    if (players[state.currentPlayerPos] === players[state.playersInHand - 1]) {
+
+    if (+state.currentPlayerPos === +state.lastOne) {
       return dispatch('next_card');
     }
+  },
+
+  next_action: ({ dispatch, commit, state, getters }, p) => {
+    const player = getters.currentPlayer;
+    if (p.type === 'fold') commit('fold', { player });
+    else
+      commit('bet', {
+        player,
+        pos: state.currentPlayerPos,
+        amount: p.type === 'knock' ? 0 : state.betAmount
+      });
+
+    return dispatch('next_player');
+    // commit('skipFolded', {
+    //   players: getters.players,
+    //   nPlayers: getters.nPlayers
+    // });
+    // if (getters.playersInHand < 2)
+    // commit('endGame')
   }
 };

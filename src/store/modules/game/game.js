@@ -1,13 +1,17 @@
 const state = {
+  end: false,
   cards: 0,
   dealer: 0,
   playersInHand: 0,
   currentPlayerPos: 1,
   pot: 0,
-  betAmount: 10
+  lastOne: 0, //last one to talk before next card
+  betAmount: 0,
+  playerBets: []
 };
 
 const getters = {
+  end: state => state.end,
   dealer: state => state.dealer,
   betAmount: state => state.betAmount,
   cards: state => state.cards,
