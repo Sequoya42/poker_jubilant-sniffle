@@ -1,19 +1,17 @@
 <template>
-<div>
-    <v-dialog v-model="toggleShit">
-      <v-card>
-        <p>
-          {{cards}}
-          CHOOSE WINNER
-        </p>
-       <v-btn @click.native.stop="toggleShit=!toggleShit">Bet</v-btn>
-     </v-card>
-     </v-dialog>
+  <div class="visible">
+
+    <h6>Choose winner</h6>
+<div v-for="player in players">
+  <v-btn @click="reset">
+    {{player.name}}
+  </v-btn>
+</div>
 </div>
 </template>
 
 <script>
-// import { mapGetters, mapMutations } from 'vuex';
+import { mapGetters, mapActions } from 'vuex';
 
 export default {
   props: ['cards', 'timing'],
@@ -23,6 +21,7 @@ export default {
     return {};
   },
   computed: {
+    ...mapGetters(['players']),
     toggleShit: {
       get: function() {
         console.log('this.cards', this.cards);
@@ -34,11 +33,29 @@ export default {
       }
     }
   },
-  components: {},
-  methods: {}
+  methods: {
+    ...mapActions(['reset'])
+  },
+  components: {}
 };
 </script>
 
 <style>
 
+.visible {
+  border: 1px solid;
+  margin: 22px;
+  padding: 22px;
+  border-radius: 10px;
+}
 </style>
+
+<!-- <v-dialog v-model="toggleShit">
+  <v-card>
+    <p>
+      {{cards}}
+      CHOOSE WINNER
+    </p>
+   <v-btn @click.native.stop="toggleShit=!toggleShit">Bet</v-btn>
+ </v-card>
+ </v-dialog> -->
