@@ -1,12 +1,12 @@
+<!-- plugin for validation -->
 <template>
   <div class="visible">
-
-    <h6>Choose winner</h6>
-<div v-for="player in players">
-  <v-btn @click="reset">
-    {{player.name}}
-  </v-btn>
+    <h6>Choose winner(s)</h6>
+    {{winners}}
+<div v-for="(player, index) in players" :key="player.folded">
+  <v-btn :class="clicked(index)" v-if="!player.folded" @click="addWinner(index)"> {{player.name}} </v-btn>
 </div>
+<v-btn @click="reset(winners)">submit</v-btn>
 </div>
 </template>
 
@@ -14,27 +14,29 @@
 import { mapGetters, mapActions } from 'vuex';
 
 export default {
-  props: ['cards', 'timing'],
+  // props: ['players'],
   name: 'chooseWinner',
 
   data: function() {
-    return {};
+    return {
+      winners: []
+    };
   },
   computed: {
-    ...mapGetters(['players']),
-    toggleShit: {
-      get: function() {
-        console.log('this.cards', this.cards);
-        console.log('this.timing', this.timing);
-        return this.cards === 5 && this.timing;
-      },
-      set: function() {
-        console.log('no set needed', this.toggleShit);
-      }
-    }
+    ...mapGetters(['players'])
   },
   methods: {
-    ...mapActions(['reset'])
+    ...mapActions(['reset']),
+    clicked: function(index) {
+      return {
+        clicked: this.winners.includes(index)
+      };
+    },
+    addWinner: function(index) {
+      if (this.winners.includes(index))
+        this.winners.splice(this.winners.indexOf(index), 1);
+      else this.winners.push(index);
+    }
   },
   components: {}
 };
@@ -47,6 +49,10 @@ export default {
   margin: 22px;
   padding: 22px;
   border-radius: 10px;
+}
+
+.clicked {
+  background-color : rgb(81, 129, 76) !important;
 }
 </style>
 

@@ -1,5 +1,11 @@
 module.exports = {
-  reset: state => (state.end = false),
+  reset: (state, { winners, players }) => {
+    state.end = false;
+    const amount = state.pot / winners.length;
+    state.pot = 0;
+    console.log('winners', winners);
+    winners.forEach(w => (players[w].stack += amount));
+  },
 
   betAmount: (state, p) => {
     state.betAmount = p;
@@ -45,21 +51,20 @@ module.exports = {
       let pastDealer = players.shift();
       players.push(pastDealer);
     }
-
-    players.forEach(e => (e.folded = false));
+    // redo this, order of thing call after pot distributed to winners
+    // players.forEach(e => (e.folded = false));
 
     state.cards = 0;
     state.playersInHand = numberOfPlayers;
     state.betAmount = smallBlind;
     state.lastOne = 3 % numberOfPlayers;
-
     if (numberOfPlayers === 2) {
       state.lastOne = 0;
-      players[(state.dealer + 2) % numberOfPlayers].stack - smallBlind;
-      players[(state.dealer + 1) % numberOfPlayers].stack - smallBlind * 2;
+      players[(state.dealer + 2) % numberOfPlayers].stack -= smallBlind;
+      players[(state.dealer + 1) % numberOfPlayers].stack -= smallBlind * 2;
     } else {
-      players[(state.dealer + 1) % numberOfPlayers].stack - smallBlind;
-      players[(state.dealer + 2) % numberOfPlayers].stack - smallBlind * 2;
+      players[(state.dealer + 1) % numberOfPlayers].stack -= smallBlind;
+      players[(state.dealer + 2) % numberOfPlayers].stack -= smallBlind * 2;
     }
   }
 };

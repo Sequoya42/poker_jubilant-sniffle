@@ -1,5 +1,6 @@
 module.exports = {
-  reset: ({ commit }) => commit('reset'),
+  reset: ({ commit, getters }, winners) =>
+    commit('reset', { winners, players: getters.players }),
 
   bet_amount: ({ commit }, p) => commit('betAmount', p),
 
