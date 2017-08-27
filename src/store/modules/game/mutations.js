@@ -3,7 +3,6 @@ module.exports = {
     state.end = false;
     const amount = state.pot / winners.length;
     state.pot = 0;
-    console.log('winners', winners);
     winners.forEach(w => (players[w].stack += amount));
   },
 
@@ -66,5 +65,6 @@ module.exports = {
       players[(state.dealer + 1) % numberOfPlayers].stack -= smallBlind;
       players[(state.dealer + 2) % numberOfPlayers].stack -= smallBlind * 2;
     }
+    state.pot = smallBlind * 3;
   }
 };

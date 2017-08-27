@@ -11,6 +11,7 @@ const state = {
 };
 
 const getters = {
+  pot: state => state.pot,
   end: state => state.end,
   dealer: state => state.dealer,
   betAmount: state => state.betAmount,
