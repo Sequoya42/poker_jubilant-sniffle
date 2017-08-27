@@ -10,7 +10,9 @@ const state = {
 };
 
 const getters = {
+  playerBets: state => state.playerBets,
   pot: state => state.pot,
+  lastOne: state => state.lastOne,
   end: state => state.end,
   betAmount: state => state.betAmount,
   cards: state => state.cards,
@@ -24,7 +26,6 @@ const getters = {
 const actions = require('./actions');
 const mutations = require('./mutations');
 
-console.log('actions', actions);
 export default {
   state,
   getters,

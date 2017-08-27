@@ -1,14 +1,31 @@
 <template>
 <div>
+  //les bails du dernier bet {{lastOne}}
   <v-dialog  v-model="realDialog">
     <v-card id="ledialog">
-      <p>
-        {{dialog}}
-        {{realDialog}}
-      </p>
-      <v-text-field :value="betAmount" @input="bet_amount" type="number"></v-text-field>
-     <v-slider label="Bet"  :max="currentPlayer.stack" :value="betAmount" @input="bet_amount"></v-slider>
-     <v-btn @click.prevent="next_action({type: 'raise'})" @click.stop="realDialog=!realDialog">Bet</v-btn>
+      <div>
+        {{lastBet || 1}}
+      </div>
+      <v-text-field autofocus
+       :value="betAmount"
+       :min="lastBet"
+       :step="smallBlind"
+       :max="currentPlayer.stack"
+       @input="bet_amount"
+       @keyup.enter.stop="realDialog=!realDialog"
+       @keyup.enter.prevent="bet"
+       type="number"
+        ></v-text-field>
+
+     <v-slider label="Bet"
+     :value="betAmount"
+     :min="lastBet"
+     :step="smallBlind"
+     :max="currentPlayer.stack"
+      @input="bet_amount"></v-slider>
+     <v-btn
+     @click.prevent="bet"
+     @click.stop="realDialog=!realDialog">Bet</v-btn>
    </v-card>
    </v-dialog>
 </div>
@@ -20,8 +37,13 @@ import { mapGetters, mapMutations, mapActions } from 'vuex';
 export default {
   props: ['dialog'],
   name: 'raiseDialog',
+  data: function() {
+    return {
+      lastBet: this.$store.state.game.betAmount
+    };
+  },
   computed: {
-    ...mapGetters(['betAmount', 'currentPlayer']),
+    ...mapGetters(['betAmount', 'currentPlayer', 'smallBlind', 'lastOne']),
     realDialog: {
       get: function() {
         return this.dialog;
@@ -33,7 +55,11 @@ export default {
     }
   },
   methods: {
-    ...mapActions(['next_action', 'bet_amount'])
+    ...mapActions(['next_action', 'bet_amount']),
+    bet: function() {
+      this.lastBet = this.betAmount;
+      this.next_action({ type: 'bet' });
+    }
   }
 };
 </script>

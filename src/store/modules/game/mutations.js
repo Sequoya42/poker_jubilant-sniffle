@@ -27,8 +27,7 @@ module.exports = {
 
   bet: (state, { pos, player, amount }) => {
     const playerBet = state.playerBets[pos];
-    const newAmount = amount > playerBet ? amount - playerBet : amount;
-
+    let newAmount = amount > playerBet ? amount - playerBet : amount;
     state.pot += newAmount;
     state.playerBets[pos] = newAmount;
     player.stack -= newAmount;
@@ -36,8 +35,9 @@ module.exports = {
 
   // ******** ********  next_card stuff  ******** ********
   nextCard: (state, p) => {
+    console.log('next card');
     state.cards += p.cards;
-    state.betAmount = p.amount;
+    state.playerBets = [];
   },
 
   newHand: (state, { first, players, numberOfPlayers, smallBlind }) => {
@@ -51,12 +51,11 @@ module.exports = {
     players.forEach(e => (e.folded = false));
 
     state.cards = 0;
-    state.lastOne = 0;
+    state.lastOne = numberOfPlayers - 1;
     state.currentPlayerPos = 3 % numberOfPlayers;
     state.playersInHand = numberOfPlayers;
     state.betAmount = smallBlind;
     if (numberOfPlayers === 2) {
-      state.lastOne = 0;
       players[2 % numberOfPlayers].stack -= smallBlind;
       players[1 % numberOfPlayers].stack -= smallBlind * 2;
     } else {
