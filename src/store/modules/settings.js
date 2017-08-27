@@ -1,13 +1,3 @@
-//put stack inside players? when? how?
-//dealer as state.dealer with index of players ?
-
-//TODO
-/*
-Figure out what to do
-Refactor [separate setttings from game, this is mostly settings]
-Find a way to architecture the game loop
-[each user action, and the end of a "hand" [reset folded attributes etc]]
-*/
 const state = {
   stack: 500,
   numberOfPlayers: 3,
