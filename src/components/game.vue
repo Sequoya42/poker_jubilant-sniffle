@@ -6,7 +6,10 @@
 
 <chooseWinner v-else></chooseWinner>
 
-<playerStack></playerStack>
+<v-btn  @click="showStack=!showStack">
+  {{showStack ? 'hide infos' : 'show infos' }}
+</v-btn>
+  <playerStack v-if="showStack" v-model="players"></playerStack>
 </v-container>
 <pokerTable></pokerTable>
 
@@ -20,8 +23,13 @@ export default {
     this.$store.commit('setPlayersStack');
     this.$store.dispatch('new_hand', 'first');
   },
+  data: function() {
+    return {
+      showStack: true
+    };
+  },
   computed: {
-    ...mapGetters(['end'])
+    ...mapGetters(['end', 'players'])
   },
   methods: {
     // ...mapActions([])

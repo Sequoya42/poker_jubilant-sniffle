@@ -6,9 +6,9 @@
   hide-actions
   >
 
-  <template slot="items" scope="props">
-    <!-- <v-icon>eur</v-icon> -->
-       <td class="text-xs-left">{{ props.item.name }}</td>
+  <template  slot="items" scope="props">
+    <!-- <tr :class="{folded: props.item.folded}"> -->
+       <td   class="text-xs-left">{{ props.item.name }}</td>
        <td class="text-xs-right">{{ props.item.stack }}</td>
        <td class="text-xs-right">
          {{dealer}}
@@ -16,6 +16,7 @@
            donut_small
        </v-icon>
        </td>
+     <!-- </tr> -->
      </template>
   </v-data-table>
 </div>
@@ -55,5 +56,8 @@ export default {
 </script>
 
 <style>
-
+.folded {
+  background-color: #3D1255;
+  color: white;
+}
 </style>
