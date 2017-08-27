@@ -6,25 +6,15 @@ module.exports = {
     winners.forEach(w => (players[w].stack += amount));
   },
 
-  betAmount: (state, p) => {
-    state.betAmount = p;
-  },
+  betAmount: (state, p) => (state.betAmount = p),
 
-  skipFolded: (state, { players, nPlayers }) => {
-    let isFolded = players[state.currentPlayerPos].folded;
-    while (isFolded) {
-      state.currentPlayerPos = isFolded
-        ? (state.currentPlayerPos + 1) % nPlayers
-        : state.currentPlayerPos;
-      isFolded = players[state.currentPlayerPos].folded;
+  nextPlayer: (state, { nPlayers }) =>
+    (state.currentPlayerPos = (state.currentPlayerPos + 1) % nPlayers),
+
+  fold: (state, { player, pos }) => {
+    if (state.lastOne === pos) {
+      state.lastOne -= 1;
     }
-  },
-
-  nextPlayer: (state, { nPlayers }) => {
-    state.currentPlayerPos = (state.currentPlayerPos + 1) % nPlayers;
-  },
-
-  fold: (state, { player }) => {
     player.folded = true;
     state.playersInHand -= 1;
   },
@@ -51,9 +41,10 @@ module.exports = {
       players.push(pastDealer);
     }
     // redo this, order of thing call after pot distributed to winners
-    // players.forEach(e => (e.folded = false));
+    players.forEach(e => (e.folded = false));
 
     state.cards = 0;
+    state.currentPlayerPos = 3 % numberOfPlayers;
     state.playersInHand = numberOfPlayers;
     state.betAmount = smallBlind;
     state.lastOne = 3 % numberOfPlayers;
@@ -68,3 +59,17 @@ module.exports = {
     state.pot = smallBlind * 3;
   }
 };
+/*
+dealer last one to talk
+
+last one - 1 if dealer so to the right //circular buffer
+*/
+// skipFolded: (state, { players, nPlayers }) => {
+//   let isFolded = players[state.currentPlayerPos].folded;
+//   while (isFolded) {
+//     state.currentPlayerPos = isFolded
+//     ? (state.currentPlayerPos + 1) % nPlayers
+//     : state.currentPlayerPos;
+//     isFolded = players[state.currentPlayerPos].folded;
+//   }
+// },

@@ -1,10 +1,12 @@
 module.exports = {
-  reset: ({ commit, getters }, winners) =>
-    commit('reset', { winners, players: getters.players }),
+  reset: ({ commit, getters }, winners) => {
+    commit('reset', { winners, players: getters.players });
+    return dispatch('newHand');
+  },
 
   bet_amount: ({ commit }, p) => commit('betAmount', p),
 
-  new_hand: ({ commit, getters, state }, first) => {
+  new_hand: ({ commit, getters }, first) => {
     commit('newHand', {
       first,
       players: getters.players,
@@ -38,11 +40,12 @@ module.exports = {
 
   next_action: ({ dispatch, commit, state, getters }, p) => {
     const player = getters.currentPlayer;
-    if (p.type === 'fold') commit('fold', { player });
+    const pos = getters.currentPlayerPos;
+    if (p.type === 'fold') commit('fold', { player, pos });
     else
       commit('bet', {
         player,
-        pos: state.currentPlayerPos,
+        pos,
         amount: p.type === 'knock' ? 0 : state.betAmount
       });
 
