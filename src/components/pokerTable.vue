@@ -1,9 +1,9 @@
 <template>
   <div class="wrapperTable debug">
   <div class="pokerTable">
-
-    <div  class="playingCard Deck">
+ <div  class="playingCard Deck">
     </div>
+    <!-- <v-flex class="pot">{{pot}}</v-flex> -->
     <transition-group name="list">
       <div v-for="card in cards" class="playingCard" :key="card">
       </div>
@@ -23,7 +23,7 @@ export default {
     playerCard: require('./playerCard.vue')
   },
   computed: {
-    ...mapGetters(['nPlayers', 'players', 'cards'])
+    ...mapGetters(['nPlayers', 'players', 'cards', 'pot'])
   },
   methods: {}
 };
@@ -71,6 +71,10 @@ export default {
   width: 8%;
   min-width: 33px;
   height: 50px;
+}
+
+.pot{
+  margin: 20%
 }
 
 .Deck{
