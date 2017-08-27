@@ -1,5 +1,10 @@
 <template>
   <div>
+
+<div>
+  {{players}}
+</div>
+
 <v-container class="choices">
   <gameInfos></gameInfos>
   <playerAction v-if="!end"></playerAction>
