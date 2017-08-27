@@ -7,8 +7,9 @@
   >
 
   <template  slot="items" scope="props">
-    <!-- <tr :class="{folded: props.item.folded}"> -->
-       <td   class="text-xs-left">{{ props.item.name }}</td>
+    <!-- Line below does not update directly, why? -->
+    <!-- <tr :class="{folded: props.item.folded}" v-model="props.item.selected"> -->
+       <td class="text-xs-left">{{ props.item.name }}</td>
        <td class="text-xs-right">{{ props.item.stack }}</td>
        <td class="text-xs-right">
          <v-icon v-if="players[0] === props.item" label="ni">

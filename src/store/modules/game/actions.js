@@ -18,32 +18,31 @@ module.exports = {
   next_card: ({ commit, state, getters }) => {
     if (state.cards === 5) {
       commit('endGame');
+    } else {
+      commit('nextCard', { cards: state.cards === 0 ? 3 : 1 });
+      commit('betAmount', getters.smallBlind);
     }
-    commit('nextCard', {
-      cards: state.cards === 0 ? 3 : 1,
-      amount: state.betAmount
-    });
   },
 
   next_player: ({ dispatch, commit, state, getters }, p) => {
+    if (state.playersInHand < 2) return commit('endGame');
+    if (state.currentPlayerPos === state.lastOne) {
+      dispatch('next_card');
+    }
     commit('nextPlayer', {
       nPlayers: getters.nPlayers,
       players: getters.players
     });
-
-    if (state.currentPlayerPos === state.lastOne) {
-      return dispatch('next_card');
-    }
   },
 
   next_action: ({ dispatch, commit, state, getters }, p) => {
     const player = getters.currentPlayer,
       pos = getters.currentPlayerPos,
       nPlayers = getters.nPlayers,
-      amount = p.type === 'knock' ? 0 : state.betAmount;
+      amount = state.betAmount;
 
     if (p.type === 'fold') commit('fold', { player, pos, nPlayers });
-    else commit('bet', { player, pos, amount });
+    else if (p.type === 'bet') commit('bet', { player, pos, amount });
 
     return dispatch('next_player');
   }

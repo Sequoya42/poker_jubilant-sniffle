@@ -5,7 +5,7 @@
   <playerAction v-if="!end"></playerAction>
 
 <chooseWinner v-else></chooseWinner>
-
+lastone {{lastOne}}
 <v-btn  @click="showStack=!showStack">
   {{showStack ? 'hide infos' : 'show infos' }}
 </v-btn>
@@ -25,11 +25,11 @@ export default {
   },
   data: function() {
     return {
-      showStack: true
+      showStack: false
     };
   },
   computed: {
-    ...mapGetters(['end', 'players'])
+    ...mapGetters(['end', 'players', 'lastOne'])
   },
   methods: {
     // ...mapActions([])

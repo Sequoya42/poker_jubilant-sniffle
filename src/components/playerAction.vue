@@ -1,8 +1,13 @@
 <template>
 <div>
   <v-btn label="Fold" @click.prevent="next_action({type: 'fold'})">Fold</v-btn>
-  <v-btn label="knock" @click.prevent="next_action({type: 'knock'})" @keyup.75="next_action({type: 'knock'})">check</v-btn>
-  <v-btn label="Follow" @click.prevent="next_action({type: 'follow'})">Follow</v-btn>
+  <v-btn
+  label="knock"
+  v-if="!playerBets.length"
+  @click.prevent="next_action({type: 'knock'})"
+  @keyup.75="next_action({type: 'knock'})">
+  check</v-btn>
+  <v-btn v-else label="follow" @click.prevent="next_action({type: 'follow'})">Follow</v-btn>
   <v-btn label="Raise" @click.stop="dialog=!dialog">Raise</v-btn>
 <raiseDialog :dialog="dialog" @closeDialog="dialog=!dialog"></raiseDialog>
 
@@ -20,7 +25,9 @@ export default {
       dialog: false
     };
   },
-  computed: {},
+  computed: {
+    ...mapGetters(['playerBets'])
+  },
   methods: {
     ...mapActions(['next_action'])
   },

@@ -13,7 +13,7 @@
        <td class="text-xs-right">{{ players[0].name }}</td>
        <td class="text-xs-right">{{ currentPlayer.name }}</td>
        <td class="text-xs-right">{{playersInHand}} </td>
-       <td class="text-xs-right">{{ betAmount }}</td>
+       <td  v-model="betAmount" class="text-xs-right">{{ betAmount }}</td>
      </template>
   </v-data-table>
 </div>
@@ -69,6 +69,7 @@ export default {
 <style>
 #space{
   overflow: scroll;
+  width: 120%;
   margin-bottom: 10%;
 }
 </style>
