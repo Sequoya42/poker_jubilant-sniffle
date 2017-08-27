@@ -36,7 +36,6 @@ const mutations = {
     }
   },
   setPlayersStack: (state, d) => {
-    console.log('SETPLAYERSTACK CALLED');
     state.players.forEach(e => {
       e.stack = state.stack;
       e.folded = false;

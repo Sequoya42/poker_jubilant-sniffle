@@ -11,7 +11,6 @@
        <td   class="text-xs-left">{{ props.item.name }}</td>
        <td class="text-xs-right">{{ props.item.stack }}</td>
        <td class="text-xs-right">
-         {{dealer}}
          <v-icon v-if="players[0] === props.item" label="ni">
            donut_small
        </v-icon>
@@ -49,7 +48,7 @@ export default {
   },
   components: {},
   computed: {
-    ...mapGetters(['players', 'dealer'])
+    ...mapGetters(['players'])
   },
   methods: {}
 };
