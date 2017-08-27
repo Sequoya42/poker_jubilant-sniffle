@@ -1,5 +1,5 @@
 <template>
-<div>
+<div v-if="realDialog">
   //les bails du dernier bet {{lastOne}}
   <v-dialog  v-model="realDialog">
     <v-card id="ledialog">

@@ -7,7 +7,7 @@
   @click.prevent="next_action({type: 'knock'})"
   @keyup.75="next_action({type: 'knock'})">
   check</v-btn>
-  <v-btn v-else label="follow" @click.prevent="next_action({type: 'follow'})">Follow</v-btn>
+  <v-btn v-else label="follow" @click.prevent="next_action({type: 'bet'})">Follow</v-btn>
   <v-btn label="Raise" @click.stop="dialog=!dialog">Raise</v-btn>
 <raiseDialog :dialog="dialog" @closeDialog="dialog=!dialog"></raiseDialog>
 
