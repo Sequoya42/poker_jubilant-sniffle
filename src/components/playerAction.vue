@@ -10,7 +10,7 @@
   <v-btn label="Fold" @click.prevent="next_action({type: 'fold'})">Fold</v-btn>
   <v-btn
   label="knock"
-  v-if="!playerBets.length"
+  v-if="allEven"
   @click.prevent="next_action({type: 'knock'})"
   @keyup.75="next_action({type: 'knock'})">
   check</v-btn>
@@ -36,7 +36,7 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(['playerBets', 'betAmount', 'currentPlayer', 'smallBlind'])
+    ...mapGetters(['allEven', 'betAmount', 'currentPlayer', 'smallBlind'])
   },
   methods: {
     ...mapActions(['next_action', 'bet_amount']),

@@ -26,7 +26,7 @@ module.exports = {
   },
 
   bet: (state, { pos, player, amount }) => {
-    const playerBet = state.playerBets[pos];
+    const playerBet = player.bet;
     let newAmount = amount;
     console.log('playerBet', playerBet, amount, newAmount);
 
@@ -34,8 +34,7 @@ module.exports = {
       state.lastOne = pos;
       newAmount -= playerBet;
     }
-    state.playerBets.splice(pos, 1, amount);
-    console.log('playerBets', state.playerBets);
+    player.bet = amount;
     state.pot += newAmount;
     player.stack -= newAmount;
   },
@@ -44,19 +43,21 @@ module.exports = {
   nextCard: (state, p) => {
     console.log('next card');
     state.cards += p.cards;
-    state.playerBets = new Array(p.nPlayers).fill(0);
     // state.currentPlayerPos = 1;
   },
 
+  allEven: (state, x) => (state.allEven = x),
+
   newHand: (state, { first, players, numberOfPlayers, smallBlind }) => {
-    console.log('is this called');
     if (!first) {
       let pastDealer = players.shift();
       players.push(pastDealer);
     } else {
-      state.playerBets = new Array(numberOfPlayers).fill(0);
     }
-    players.forEach(e => (e.folded = false));
+    players.forEach(e => {
+      e.folded = false;
+      e.bet = 0;
+    });
 
     state.cards = 0;
     state.lastOne = numberOfPlayers - 1;

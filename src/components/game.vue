@@ -1,21 +1,24 @@
 <template>
-  <div>
+  <div >
     <pokerTable class="topSpace"></pokerTable>
 <v-container class="choices">
   <!-- <gameInfos></gameInfos> -->
   <playerAction v-if="!end"></playerAction>
 
 <chooseWinner v-else></chooseWinner>
-<div v-model="playerBets">
-
-  {{playerBets}}
-</div>
 <!--
 <v-btn  @click="showStack=!showStack">
   {{showStack ? 'hide infos' : 'show infos' }}
 </v-btn>
   <playerStack v-if="showStack" v-model="players"></playerStack> -->
+  <playerStack v-model="players"></playerStack>
 </v-container>
+<div v-model="players" v-for="player in players">
+  <div class="">
+
+    {{player}}
+  </div>
+</div>
 
 </div>
 </template>
@@ -88,6 +91,6 @@ css
 
 ui
 
-
+find atom package to order object property by name
 
 */

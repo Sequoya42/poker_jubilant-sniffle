@@ -29,18 +29,20 @@ module.exports = {
 
   next_player: ({ dispatch, commit, state, getters }, p) => {
     if (state.playersInHand < 2) return commit('endGame');
-    let x = !!state.playerBets
+    let x = !!getters.players
       .filter(e => !e.folded)
+      .map(e => e.bet)
       .reduce((a, b) => (a === b ? a : NaN));
     console.log('x', x);
 
     if (state.currentPlayerPos === state.lastOne && x) {
-      dispatch('next_card');
+      dispatch('next_card', x);
     }
     commit('nextPlayer', {
       nPlayers: getters.nPlayers,
       players: getters.players
     });
+    commit('allEven', x);
   },
 
   next_action: ({ dispatch, commit, state, getters }, p) => {
