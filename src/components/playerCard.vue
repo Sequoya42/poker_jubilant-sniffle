@@ -6,7 +6,7 @@
   <div class="stack">
     {{player.stack}}
   </div>
-  {{player.folded}}
+  {{index}}
   <!--  game.js in function clearHand : we reorder the array of players, dealer always on top -->
     <v-icon v-if="index === 0">people</v-icon>
     <v-icon v-if="player.folded">visibility_off</v-icon>

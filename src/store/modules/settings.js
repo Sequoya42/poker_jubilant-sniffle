@@ -18,12 +18,25 @@ const getters = {
   players: state => state.players
 };
 
-const actions = {};
+const actions = {
+  update_players: ({ commit }, d) => commit('updatePlayers', d),
+
+  change_name: ({ commit, getters }, d) => {
+    let name = d.$event;
+    console.log('name', name);
+    console.log(getters.players.some(e => e.name === name));
+    if (getters.players.some(e => e.name === name)) d.$event += '_2';
+    commit('changeName', d);
+  }
+};
 
 const mutations = {
   setStack: (state, d) => (state.stack = d),
+
   setSmallBlind: (state, d) => (state.smallBlind = d),
+
   setBigBlind: (state, d) => (state.bigBlind = d),
+
   setPlayers: (state, d) => {
     if (d > 0) {
       if (d > state.numberOfPlayers) {
@@ -35,6 +48,7 @@ const mutations = {
       state.numberOfPlayers = d;
     }
   },
+
   setPlayersStack: (state, d) => {
     state.players.forEach(e => {
       e.stack = state.stack;
@@ -46,11 +60,9 @@ const mutations = {
     console.log(d);
     state.players = d;
   },
+
   changeName: (state, d) => {
-    console.log('new', d.$event);
     state.players[d.index].name = d.$event;
-    console.log('Player:', state.players);
-    console.log(d);
   }
 };
 
