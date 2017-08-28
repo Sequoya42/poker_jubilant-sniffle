@@ -2,9 +2,9 @@ const state = {
   stack: 500,
   numberOfPlayers: 3,
   players: [
-    { name: 'Player_1', stack: 500 },
-    { name: 'Player_2', stack: 500 },
-    { name: 'Player_3', stack: 500 }
+    { name: 'Player_1', stack: 500, bet: 0, folded: false },
+    { name: 'Player_2', stack: 500, bet: 0, folded: false },
+    { name: 'Player_3', stack: 500, bet: 0, folded: false }
   ],
   smallBlind: 10,
   bigBlind: 20
@@ -40,8 +40,12 @@ const mutations = {
   setPlayers: (state, d) => {
     if (d > 0) {
       if (d > state.numberOfPlayers) {
-        for (let i = state.numberOfPlayers; i < d; i++)
-          state.players.push({ name: `Player_${+i + 1}` });
+        state.players.splice(d, 1, {
+          name: `Player_${+state.numberOfPlayers + 1}`,
+          stack: 500,
+          bet: 0,
+          folded: false
+        });
       } else if (d < state.numberOfPlayers) {
         state.players.splice(d, +(state.numberOfPlayers - d));
       }
@@ -52,7 +56,6 @@ const mutations = {
   setPlayersStack: (state, d) => {
     state.players.forEach(e => {
       e.stack = state.stack;
-      e.folded = false;
     });
   },
 

@@ -1,16 +1,16 @@
 const state = {
   end: false,
+  allEven: true,
   cards: 0,
   playersInHand: 0,
   currentPlayerPos: 1,
   pot: 0,
   lastOne: 0, //last one to talk before next card
-  betAmount: 0,
-  playerBets: []
+  betAmount: 0
 };
 
 const getters = {
-  playerBets: state => state.playerBets,
+  allEven: state => state.allEven,
   pot: state => state.pot,
   lastOne: state => state.lastOne,
   end: state => state.end,
