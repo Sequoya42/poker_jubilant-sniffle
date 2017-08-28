@@ -1,5 +1,5 @@
 <template>
-  <div class="wrapperTable debug">
+  <div class="wrapperTable">
   <div class="pokerTable">
  <div  class="playingCard Deck">
     </div>
@@ -44,6 +44,7 @@ export default {
   max-width: 900px;
   padding: 20px;
   margin: 0 auto;
+  margin-top: 6%;
   align-items: center;
 }
 

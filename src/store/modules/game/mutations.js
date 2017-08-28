@@ -27,9 +27,16 @@ module.exports = {
 
   bet: (state, { pos, player, amount }) => {
     const playerBet = state.playerBets[pos];
-    let newAmount = amount > playerBet ? amount - playerBet : amount;
+    let newAmount = amount;
+    console.log('playerBet', playerBet, amount, newAmount);
+
+    if (amount > playerBet) {
+      state.lastOne = pos;
+      newAmount -= playerBet;
+    }
+    state.playerBets.splice(pos, 1, amount);
+    console.log('playerBets', state.playerBets);
     state.pot += newAmount;
-    state.playerBets[pos] = newAmount;
     player.stack -= newAmount;
   },
 
@@ -37,17 +44,18 @@ module.exports = {
   nextCard: (state, p) => {
     console.log('next card');
     state.cards += p.cards;
-    state.playerBets = [];
+    state.playerBets = new Array(p.nPlayers).fill(0);
+    // state.currentPlayerPos = 1;
   },
 
   newHand: (state, { first, players, numberOfPlayers, smallBlind }) => {
     console.log('is this called');
     if (!first) {
-      // state.end = true;
       let pastDealer = players.shift();
       players.push(pastDealer);
+    } else {
+      state.playerBets = new Array(numberOfPlayers).fill(0);
     }
-    // redo this, order of thing call after pot distributed to winners
     players.forEach(e => (e.folded = false));
 
     state.cards = 0;
@@ -65,17 +73,3 @@ module.exports = {
     state.pot = smallBlind * 3;
   }
 };
-/*
-dealer last one to talk
-
-last one - 1 if dealer so to the right //circular buffer
-*/
-// skipFolded: (state, { players, nPlayers }) => {
-//   let isFolded = players[state.currentPlayerPos].folded;
-//   while (isFolded) {
-//     state.currentPlayerPos = isFolded
-//     ? (state.currentPlayerPos + 1) % nPlayers
-//     : state.currentPlayerPos;
-//     isFolded = players[state.currentPlayerPos].folded;
-//   }
-// },

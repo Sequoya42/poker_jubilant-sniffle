@@ -2,7 +2,6 @@ import Vue from 'vue';
 import Vuex from 'vuex';
 import game from './modules/game/game.js';
 import settings from './modules/settings';
-import playerSettings from './modules/playerSettings';
 
 Vue.use(Vuex);
 
@@ -13,7 +12,6 @@ export default new Vuex.Store({
   state: {},
   modules: {
     game,
-    settings,
-    playerSettings
+    settings
   }
 });

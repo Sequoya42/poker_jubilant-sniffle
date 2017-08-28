@@ -1,22 +1,21 @@
 <template>
   <div>
-
-<div>
-  {{players}}
-</div>
-
+    <pokerTable class="topSpace"></pokerTable>
 <v-container class="choices">
-  <gameInfos></gameInfos>
+  <!-- <gameInfos></gameInfos> -->
   <playerAction v-if="!end"></playerAction>
 
 <chooseWinner v-else></chooseWinner>
-lastone {{lastOne}}
+<div v-model="playerBets">
+
+  {{playerBets}}
+</div>
+<!--
 <v-btn  @click="showStack=!showStack">
   {{showStack ? 'hide infos' : 'show infos' }}
 </v-btn>
-  <playerStack v-if="showStack" v-model="players"></playerStack>
+  <playerStack v-if="showStack" v-model="players"></playerStack> -->
 </v-container>
-<pokerTable></pokerTable>
 
 </div>
 </template>
@@ -30,11 +29,11 @@ export default {
   },
   data: function() {
     return {
-      showStack: false
+      showStack: true
     };
   },
   computed: {
-    ...mapGetters(['end', 'players', 'lastOne'])
+    ...mapGetters(['end', 'players', 'playerBets'])
   },
   methods: {
     // ...mapActions([])
@@ -51,10 +50,44 @@ export default {
 
 <style>
 .choices {
-  margin: 2%;
+  /*border-style:none;*/
+  box-shadow: 4px 2px 10px rgba(0, 0, 0, .5) inset;
+  /*border: 1px solid blck;*/
+  padding: 4%;
+border-radius: 22%;
+  margin: 4%;
   display: inline-block;
   min-width: 360px;
-  width: 100%;
+  width: 80%;
+}
+
+  .topSpace {
+    /*margin-top: 100px !important;*/
 }
 
 </style>
+
+// TODO
+/*
+
+lastone to play, need to be fix when multiple raise
+
+do not rotate players, have a dealer and
+dealer = dealer === numberOfPlayers - 1 ? 0 : dealer + 1
+
+// ******** ********    ******** ********
+
+separate pot when multiple all in with different values
+a way to choose order of winners
+
+put color folded before choose winner when only one player left
+
+refactor !
+
+css
+
+ui
+
+
+
+*/

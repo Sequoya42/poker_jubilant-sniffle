@@ -19,14 +19,22 @@ module.exports = {
     if (state.cards === 5) {
       commit('endGame');
     } else {
-      commit('nextCard', { cards: state.cards === 0 ? 3 : 1 });
+      commit('nextCard', {
+        cards: state.cards === 0 ? 3 : 1,
+        nPlayers: getters.nPlayers
+      });
       commit('betAmount', getters.smallBlind);
     }
   },
 
   next_player: ({ dispatch, commit, state, getters }, p) => {
     if (state.playersInHand < 2) return commit('endGame');
-    if (state.currentPlayerPos === state.lastOne) {
+    let x = !!state.playerBets
+      .filter(e => !e.folded)
+      .reduce((a, b) => (a === b ? a : NaN));
+    console.log('x', x);
+
+    if (state.currentPlayerPos === state.lastOne && x) {
       dispatch('next_card');
     }
     commit('nextPlayer', {

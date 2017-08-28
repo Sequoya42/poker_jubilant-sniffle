@@ -2,7 +2,7 @@
   <div>
     <h4>Players names</h4>
     <draggable v-model='players'>
-    <div v-for="(p, index) in players" :key='p.id'>
+    <div v-for="(p, index) in players" :key='index'>
         <v-text-field
         type="text"
         :value="p.name"
