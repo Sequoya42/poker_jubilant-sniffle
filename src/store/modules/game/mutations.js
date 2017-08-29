@@ -9,11 +9,15 @@ module.exports = {
   endGame: state => (state.end = true),
 
   updateAmount: (state, p) => {
-    console.log('p.amount', p.amount);
-    if (p.amount > state.betAmount)
-      state.lastOne = p.pos === 0 ? p.numberOfPlayers - 1 : p.pos - 1;
-    state.betAmount = p.amount ? p.amount : state.betAmount;
-    console.log('state.lastOne', state.lastOne);
+    if (p.amount > state.betAmount) {
+      state.lastOne =
+        state.currentPlayerPos === 0
+          ? p.numberOfPlayers - 1
+          : state.currentPlayerPos - 1;
+    }
+    state.betAmount = p.amount;
+    // ? p.amount : state.betAmount;
+    // console.log('state.lastOne', state.lastOne);
   },
 
   nextPlayer: (state, { nPlayers, players }) => {
@@ -22,7 +26,7 @@ module.exports = {
       players[state.currentPlayerPos].folded ||
       !players[state.currentPlayerPos].stack
     ) {
-      state.currentPlayerPos = state.currentPlayerPos + 1 % nPlayers;
+      state.currentPlayerPos = (state.currentPlayerPos + 1) % nPlayers;
     }
   },
 
@@ -66,8 +70,14 @@ module.exports = {
     // state current player pos will be state.dealer + 1 since next player is calledafter
     state.currentPlayerPos = state.dealer;
   },
-
   newHand: (state, { first, players, numberOfPlayers, smallBlind }) => {
+    function putBlind(small, big) {
+      players[(state.dealer + big) % numberOfPlayers].bet += smallBlind;
+      players[(state.dealer + small) % numberOfPlayers].bet += smallBlind * 2;
+      players[(state.dealer + big) % numberOfPlayers].stack -= smallBlind;
+      players[(state.dealer + small) % numberOfPlayers].stack -= smallBlind * 2;
+    }
+
     players.forEach(e => {
       e.folded = false;
       e.bet = 0;
@@ -80,15 +90,9 @@ module.exports = {
     state.betAmount = smallBlind * 2;
     state.separatePot = [];
     if (numberOfPlayers === 2) {
-      players[2 % numberOfPlayers].bet += smallBlind;
-      players[1 % numberOfPlayers].bet += smallBlind * 2;
-      players[2 % numberOfPlayers].stack -= smallBlind;
-      players[1 % numberOfPlayers].stack -= smallBlind * 2;
+      putBlind(1, 2);
     } else {
-      players[1 % numberOfPlayers].stack -= smallBlind;
-      players[2 % numberOfPlayers].stack -= smallBlind * 2;
-      players[1 % numberOfPlayers].bet += smallBlind;
-      players[2 % numberOfPlayers].bet += smallBlind * 2;
+      putBlind(2, 1);
     }
     state.pot = smallBlind * 3;
   }

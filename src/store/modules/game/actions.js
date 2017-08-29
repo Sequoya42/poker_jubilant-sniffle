@@ -6,11 +6,13 @@ module.exports = {
     return dispatch('new_hand');
   },
 
+  // last_one: ({ commit, getters }) => {
+  //   commit('lastOne', getters.numberOfPlayers);
+  // },
   update_amount: ({ commit, getters }, amount) => {
     console.log('amount', amount);
     commit('updateAmount', {
       amount: amount,
-      pos: getters.currentPlayerPos,
       numberOfPlayers: getters.nPlayers
     });
   },
