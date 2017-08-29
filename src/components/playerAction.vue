@@ -1,6 +1,9 @@
 <template>
 <div>
   <v-chip class="green white--text"> {{currentPlayer.name}}</v-chip>
+  <v-flex :value="lastBet" class="green white--text"> {{toggle}}</v-flex>
+
+  <!-- class="debug" -->
   <v-slider label="Bet"
   :value="betAmount"
   :min="lastBet"
@@ -10,13 +13,13 @@
   <v-btn label="Fold" @click.prevent="next_action({type: 'fold'})">Fold</v-btn>
   <v-btn
   label="knock"
-  v-if="currentPlayer.bet >= betAmount"
+  v-if="toggle"
   @click.prevent="next_action({type: 'knock'})"
   @keyup.75="next_action({type: 'knock'})">
   check</v-btn>
-  <v-btn v-else label="follow" @click.prevent="next_action({type: 'bet'})">Follow</v-btn>
+  <v-btn v-else label="follow" @click.prevent="bet">Follow</v-btn>
 
-    <v-btn @click.prevent="bet" >Bet</v-btn>
+    <v-btn  :value="betAmount" @click.prevent="bet" >Bet</v-btn>
    <br/>
    <v-chip class="amber">{{betAmount}}</v-chip>
 
@@ -35,11 +38,18 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(['allEven', 'betAmount', 'currentPlayer', 'smallBlind'])
+    ...mapGetters(['betAmount', 'currentPlayer', 'smallBlind']),
+    toggle: function() {
+      // return false;
+      return this.$store.getters.players
+        .filter(e => !e.folded)
+        .every((el, i, arr) => el.bet === arr[0].bet);
+    }
   },
   methods: {
     ...mapActions(['next_action', 'bet_amount']),
-    bet: function() {
+    bet: function(e) {
+      console.log('e', e);
       this.lastBet = this.smallBlind;
       this.next_action({ type: 'bet' });
     }
@@ -51,4 +61,8 @@ export default {
 </script>
 
 <style>
+.debug{
+border: 5px solid black;
+margin-bottom: 100px;
+}
 </style>

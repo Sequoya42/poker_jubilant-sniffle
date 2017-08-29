@@ -1,5 +1,6 @@
 module.exports = {
   chooseWinner: (state, { winners, players }) => {
+    if (!winners.length) return;
     state.end = false;
     const amount = state.pot / winners.length;
     state.pot = 0;
@@ -8,11 +9,19 @@ module.exports = {
 
   endGame: state => (state.end = true),
 
-  betAmount: (state, p) => (state.betAmount = p),
+  updateAmount: (state, p) => {
+    console.log('p.amount', p.amount);
+    if (p.amount > state.betAmount)
+      state.lastOne = p.pos === 0 ? p.numberOfPlayers - 1 : p.pos - 1;
+    state.betAmount = p.amount ? p.amount : state.betAmount;
+  },
 
   nextPlayer: (state, { nPlayers, players }) => {
     state.currentPlayerPos = (state.currentPlayerPos + 1) % nPlayers;
-    while (players[state.currentPlayerPos].folded) {
+    while (
+      players[state.currentPlayerPos].folded ||
+      !players[state.currentPlayerPos].stack
+    ) {
       state.currentPlayerPos = state.currentPlayerPos + 1 % nPlayers;
     }
   },
@@ -28,11 +37,12 @@ module.exports = {
   bet: (state, { pos, player, amount }) => {
     const playerBet = player.bet;
     let newAmount = amount;
-    console.log('playerBet', playerBet, amount, newAmount);
 
     if (amount > playerBet) {
-      state.lastOne = pos;
       newAmount -= playerBet;
+    } else if (amount > player.stack) {
+      newAmount = player.stack;
+      state.separatePot, push({ pos, amount: state.pot + newAmount });
     }
     player.bet = amount;
     state.pot += newAmount;
@@ -43,28 +53,31 @@ module.exports = {
   nextCard: (state, p) => {
     console.log('next card');
     state.cards += p.cards;
-    // state.currentPlayerPos = 0;
+    state.betAmount = p.smallBlind;
+    p.players.forEach((e, i) => {
+      e.bet = 0;
+    });
+    state.currentPlayerPos = state.dealer;
+    while (p.players[state.currentPlayerPos].folded)
+      state.currentPlayerPos += 1 % p.nPlayers;
+
+    state.lastOne = state.currentPlayerPos;
+    // state current player pos will be state.dealer + 1 since next player is calledafter
+    state.currentPlayerPos = state.dealer;
   },
 
-  allEven: (state, x) => (state.allEven = x),
-
   newHand: (state, { first, players, numberOfPlayers, smallBlind }) => {
-    console.log('NEWHAND');
-    if (!first) {
-      let pastDealer = players.shift();
-      players.push(pastDealer);
-    } else {
-    }
     players.forEach(e => {
       e.folded = false;
       e.bet = 0;
     });
-
+    state.dealer = (state.dealer + 1) % numberOfPlayers;
     state.cards = 0;
     state.lastOne = numberOfPlayers - 1;
     state.currentPlayerPos = 3 % numberOfPlayers;
     state.playersInHand = numberOfPlayers;
     state.betAmount = smallBlind * 2;
+    state.separatePot = [];
     if (numberOfPlayers === 2) {
       players[2 % numberOfPlayers].bet += smallBlind;
       players[1 % numberOfPlayers].bet += smallBlind * 2;
