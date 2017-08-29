@@ -33,7 +33,10 @@ module.exports = {
         smallBlind: getters.bigBlind,
         nPlayers: getters.nPlayers
       });
-      commit('updateAmount', getters.smallBlind);
+      commit('updateAmount', {
+        amount: getters.bigBlind,
+        nPlayers: getters.nPlayers
+      });
     }
   },
 
@@ -52,7 +55,7 @@ module.exports = {
     const player = getters.currentPlayer,
       pos = getters.currentPlayerPos,
       nPlayers = getters.nPlayers,
-      amount = state.betAmount;
+      amount = p.amount;
 
     if (p.type === 'fold') commit('fold', { player, pos, nPlayers });
     else if (p.type === 'bet') commit('bet', { player, pos, amount });
