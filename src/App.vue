@@ -18,13 +18,17 @@ export default {
 
 <style>
 #app {
-  background-color: #cccccc !important;
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  color: #2c3e50;
-
+  background-color: #335C67;
+  /*background: url('./assets/pattern.jpg') no-repeat center center fixed;*/
+  /*background: linear-gradient( ) no-repeat center center fixed;*/
+  -webkit-background-size: cover;
+ -moz-background-size: cover;
+ -o-background-size: cover;
+ background-size: cover;
 position:absolute;
 top:0px;
 left:0px;

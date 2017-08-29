@@ -75,6 +75,8 @@ border-radius: 22%;
 // TODO
 /*
 
+No negative stack
+
 lastone to play, need to be fix when multiple raise
 
 do not rotate players, have a dealer and

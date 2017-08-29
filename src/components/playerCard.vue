@@ -28,9 +28,13 @@ export default {
       let topPos = ` ${Math.sin(p) * 150 + 150 - 50}px`;
       return {
         position: 'absolute',
+        flexDirection: 'column',
+        // background: 'linear-gradient(120deg, rgb(215, 188, 41), green)',
+        border: 'solid 1.5px rgb(25, 24, 52)',
+        height: '60px',
         backgroundColor: this.player.folded
           ? '#3D1255'
-          : this.index === this.currentPlayerPos ? '#D80B00' : '#AA0800',
+          : this.index === this.currentPlayerPos ? '#2D4571' : '#2D4571',
         top: topPos,
         left: leftPos
       };
