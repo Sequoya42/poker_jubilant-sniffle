@@ -10,7 +10,7 @@
   <v-btn label="Fold" @click.prevent="next_action({type: 'fold'})">Fold</v-btn>
   <v-btn
   label="knock"
-  v-if="allEven"
+  v-if="currentPlayer.bet >= betAmount"
   @click.prevent="next_action({type: 'knock'})"
   @keyup.75="next_action({type: 'knock'})">
   check</v-btn>
@@ -18,7 +18,6 @@
 
     <v-btn @click.prevent="bet" >Bet</v-btn>
    <br/>
-
    <v-chip class="amber">{{betAmount}}</v-chip>
 
 </div>
