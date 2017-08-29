@@ -1,14 +1,22 @@
 module.exports = {
   chooseWinner: ({ dispatch, commit, getters }, winners) => {
+    if (!winners.length) return;
+
     commit('chooseWinner', { winners, players: getters.players });
     return dispatch('new_hand');
   },
 
-  bet_amount: ({ commit }, p) => commit('betAmount', p),
+  bet_amount: ({ commit, getters }, amount) => {
+    console.log('amount', amount);
+    commit('updateAmount', {
+      amount: amount,
+      pos: getters.currentPlayerPos,
+      numberOfPlayers: getters.nPlayers
+    });
+  },
 
-  new_hand: ({ commit, getters }, first) => {
+  new_hand: ({ commit, getters }) => {
     commit('newHand', {
-      first,
       players: getters.players,
       numberOfPlayers: getters.nPlayers,
       smallBlind: getters.smallBlind
@@ -21,28 +29,23 @@ module.exports = {
     } else {
       commit('nextCard', {
         cards: state.cards === 0 ? 3 : 1,
+        players: getters.players,
+        smallBlind: getters.bigBlind,
         nPlayers: getters.nPlayers
       });
-      commit('betAmount', getters.smallBlind);
+      commit('updateAmount', getters.smallBlind);
     }
   },
 
   next_player: ({ dispatch, commit, state, getters }, p) => {
     if (state.playersInHand < 2) return commit('endGame');
-    let x = !!getters.players
-      .filter(e => !e.folded)
-      .map(e => e.bet)
-      .reduce((a, b) => (a === b ? a : NaN));
-    console.log('x', x);
-
-    if (state.currentPlayerPos === state.lastOne && x) {
-      dispatch('next_card', x);
+    if (state.currentPlayerPos === state.lastOne) {
+      dispatch('next_card');
     }
     commit('nextPlayer', {
       nPlayers: getters.nPlayers,
       players: getters.players
     });
-    commit('allEven', x);
   },
 
   next_action: ({ dispatch, commit, state, getters }, p) => {
