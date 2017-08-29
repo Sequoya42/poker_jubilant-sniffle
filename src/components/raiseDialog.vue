@@ -11,7 +11,7 @@
        :min="lastBet"
        :step="smallBlind"
        :max="currentPlayer.stack"
-       @input="bet_amount"
+       @input="update_amount"
        @keyup.enter.stop="realDialog=!realDialog"
        @keyup.enter.prevent="bet"
        type="number"
@@ -22,7 +22,7 @@
      :min="lastBet"
      :step="smallBlind"
      :max="currentPlayer.stack"
-      @input="bet_amount"></v-slider>
+      @input="update_amount"></v-slider>
      <v-btn
      @click.prevent="bet"
      @click.stop="realDialog=!realDialog">Bet</v-btn>
@@ -55,7 +55,7 @@ export default {
     }
   },
   methods: {
-    ...mapActions(['next_action', 'bet_amount']),
+    ...mapActions(['next_action', 'update_amount']),
     bet: function() {
       this.lastBet = this.betAmount;
       this.next_action({ type: 'bet' });
