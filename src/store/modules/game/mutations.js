@@ -1,6 +1,5 @@
 module.exports = {
   chooseWinner: (state, { winners, players }) => {
-    if (!winners.length) return;
     state.end = false;
     const amount = state.pot / winners.length;
     state.pot = 0;
@@ -45,6 +44,7 @@ module.exports = {
       state.separatePot, push({ pos, amount: state.pot + newAmount });
     }
     player.bet = amount;
+    state.betAmount = amount;
     state.pot += newAmount;
     player.stack -= newAmount;
   },
