@@ -6,7 +6,7 @@ module.exports = {
     return dispatch('new_hand');
   },
 
-  bet_amount: ({ commit, getters }, amount) => {
+  update_amount: ({ commit, getters }, amount) => {
     console.log('amount', amount);
     commit('updateAmount', {
       amount: amount,

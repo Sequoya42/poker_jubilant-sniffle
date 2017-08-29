@@ -26,7 +26,7 @@ export default {
       let step = Math.PI * 2 / this.nPlayers;
       let p = step * this.index + Math.PI * 2 / 12;
       let leftPos = `${Math.cos(p) * 276 + 450 - 35}px`;
-      let topPos = ` ${Math.sin(p) * 150 + 300 - 50}px`;
+      let topPos = ` ${Math.sin(p) * 150 + 150 - 50}px`;
       return {
         position: 'absolute',
         backgroundColor: this.player.folded

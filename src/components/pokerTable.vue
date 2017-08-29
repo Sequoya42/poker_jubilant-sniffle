@@ -39,7 +39,7 @@ export default {
   display: flex;
   flex-direction: row;
   justify-content: center;
-  min-height: 600px;
+  min-height: 300px;
   background-color: #EEE;
   max-width: 900px;
   padding: 20px;

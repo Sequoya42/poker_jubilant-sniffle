@@ -1,28 +1,15 @@
 <template>
 <div>
   <v-chip class="green white--text"> {{currentPlayer.name}}</v-chip>
-  <v-flex :value="lastBet" class="green white--text"> {{toggle}}</v-flex>
+  <v-flex class="green white--text"> {{toggle}}</v-flex>
 
-  <!-- class="debug" -->
-  <!-- @input="bet_amount" -->
-  <!-- :value="betAmount" -->
-  <!-- :step="smallBlind" -->
-  <!-- <v-slider label="Bet"
+  <v-slider label="Bet"
   v-model="lastBet"
   :min="betAmount"
   :max="currentPlayer.stack"
-  ></v-slider> -->
+  ></v-slider>
 
-  //TODO
-  /*
-make buttons instead of slider and bet button
-big blind,
-pot,
-half-pot
-all in
-  */
 
-  <v-btn label="bigBlind">big Blind</v-btn>
 
   <v-btn label="Fold" @click.prevent="next_action({type: 'fold'})">Fold</v-btn>
   <v-btn
@@ -35,7 +22,10 @@ all in
 
     <v-btn  :value="betAmount" @click.prevent="bet(lastBet)" >Bet</v-btn>
    <br/>
-   <v-chip class="amber">{{ lastBet }} {{10}}</v-chip>
+   <v-btn label="bigBlind" @click.prevent="bet(bigBlind)">{{bigBlind}}</v-btn>
+   <v-btn label="pot" @click.prevent="bet(pot)">{{pot}}</v-btn>
+   <br/>
+   <v-chip class="amber">{{ betAmount }} and last {{lastBet}}</v-chip>
 
 </div>
 </template>
@@ -52,17 +42,26 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(['betAmount', 'currentPlayer', 'smallBlind']),
+    ...mapGetters([
+      'betAmount',
+      'currentPlayer',
+      'smallBlind',
+      'bigBlind',
+      'pot'
+    ]),
     toggle: function() {
-      return this.$store.getters.players
+      let x = this.$store.getters.players
         .filter(e => !e.folded)
         .every((el, i, arr) => el.bet === arr[0].bet);
+      if (x) this.lastBet = this.bigBlind;
+      return x;
     }
   },
   methods: {
-    ...mapActions(['next_action', 'bet_amount']),
+    ...mapActions(['next_action', 'update_amount']),
     bet: function(e) {
       console.log('e', e);
+      if (e > this.betAmount) this.$store.dispatch('update_amount', e);
       this.next_action({ type: 'bet', amount: e });
     }
   },

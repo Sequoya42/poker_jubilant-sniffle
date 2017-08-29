@@ -13,6 +13,7 @@ module.exports = {
     if (p.amount > state.betAmount)
       state.lastOne = p.pos === 0 ? p.numberOfPlayers - 1 : p.pos - 1;
     state.betAmount = p.amount ? p.amount : state.betAmount;
+    console.log('state.lastOne', state.lastOne);
   },
 
   nextPlayer: (state, { nPlayers, players }) => {
