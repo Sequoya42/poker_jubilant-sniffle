@@ -43,12 +43,13 @@ module.exports = {
   nextCard: (state, p) => {
     console.log('next card');
     state.cards += p.cards;
-    // state.currentPlayerPos = 1;
+    // state.currentPlayerPos = 0;
   },
 
   allEven: (state, x) => (state.allEven = x),
 
   newHand: (state, { first, players, numberOfPlayers, smallBlind }) => {
+    console.log('NEWHAND');
     if (!first) {
       let pastDealer = players.shift();
       players.push(pastDealer);
@@ -63,13 +64,17 @@ module.exports = {
     state.lastOne = numberOfPlayers - 1;
     state.currentPlayerPos = 3 % numberOfPlayers;
     state.playersInHand = numberOfPlayers;
-    state.betAmount = smallBlind;
+    state.betAmount = smallBlind * 2;
     if (numberOfPlayers === 2) {
+      players[2 % numberOfPlayers].bet += smallBlind;
+      players[1 % numberOfPlayers].bet += smallBlind * 2;
       players[2 % numberOfPlayers].stack -= smallBlind;
       players[1 % numberOfPlayers].stack -= smallBlind * 2;
     } else {
       players[1 % numberOfPlayers].stack -= smallBlind;
       players[2 % numberOfPlayers].stack -= smallBlind * 2;
+      players[1 % numberOfPlayers].bet += smallBlind;
+      players[2 % numberOfPlayers].bet += smallBlind * 2;
     }
     state.pot = smallBlind * 3;
   }
