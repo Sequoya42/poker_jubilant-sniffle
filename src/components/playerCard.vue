@@ -1,16 +1,15 @@
 <template>
-<div class="mainDiv" :style="orderPlayer">
+<v-chip  :style="orderPlayer">
   <div class="name">
     {{player.name}}
   </div>
   <div class="stack">
     {{player.stack}}
   </div>
-  {{index}}
   <!--  game.js in function clearHand : we reorder the array of players, dealer always on top -->
     <v-icon v-if="index === dealer">people</v-icon>
     <v-icon v-if="player.folded">visibility_off</v-icon>
-</div>
+</v-chip>
 </template>
 
 <script>
@@ -59,6 +58,7 @@ export default {
 
 .name {
   color       : white;
+  width: 100%;
   font-weight : 900;
   line-height : 2;
 }

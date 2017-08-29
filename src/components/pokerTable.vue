@@ -1,9 +1,9 @@
 <template>
   <div class="wrapperTable">
   <div class="pokerTable">
+    <v-chip class="primary green darken-2 pot">{{pot}}</v-chip>
  <div  class="playingCard Deck">
     </div>
-    <!-- <v-flex class="pot">{{pot}}</v-flex> -->
     <transition-group name="list">
       <div v-for="card in cards" class="playingCard" :key="card">
       </div>
@@ -40,7 +40,7 @@ export default {
   flex-direction: row;
   justify-content: center;
   min-height: 300px;
-  background-color: #EEE;
+  /*background-color: ;*/
   max-width: 900px;
   padding: 20px;
   margin: 0 auto;
@@ -52,7 +52,8 @@ export default {
   order: 2;
   border: 12px solid #443022;
   border-radius: 150px;
-  background-color: #008413;
+  background: url('../assets/wood2.jpg');
+  /*background-color: #008413;*/
   display: inline-block;
   position: relative;
   min-height: 300px;
@@ -75,7 +76,11 @@ export default {
 }
 
 .pot{
-  margin: 20%
+/*text-align: center;*/
+margin-top: 25%;
+position: absolute;
+width: auto;
+text-align: center;
 }
 
 .Deck{

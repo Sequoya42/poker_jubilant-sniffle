@@ -56,14 +56,14 @@ export default {
 <style>
 .choices {
   /*border-style:none;*/
-  box-shadow: 4px 2px 10px rgba(0, 0, 0, .5) inset;
+  /*box-shadow: 4px 2px 10px rgba(0, 0, 0, .5) inset;*/
   /*border: 1px solid blck;*/
-  padding: 4%;
+  /*padding: 4%;*/
 border-radius: 22%;
-  margin: 4%;
+  margin: 2%;
   display: inline-block;
   min-width: 360px;
-  width: 80%;
+  width: 60%;
 }
 
   .topSpace {
