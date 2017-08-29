@@ -50,9 +50,10 @@ export default {
 
 .pokerTable {
   order: 2;
-  border: 12px solid #443022;
+  border: 6px solid ;
   border-radius: 150px;
-  background: url('../assets/wood2.jpg');
+  background-color: #6D5959;
+  /*background: url('../assets/wood2.jpg');*/
   /*background-color: #008413;*/
   display: inline-block;
   position: relative;

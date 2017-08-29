@@ -41,11 +41,11 @@ export default {
 }
 
 .customGreen {
-  background-color: #55AA55 !important;
+  background-color: inherit;
 }
 
 .darkGreen {
-background-color: #38ac44 !important;
+/*background-color: #38ac44 !important;*/
 color: white !important;
 }
 

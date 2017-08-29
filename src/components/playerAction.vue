@@ -1,10 +1,11 @@
 <template>
 <div>
   <v-chip class="green white--text"> {{currentPlayer.name}}</v-chip>
+  <v-chip class="amber">{{lastBet}}</v-chip>
 
   <v-slider
   label="Bet"
-  class="green sliderDesign"
+  class="sliderDesign"
   v-model="lastBet"
   :min="betAmount"
   :max="currentPlayer.stack"
@@ -26,9 +27,8 @@
   <v-btn v-else label="follow" @click.prevent="bet(betAmount)">Follow</v-btn>
 
    <br/>
-   <v-chip class="amber">{{lastBet}}</v-chip>
    <br/>
-   <v-btn  class="primary green darken-3" :value="betAmount" @click.prevent="bet(pot)" >pot: {{pot}}</v-btn>
+   <!-- <v-btn  class="primary green darken-3" :value="betAmount" @click.prevent="bet(pot)" >pot: {{pot}}</v-btn> -->
 
 </div>
 </template>
@@ -87,7 +87,7 @@ margin-bottom: 100px;
 }
 
 .sliderDesign {
-  background-color: #cccccc !important;
+  /*background-color: #cccccc !important;*/
   box-shadow: 1px;
     /*background: red;*/
 }
