@@ -30,7 +30,7 @@ export default {
         return this.$store.getters.players;
       },
       set(value) {
-        this.$store.commit('updatePlayers', value);
+        this.$store.commit('updatePlayersOrders', value);
       }
     }
   },

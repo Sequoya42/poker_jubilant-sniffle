@@ -1,11 +1,23 @@
 <template>
-  <div class="home">
+  <v-container fluid class="home">
     <v-card>
-      <v-card-title>
-        First try at VUEJS
+      <v-card-title primary-title>
+        <div>
+
+        <h3 class="headline ">
+        Poker stack
+      </h3>
+    </div>
       </v-card-title>
       <v-card-text>
-      Using vuex
+        <h6>
+          Have cards and no poker chips?
+          <br />
+
+          Play with cards in your hands, and bet on the computer.
+
+        </h6>
+
     </v-card-text>
     </v-card>
     <!-- <div id="buttonLink"> -->
@@ -20,7 +32,7 @@
         </router-link>
     <!-- </span> -->
     </div>
-  </div>
+  </v-container fluid>
 
 </template>
 

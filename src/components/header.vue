@@ -1,21 +1,29 @@
 <template>
-  <v-toolbar   class=" primary green customGreen">
-    <v-menu>
-  <v-btn class="darkGreen" slot="activator">
+  <v-toolbar   class=" headerStuff primary green customGreen">
+    <!-- <v-menu> -->
+  <!-- <v-btn class="darkGreen" slot="activator">
    <v-icon>home</v-icon>
    <div class="routes">
      Routes
    </div>
-  </v-btn>
+  </v-btn> -->
 
-  <v-list>
-      <v-list-tile @click="redirect('Game')"> Le game </v-list-tile>
-    <v-list-tile @click="redirect('Home')"> le home </v-list-tile>
-    <v-list-tile @click="redirect('Settings')"> le settings </v-list-tile>
-  </v-list>
+  <!-- <v-list>
+  <v-list-tile @click="redirect('Game')"> Le game </v-list-tile>
+  <v-list-tile @click="redirect('Home')"> le home </v-list-tile>
+  <v-list-tile @click="redirect('Settings')"> le settings </v-list-tile>
+</v-list> -->
 
-</v-menu>
-    <h4 class="title">Poker jubilant sniffle</h4>
+<!-- </v-menu> -->
+
+<div class="title chipStuff">
+  <v-chip class="primary light-green darken-1" @click="redirect('Game')"> Play </v-chip>
+  <v-chip class="primary light-green darken-2" @click="redirect('Home')"> le home </v-chip>
+  <v-chip class="primary light-green darken-3" @click="redirect('Settings')"> Settings </v-chip>
+
+</div>
+
+    <!-- <h4 class="title">Poker jubilant sniffle</h4> -->
   </v-toolbar>
 </template>
 
@@ -31,6 +39,15 @@ export default {
 </script>
 
 <style>
+.headerStuff {
+  text-align: center !important;
+}
+
+.chipStuff {
+  /*float: right !important;*/
+/*matgin: auto;*/
+}
+
 .routes {
   padding: 10px;
 }

@@ -11,6 +11,7 @@ const state = {
 };
 
 const getters = {
+  separatePot: state => state.separatePot,
   dealer: state => state.dealer,
   pot: state => state.pot,
   lastOne: state => state.lastOne,

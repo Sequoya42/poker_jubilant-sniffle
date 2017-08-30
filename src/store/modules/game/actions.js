@@ -2,8 +2,18 @@ module.exports = {
   chooseWinner: ({ dispatch, commit, getters }, winners) => {
     if (!winners.length) return;
 
-    commit('chooseWinner', { winners, players: getters.players });
+    commit('chooseWinner', {
+      winners,
+      players: getters.players
+    });
+
+    let x = getters.players.filter(e => e.stack > getters.smallBlind);
+    if (x.length === 1) {
+      commit('reset');
+    }
+    // } else {
     return dispatch('new_hand');
+    // }
   },
 
   update_amount: ({ commit, getters }, amount) => {
@@ -40,6 +50,7 @@ module.exports = {
   },
 
   next_player: ({ dispatch, commit, state, getters }, p) => {
+    //or they've all [allin]
     if (state.playersInHand < 2) {
       return dispatch('chooseWinner', [getters.nextPlayerPos]);
     }

@@ -1,11 +1,14 @@
 <template>
   <div >
+    <!-- {{reset}} -->
     <pokerTable class="topSpace"></pokerTable>
 <v-container class="choices">
   <!-- <gameInfos></gameInfos> -->
-  <playerAction v-if="!end"></playerAction>
+  <resetGame v-if="reset"></resetGame>
 
-<chooseWinner v-else></chooseWinner>
+  <playerAction v-else-if="!end"></playerAction>
+
+  <chooseWinner v-else></chooseWinner>
 <!--
 <v-btn  @click="showStack=!showStack">
   {{showStack ? 'hide infos' : 'show infos' }}
@@ -19,9 +22,14 @@
     {{player}}
   </div>
 </div> -->
-<v-flex>
+<!-- <v-flex>
   {{players.map((e, i)=>({[i]: e.bet}))}}
+</v-flex> -->
+
+<v-flex>
+  {{separatePot}}
 </v-flex>
+
 </div>
 </template>
 <script>
@@ -38,7 +46,7 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(['end', 'players'])
+    ...mapGetters(['end', 'players', 'reset', 'separatePot'])
   },
   methods: {
     // ...mapActions([])
@@ -48,7 +56,8 @@ export default {
     pokerTable: require('./pokerTable.vue'),
     gameInfos: require('./gameInfos.vue'),
     chooseWinner: require('./chooseWinner.vue'),
-    playerAction: require('./playerAction')
+    playerAction: require('./playerAction'),
+    resetGame: require('./reset')
   }
 };
 </script>
