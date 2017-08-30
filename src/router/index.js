@@ -9,12 +9,12 @@ Vue.use(Router);
 export default new Router({
   routes: [
     {
-      path: '/',
+      path: '/description',
       name: 'Home',
       component: Home
     },
     {
-      path: '/game',
+      path: '/',
       name: 'Game',
       component: Game
     },

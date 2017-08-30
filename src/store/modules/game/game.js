@@ -28,7 +28,10 @@ const getters = {
   },
   nextPlayer: (state, getters) => {
     return getters.players[(state.currentPlayerPos + 1) % getters.nPlayers];
-  }
+  },
+
+  minStack: (state, getters) =>
+    getters.players.map(e => e.stack).reduce((a, b) => (a < b ? a : b))
 };
 
 const actions = require('./actions');
