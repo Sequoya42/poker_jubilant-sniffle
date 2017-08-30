@@ -7,6 +7,15 @@
   <v-btn :class="clicked(index)" v-if="!player.folded" @click="addWinner(index)"> {{player.name}} </v-btn>
 </div>
 <v-btn @click="chooseWinner(winners)">submit</v-btn>
+
+<v-snackbar
+     :timeout="2000"
+     :top="true"
+     v-model="snackbar"
+   >
+{{winners}}  <v-btn flat class="pink--text" @click.native="snackbar = false">Close</v-btn>
+   </v-snackbar>
+
 </div>
 </template>
 
@@ -19,7 +28,8 @@ export default {
 
   data: function() {
     return {
-      winners: []
+      winners: [],
+      snackbar: true
     };
   },
   computed: {

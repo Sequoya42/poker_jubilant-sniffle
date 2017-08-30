@@ -9,6 +9,8 @@ module.exports = {
 
   endGame: state => (state.end = true),
 
+  oneWin: (state, p) => (state.oneWin = p.name),
+
   updateAmount: (state, p) => {
     if (p.amount > state.betAmount) {
       state.lastOne =
@@ -46,7 +48,7 @@ module.exports = {
       newAmount -= playerBet;
     } else if (amount >= player.stack) {
       newAmount = player.stack;
-      state.playersInHand -= 1;
+      // state.playersInHand -= 1;
     }
     state.separatePot.splice(pos, 1, state.separatePot[pos] + newAmount);
     player.bet = amount;
@@ -73,14 +75,14 @@ module.exports = {
   },
 
   newHand: (state, { players, numberOfPlayers, smallBlind }) => {
-    function putBlind(small, big) {
-      players[(state.dealer + big) % numberOfPlayers].bet += smallBlind * 2;
-      players[(state.dealer + small) % numberOfPlayers].bet += smallBlind;
-      players[(state.dealer + big) % numberOfPlayers].stack -= smallBlind * 2;
-      players[(state.dealer + small) % numberOfPlayers].stack -= smallBlind;
+    function putBlind(small, big, nPlayers) {
+      players[(state.dealer + big) % nPlayers].bet += smallBlind * 2;
+      players[(state.dealer + small) % nPlayers].bet += smallBlind;
+      players[(state.dealer + big) % nPlayers].stack -= smallBlind * 2;
+      players[(state.dealer + small) % nPlayers].stack -= smallBlind;
 
-      state.separatePot[(state.dealer + small) % numberOfPlayers] = smallBlind;
-      state.separatePot[(state.dealer + big) % numberOfPlayers] = smallBlind * 2;
+      state.separatePot[(state.dealer + small) % nPlayers] = smallBlind;
+      state.separatePot[(state.dealer + big) % nPlayers] = smallBlind * 2;
     }
 
     players.forEach((e, i) => {
@@ -96,10 +98,11 @@ module.exports = {
     state.separatePot = new Array(3).fill(0);
 
     if (state.playersInHand === 2) {
-      putBlind(2, 1);
+      putBlind(2, 1, state.playersInHand);
     } else {
-      putBlind(1, 2);
+      putBlind(1, 2, state.playersInHand);
     }
     state.pot = smallBlind * 3;
+    state.oneWin = false;
   }
 };

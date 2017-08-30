@@ -5,6 +5,7 @@ import Vuex from 'vuex';
 import VueMaterial from 'vue-material';
 import Vuetify from 'vuetify';
 import App from './App';
+import popup from './components/popup';
 import router from './router';
 import store from './store';
 
@@ -22,5 +23,5 @@ new Vue({
   router,
   store,
   template: '<App/>',
-  components: { App }
+  components: { App, popup }
 });
