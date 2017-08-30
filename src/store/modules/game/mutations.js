@@ -1,9 +1,10 @@
 module.exports = {
-  chooseWinner: (state, { winners, players }) => {
-    state.end = false;
+  chooseWinner: (state, { winners, players, reset }) => {
     const amount = state.pot / winners.length;
-    state.pot = 0;
     winners.forEach(w => (players[w].stack += amount));
+
+    state.pot = 0;
+    state.end = false;
   },
 
   endGame: state => (state.end = true),
@@ -16,8 +17,6 @@ module.exports = {
           : state.currentPlayerPos - 1;
     }
     state.betAmount = p.amount;
-    // ? p.amount : state.betAmount;
-    // console.log('state.lastOne', state.lastOne);
   },
 
   nextPlayer: (state, { nPlayers, players }) => {
@@ -39,15 +38,16 @@ module.exports = {
   },
 
   bet: (state, { pos, player, amount }) => {
-    console.log('BET');
     const playerBet = player.bet;
     let newAmount = amount;
 
-    if (amount > playerBet) {
+    if (amount > playerBet && amount < player.stack) {
+      console.log('else if bet');
       newAmount -= playerBet;
-    } else if (amount > player.stack) {
+    } else if (amount >= player.stack) {
+      console.log('if bet');
       newAmount = player.stack;
-      state.separatePot, push({ pos, amount: state.pot + newAmount });
+      state.separatePot.push({ pos, amount: player.stack });
     }
     player.bet = amount;
     state.betAmount = amount;

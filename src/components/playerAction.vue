@@ -5,25 +5,28 @@
   <v-chip class="red darken-4">{{betAmount}}  </v-chip>
 
   <v-slider
-  label="Bet"
+  :step="betAmount"
+  snap
+  thumb-label
   class="sliderDesign"
   v-model="lastBet"
   :min="betAmount"
   :max="currentPlayer.stack"
   ></v-slider>
 
-
   <v-btn label="Fold" @click.prevent="next_action({type: 'fold'})">Fold</v-btn>
   <v-btn
   v-if="lastBet > betAmount"
   :value="betAmount"
   @click.prevent="bet(lastBet)" >Bet</v-btn>
+
   <v-btn
   label="knock"
   v-else-if="toggle"
   @click.prevent="next_action({type: 'knock'})"
   @keyup.75="next_action({type: 'knock'})">
   check</v-btn>
+
   <v-btn v-else label="follow" @click.prevent="bet(betAmount)">Follow</v-btn>
   <v-btn label="allIn" @click.prevent="bet(currentPlayer.stack)">AllIn</v-btn>
 
@@ -38,16 +41,6 @@
 import { mapGetters, mapActions } from 'vuex';
 
 export default {
-  // beforeUpdate() {
-  //   //do something before updating vue instance
-  //   console.log('before update');
-  // },
-  // beforeDestroy() {
-  //   //do something before destroying vue instance
-  //   console.log('DESTROYED');
-  // },
-
-  // ******** ********  LESVRAIBAILS  ******** ********
   name: 'playerAction',
 
   data: function() {
