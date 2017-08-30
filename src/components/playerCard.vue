@@ -33,7 +33,7 @@ export default {
         border: 'solid 1.5px rgb(25, 24, 52)',
         height: '60px',
         backgroundColor: this.player.folded
-          ? '#3D1255'
+          ? '#A53860'
           : this.index === this.currentPlayerPos ? '#44647A' : '#2D4571',
         top: topPos,
         left: leftPos

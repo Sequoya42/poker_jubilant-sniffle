@@ -27,7 +27,6 @@ module.exports = {
   new_hand: ({ commit, getters }, first) => {
     commit('newHand', {
       players: getters.players,
-      // numberOfPlayers: state.playersInHand,
       numberOfPlayers: getters.nPlayers,
       smallBlind: getters.smallBlind
     });
@@ -52,6 +51,11 @@ module.exports = {
 
   next_player: ({ dispatch, commit, state, getters }, p) => {
     if (state.playersInHand < 2) {
+      console.log('BEFORE TIMEOUT');
+      setTimeout(
+        () => commit('oneWin', getters.players[getters.nextPlayerPos]),
+        300
+      );
       return dispatch('chooseWinner', [getters.nextPlayerPos]);
     }
     if (state.currentPlayerPos === state.lastOne) {
@@ -74,7 +78,7 @@ module.exports = {
     else if (p.type === 'bet') commit('bet', { player, pos, amount });
     // }
     let x = getters.players.map(e => e.stack).filter(e => e > 0);
-    console.log('x', x, x.length);
+    // console.log('x', x, x.length);
     if (x.length === 0) {
       return commit('endGame');
     }

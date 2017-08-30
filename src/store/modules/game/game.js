@@ -1,5 +1,7 @@
 const state = {
   end: false,
+
+  oneWin: false,
   cards: 0,
   playersInHand: 0,
   currentPlayerPos: 1,
@@ -12,6 +14,7 @@ const state = {
 
 const getters = {
   separatePot: state => state.separatePot,
+  oneWin: state => state.oneWin,
   dealer: state => state.dealer,
   pot: state => state.pot,
   lastOne: state => state.lastOne,
@@ -27,7 +30,7 @@ const getters = {
     return (state.currentPlayerPos + 1) % getters.nPlayers;
   },
   nextPlayer: (state, getters) => {
-    return getters.players[(state.currentPlayerPos + 1) % getters.nPlayers];
+    return getters.players[(state.currentPlayerPos + 1) % state.playersInHand];
   },
 
   minStack: (state, getters) =>

@@ -1,5 +1,6 @@
 <template>
   <div >
+  <popup :winner="oneWin"></popup>
     <!-- {{reset}} -->
     <pokerTable class="topSpace"></pokerTable>
 <v-container class="choices">
@@ -42,11 +43,17 @@ export default {
   },
   data: function() {
     return {
-      showStack: true
+      showStack: true,
+      snackbar: false
     };
   },
+  watch: {
+    oneWin: function() {
+      this.snackbar = this.oneWin;
+    }
+  },
   computed: {
-    ...mapGetters(['end', 'players', 'reset', 'separatePot'])
+    ...mapGetters(['end', 'players', 'reset', 'separatePot', 'oneWin'])
   },
   methods: {
     // ...mapActions([])
@@ -57,7 +64,8 @@ export default {
     gameInfos: require('./gameInfos.vue'),
     chooseWinner: require('./chooseWinner.vue'),
     playerAction: require('./playerAction'),
-    resetGame: require('./reset')
+    resetGame: require('./reset'),
+    popup: require('./popup')
   }
 };
 </script>
