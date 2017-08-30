@@ -34,7 +34,7 @@ export default {
         height: '60px',
         backgroundColor: this.player.folded
           ? '#3D1255'
-          : this.index === this.currentPlayerPos ? '#2D4571' : '#2D4571',
+          : this.index === this.currentPlayerPos ? '#44647A' : '#2D4571',
         top: topPos,
         left: leftPos
       };

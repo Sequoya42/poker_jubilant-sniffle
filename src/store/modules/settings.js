@@ -2,9 +2,9 @@ const state = {
   stack: 500,
   numberOfPlayers: 3,
   players: [
-    { name: 'Player_1', stack: 500, bet: 0, folded: false },
-    { name: 'Player_2', stack: 500, bet: 0, folded: false },
-    { name: 'Player_3', stack: 500, bet: 0, folded: false }
+    { name: 'Player_1', stack: 500, bet: 0, folded: false, lost: false },
+    { name: 'Player_2', stack: 500, bet: 0, folded: false, lost: false },
+    { name: 'Player_3', stack: 500, bet: 0, folded: false, lost: false }
   ],
   smallBlind: 10,
   bigBlind: 20
@@ -44,7 +44,8 @@ const mutations = {
           name: `Player_${+state.numberOfPlayers + 1}`,
           stack: 500,
           bet: 0,
-          folded: false
+          folded: false,
+          lost: 0
         });
       } else if (d < state.numberOfPlayers) {
         state.players.splice(d, +(state.numberOfPlayers - d));
