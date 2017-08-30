@@ -75,6 +75,9 @@ border-radius: 22%;
 // TODO
 /*
 
+all all in, will freeze.
+middle player is okey and wont.
+
 No negative stack
 
 lastone to play, need to be fix when multiple raise

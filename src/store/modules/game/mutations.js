@@ -24,7 +24,7 @@ module.exports = {
     state.currentPlayerPos = (state.currentPlayerPos + 1) % nPlayers;
     while (
       players[state.currentPlayerPos].folded ||
-      !players[state.currentPlayerPos].stack
+      players[state.currentPlayerPos].lost
     ) {
       state.currentPlayerPos = (state.currentPlayerPos + 1) % nPlayers;
     }
@@ -39,6 +39,7 @@ module.exports = {
   },
 
   bet: (state, { pos, player, amount }) => {
+    console.log('BET');
     const playerBet = player.bet;
     let newAmount = amount;
 
@@ -70,29 +71,35 @@ module.exports = {
     // state current player pos will be state.dealer + 1 since next player is calledafter
     state.currentPlayerPos = state.dealer;
   },
-  newHand: (state, { first, players, numberOfPlayers, smallBlind }) => {
+
+  newHand: (state, { players, numberOfPlayers, smallBlind }) => {
     function putBlind(small, big) {
-      players[(state.dealer + big) % numberOfPlayers].bet += smallBlind;
-      players[(state.dealer + small) % numberOfPlayers].bet += smallBlind * 2;
-      players[(state.dealer + big) % numberOfPlayers].stack -= smallBlind;
-      players[(state.dealer + small) % numberOfPlayers].stack -= smallBlind * 2;
+      players[(state.dealer + big) % numberOfPlayers].bet += smallBlind * 2;
+      players[(state.dealer + small) % numberOfPlayers].bet += smallBlind;
+      players[(state.dealer + big) % numberOfPlayers].stack -= smallBlind * 2;
+      players[(state.dealer + small) % numberOfPlayers].stack -= smallBlind;
     }
 
-    players.forEach(e => {
+    players.forEach((e, i) => {
       e.folded = false;
       e.bet = 0;
+      // if (e.stack <= 0) e.lost = true;
     });
+    // if (players.length - todel.length < 2) {
+    //   console.log('END GAME END GAME END GAE');
+    // }
     state.dealer = (state.dealer + 1) % numberOfPlayers;
     state.cards = 0;
     state.lastOne = numberOfPlayers - 1;
-    state.currentPlayerPos = 3 % numberOfPlayers;
+    state.currentPlayerPos = (state.dealer + 3) % numberOfPlayers;
     state.playersInHand = numberOfPlayers;
     state.betAmount = smallBlind * 2;
     state.separatePot = [];
+
     if (numberOfPlayers === 2) {
-      putBlind(1, 2);
-    } else {
       putBlind(2, 1);
+    } else {
+      putBlind(1, 2);
     }
     state.pot = smallBlind * 3;
   }

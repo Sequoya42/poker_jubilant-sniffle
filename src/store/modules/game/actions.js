@@ -6,9 +6,6 @@ module.exports = {
     return dispatch('new_hand');
   },
 
-  // last_one: ({ commit, getters }) => {
-  //   commit('lastOne', getters.numberOfPlayers);
-  // },
   update_amount: ({ commit, getters }, amount) => {
     console.log('amount', amount);
     commit('updateAmount', {
@@ -17,7 +14,7 @@ module.exports = {
     });
   },
 
-  new_hand: ({ commit, getters }) => {
+  new_hand: ({ commit, getters }, first) => {
     commit('newHand', {
       players: getters.players,
       numberOfPlayers: getters.nPlayers,
@@ -43,7 +40,9 @@ module.exports = {
   },
 
   next_player: ({ dispatch, commit, state, getters }, p) => {
-    if (state.playersInHand < 2) return commit('endGame');
+    if (state.playersInHand < 2) {
+      return dispatch('chooseWinner', [getters.nextPlayerPos]);
+    }
     if (state.currentPlayerPos === state.lastOne) {
       dispatch('next_card');
     }
@@ -59,8 +58,10 @@ module.exports = {
       nPlayers = getters.nPlayers,
       amount = p.amount;
 
+    // if (player.stack > 0) {
     if (p.type === 'fold') commit('fold', { player, pos, nPlayers });
     else if (p.type === 'bet') commit('bet', { player, pos, amount });
+    // }
 
     return dispatch('next_player');
   }

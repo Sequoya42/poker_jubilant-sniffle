@@ -1,7 +1,8 @@
 <template>
 <div>
   <v-chip class="green white--text"> {{currentPlayer.name}}</v-chip>
-  <v-chip class="amber">{{lastBet}}</v-chip>
+  <v-chip class="amber">{{lastBet}}  </v-chip>
+  <v-chip class="red darken-4">{{betAmount}}  </v-chip>
 
   <v-slider
   label="Bet"
@@ -10,7 +11,6 @@
   :min="betAmount"
   :max="currentPlayer.stack"
   ></v-slider>
-
 
 
   <v-btn label="Fold" @click.prevent="next_action({type: 'fold'})">Fold</v-btn>
@@ -25,6 +25,7 @@
   @keyup.75="next_action({type: 'knock'})">
   check</v-btn>
   <v-btn v-else label="follow" @click.prevent="bet(betAmount)">Follow</v-btn>
+  <v-btn label="allIn" @click.prevent="bet(currentPlayer.stack)">AllIn</v-btn>
 
    <br/>
    <br/>
@@ -37,6 +38,16 @@
 import { mapGetters, mapActions } from 'vuex';
 
 export default {
+  // beforeUpdate() {
+  //   //do something before updating vue instance
+  //   console.log('before update');
+  // },
+  // beforeDestroy() {
+  //   //do something before destroying vue instance
+  //   console.log('DESTROYED');
+  // },
+
+  // ******** ********  LESVRAIBAILS  ******** ********
   name: 'playerAction',
 
   data: function() {
@@ -54,14 +65,9 @@ export default {
     ]),
     toggle: function() {
       let x = this.$store.getters.players
-        .filter(e => !e.folded)
+        .filter(e => !e.folded && !e.lost)
         .every((el, i, arr) => el.bet === arr[0].bet);
       if (x) this.lastBet = this.bigBlind;
-      console.log('x', x);
-      if (x) {
-        this.lastBet = 0;
-        console.log('this.lastBet', this.lastBet);
-      }
       return x;
     }
   },

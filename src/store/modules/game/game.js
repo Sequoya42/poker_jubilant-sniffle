@@ -21,6 +21,12 @@ const getters = {
   currentPlayerPos: state => state.currentPlayerPos,
   currentPlayer: (state, getters) => {
     return getters.players[state.currentPlayerPos];
+  },
+  nextPlayerPos: (state, getters) => {
+    return (state.currentPlayerPos + 1) % getters.nPlayers;
+  },
+  nextPlayer: (state, getters) => {
+    return getters.players[(state.currentPlayerPos + 1) % getters.nPlayers];
   }
 };
 
