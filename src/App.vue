@@ -22,7 +22,7 @@ export default {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
-  background-color: #335C67;
+  /*background-color: #335C67;*/
   /*background: url('./assets/pattern.jpg') no-repeat center center fixed;*/
   /*background: linear-gradient( ) no-repeat center center fixed;*/
   -webkit-background-size: cover;

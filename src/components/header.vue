@@ -1,5 +1,5 @@
 <template>
-  <v-toolbar  class="customGreen">
+  <v-toolbar   class=" primary green customGreen">
     <v-menu>
   <v-btn class="darkGreen" slot="activator">
    <v-icon>home</v-icon>
@@ -45,7 +45,7 @@ export default {
 }
 
 .darkGreen {
-/*background-color: #38ac44 !important;*/
+background-color: #38ac44 !important;
 color: white !important;
 }
 
