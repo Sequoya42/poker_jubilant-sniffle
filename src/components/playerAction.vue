@@ -28,7 +28,8 @@
   check</v-btn>
 
   <v-btn v-else label="follow" @click.prevent="bet(betAmount)">Follow</v-btn>
-  <v-btn label="allIn" @click.prevent="bet(currentPlayer.stack)">AllIn</v-btn>
+
+  <v-btn v-if="currentPlayer.stack" label="allIn" @click.prevent="bet(currentPlayer.stack)">AllIn</v-btn>
 
    <br/>
    <br/>
@@ -48,12 +49,20 @@ export default {
       lastBet: this.$store.state.game.betAmount
     };
   },
+  watch: {
+    cards: function(value) {
+      console.log('value in watch', value);
+      this.lastBet = this.smallBlind;
+    }
+  },
   computed: {
     ...mapGetters([
+      'minStack',
       'betAmount',
       'currentPlayer',
       'smallBlind',
       'bigBlind',
+      'cards',
       'pot'
     ]),
     toggle: function() {
@@ -69,6 +78,7 @@ export default {
     bet: function(e) {
       if (e > this.betAmount) {
         this.$store.dispatch('update_amount', e);
+        console.log('this.lastBet', this.lastBet);
       }
       this.next_action({ type: 'bet', amount: e });
     }

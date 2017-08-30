@@ -1,6 +1,6 @@
 module.exports = {
   chooseWinner: ({ dispatch, commit, getters }, winners) => {
-    if (!winners.length) return;
+    if (!winners || !winners.length) return;
 
     commit('chooseWinner', {
       winners,
@@ -27,6 +27,7 @@ module.exports = {
   new_hand: ({ commit, getters }, first) => {
     commit('newHand', {
       players: getters.players,
+      // numberOfPlayers: state.playersInHand,
       numberOfPlayers: getters.nPlayers,
       smallBlind: getters.smallBlind
     });
@@ -50,7 +51,6 @@ module.exports = {
   },
 
   next_player: ({ dispatch, commit, state, getters }, p) => {
-    //or they've all [allin]
     if (state.playersInHand < 2) {
       return dispatch('chooseWinner', [getters.nextPlayerPos]);
     }
@@ -73,7 +73,11 @@ module.exports = {
     if (p.type === 'fold') commit('fold', { player, pos, nPlayers });
     else if (p.type === 'bet') commit('bet', { player, pos, amount });
     // }
-
+    let x = getters.players.map(e => e.stack).filter(e => e > 0);
+    console.log('x', x, x.length);
+    if (x.length === 0) {
+      return commit('endGame');
+    }
     return dispatch('next_player');
   }
 };

@@ -26,7 +26,7 @@
   {{players.map((e, i)=>({[i]: e.bet}))}}
 </v-flex> -->
 
-<v-flex>
+<v-flex :value="separatePot">
   {{separatePot}}
 </v-flex>
 

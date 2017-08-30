@@ -23,11 +23,12 @@ module.exports = {
     state.currentPlayerPos = (state.currentPlayerPos + 1) % nPlayers;
     while (
       players[state.currentPlayerPos].folded ||
-      players[state.currentPlayerPos].lost
+      players[state.currentPlayerPos].stack === 0
     ) {
       state.currentPlayerPos = (state.currentPlayerPos + 1) % nPlayers;
     }
   },
+  // ******** ********  bet stuff  ******** ********
 
   fold: (state, { player, pos, nPlayers }) => {
     if (state.lastOne === pos) {
@@ -42,15 +43,13 @@ module.exports = {
     let newAmount = amount;
 
     if (amount > playerBet && amount < player.stack) {
-      console.log('else if bet');
       newAmount -= playerBet;
     } else if (amount >= player.stack) {
-      console.log('if bet');
       newAmount = player.stack;
-      state.separatePot.push({ pos, amount: player.stack });
+      state.playersInHand -= 1;
     }
+    state.separatePot.splice(pos, 1, state.separatePot[pos] + newAmount);
     player.bet = amount;
-    state.betAmount = amount;
     state.pot += newAmount;
     player.stack -= newAmount;
   },
@@ -64,8 +63,9 @@ module.exports = {
       e.bet = 0;
     });
     state.currentPlayerPos = state.dealer;
-    while (p.players[state.currentPlayerPos].folded)
+    while (p.players[state.currentPlayerPos].folded) {
       state.currentPlayerPos += 1 % p.nPlayers;
+    }
 
     state.lastOne = state.currentPlayerPos;
     // state current player pos will be state.dealer + 1 since next player is calledafter
@@ -78,25 +78,24 @@ module.exports = {
       players[(state.dealer + small) % numberOfPlayers].bet += smallBlind;
       players[(state.dealer + big) % numberOfPlayers].stack -= smallBlind * 2;
       players[(state.dealer + small) % numberOfPlayers].stack -= smallBlind;
+
+      state.separatePot[(state.dealer + small) % numberOfPlayers] = smallBlind;
+      state.separatePot[(state.dealer + big) % numberOfPlayers] = smallBlind * 2;
     }
 
     players.forEach((e, i) => {
-      e.folded = false;
+      e.folded = e.stack <= 0 ? (e.lost = true) : false;
       e.bet = 0;
-      // if (e.stack <= 0) e.lost = true;
     });
-    // if (players.length - todel.length < 2) {
-    //   console.log('END GAME END GAME END GAE');
-    // }
-    state.dealer = (state.dealer + 1) % numberOfPlayers;
+    state.playersInHand = players.filter(e => !e.lost).length;
+    state.dealer = (state.dealer + 1) % state.playersInHand;
     state.cards = 0;
-    state.lastOne = numberOfPlayers - 1;
-    state.currentPlayerPos = (state.dealer + 3) % numberOfPlayers;
-    state.playersInHand = numberOfPlayers;
+    state.lastOne = state.playersInHand - 1;
+    state.currentPlayerPos = (state.dealer + 3) % state.playersInHand;
     state.betAmount = smallBlind * 2;
-    state.separatePot = [];
+    state.separatePot = new Array(3).fill(0);
 
-    if (numberOfPlayers === 2) {
+    if (state.playersInHand === 2) {
       putBlind(2, 1);
     } else {
       putBlind(1, 2);
