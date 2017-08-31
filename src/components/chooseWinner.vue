@@ -8,13 +8,6 @@
 </div>
 <v-btn @click="chooseWinner(winners)">submit</v-btn>
 
-<v-snackbar
-     :timeout="2000"
-     :top="true"
-     v-model="snackbar"
-   >
-{{winners}}  <v-btn flat class="pink--text" @click.native="snackbar = false">Close</v-btn>
-   </v-snackbar>
 
 </div>
 </template>
