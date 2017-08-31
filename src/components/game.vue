@@ -39,7 +39,7 @@ export default {
   name: 'play',
   beforeMount: function() {
     this.$store.commit('setPlayersStack');
-    this.$store.dispatch('new_hand', 'first');
+    this.$store.dispatch('new_hand');
   },
   data: function() {
     return {

@@ -1,11 +1,15 @@
 module.exports = {
   chooseWinner: ({ dispatch, commit, getters }, winners) => {
+    console.log('CHOOSE WINNEr');
     commit('chooseWinner', { winners, players: getters.players });
 
-    if (getters.players.filter(e => e.stack > getters.smallBlind) === 1)
+    let x = getters.players.filter(e => e.stack > getters.smallBlind);
+    console.log('x', x.length);
+    if (x.length === 1) {
       commit('reset');
-
-    return dispatch('new_hand');
+    } else {
+      return dispatch('new_hand');
+    }
   },
 
   update_amount: ({ commit, getters }, amount) => {
@@ -20,7 +24,8 @@ module.exports = {
     commit('newHand', {
       players: getters.players,
       numberOfPlayers: getters.nPlayers,
-      smallBlind: getters.smallBlind
+      smallBlind: getters.smallBlind,
+      dealer: getters.nextPlayerPos('dealer')
     });
   },
 
