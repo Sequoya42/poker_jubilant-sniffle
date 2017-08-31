@@ -1,19 +1,11 @@
 module.exports = {
   chooseWinner: ({ dispatch, commit, getters }, winners) => {
-    if (!winners || !winners.length) return;
+    commit('chooseWinner', { winners, players: getters.players });
 
-    commit('chooseWinner', {
-      winners,
-      players: getters.players
-    });
-
-    let x = getters.players.filter(e => e.stack > getters.smallBlind);
-    if (x.length === 1) {
+    if (getters.players.filter(e => e.stack > getters.smallBlind) === 1)
       commit('reset');
-    }
-    // } else {
+
     return dispatch('new_hand');
-    // }
   },
 
   update_amount: ({ commit, getters }, amount) => {
@@ -50,12 +42,10 @@ module.exports = {
   },
 
   next_player: ({ dispatch, commit, state, getters }, p) => {
+    let test = getters.nextPlayerPos;
     if (state.playersInHand < 2) {
       console.log('BEFORE TIMEOUT');
-      setTimeout(
-        () => commit('oneWin', getters.players[getters.nextPlayerPos]),
-        300
-      );
+      setTimeout(() => commit('oneWin', getters.players[test]), 300);
       return dispatch('chooseWinner', [getters.nextPlayerPos]);
     }
     if (state.currentPlayerPos === state.lastOne) {
@@ -78,7 +68,6 @@ module.exports = {
     else if (p.type === 'bet') commit('bet', { player, pos, amount });
     // }
     let x = getters.players.map(e => e.stack).filter(e => e > 0);
-    // console.log('x', x, x.length);
     if (x.length === 0) {
       return commit('endGame');
     }
