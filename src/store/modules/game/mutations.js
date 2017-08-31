@@ -1,35 +1,25 @@
 module.exports = {
-  //order winner if different bet amount etc
-  // multipleWinners: (state, { winners, players, reset }) => {},
-  //ugl asf, to refacto
   chooseWinner: (state, { winners, players, reset }) => {
     if (state.separatePot.every((el, i, arr) => el === arr[0])) {
+      console.log('IFWIN');
+      //all bet the same amount
       const amount = state.pot / winners.length;
       winners.forEach(w => (players[w].stack += amount));
     } else {
-      winners = winners.filter(e => !players[e].folded);
-      console.log('separatePot THING ELSE');
-      // separatePot thing
-      let i = winners.length;
+      console.log('ELSEWIN', winners);
       winners.forEach(w => {
         let x = 0;
         let a = state.separatePot[w];
         state.separatePot.forEach((e, it) => {
-          if (e >= a) {
-            x += a / i;
-            e -= a / i;
-          } else {
-            // 50 < 100
-            x += e / i;
-            e -= e / i;
-          }
+          let part = e >= a ? a / winners.length : e / winners.length;
+          x += part;
+          e -= part;
         });
         players[w].stack += x;
       });
       // if lost but bet more, get money back
       state.separatePot.forEach((e, i) => (players[i].stack += e));
     }
-
     state.pot = 0;
     state.end = false;
   },
