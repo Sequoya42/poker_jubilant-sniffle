@@ -14,21 +14,19 @@
   :max="currentPlayer.stack"
   ></v-slider>
 
+  <!-- v-if="lastBet > betAmount" -->
   <v-btn label="Fold" @click.prevent="next_action({type: 'fold'})">Fold</v-btn>
-  <v-btn
-  v-if="lastBet > betAmount"
-  :value="betAmount"
-  @click.prevent="bet(lastBet)" >Bet</v-btn>
 
   <v-btn
   label="knock"
-  v-else-if="toggle"
+  v-if="toggle"
   @click.prevent="next_action({type: 'knock'})"
   @keyup.75="next_action({type: 'knock'})">
   check</v-btn>
 
   <v-btn v-else label="follow" @click.prevent="bet(betAmount)">Follow</v-btn>
 
+  <v-btn v-if="currentPlayer.stack > lastBet" :value="betAmount" @click.prevent="bet(lastBet)" >Bet</v-btn>
   <v-btn v-if="currentPlayer.stack" label="allIn" @click.prevent="bet(currentPlayer.stack)">AllIn</v-btn>
 
    <br/>
@@ -79,6 +77,7 @@ export default {
       if (e > this.betAmount) {
         this.$store.dispatch('update_amount', e);
         console.log('this.lastBet', this.lastBet);
+        this.lastBet = e;
       }
       this.next_action({ type: 'bet', amount: e });
     }
