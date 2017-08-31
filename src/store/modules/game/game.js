@@ -26,9 +26,10 @@ const getters = {
   currentPlayer: (state, getters) => {
     return getters.players[state.currentPlayerPos];
   },
-  nextPlayerPos: (state, getters) => {
+  nextPlayerPos: (state, getters) => (from = 'player') => {
     let players = getters.players;
-    let pos = (state.currentPlayerPos + 1) % getters.nPlayers;
+    from = from === 'dealer' ? state.dealer : state.currentPlayerPos;
+    let pos = (from + 1) % getters.nPlayers;
     console.log('players', players);
     while (players[pos].lost || getters.players[pos].folded) {
       pos = (pos + 1) % getters.nPlayers;
@@ -36,7 +37,7 @@ const getters = {
     return pos;
   },
   nextPlayer: (state, getters) => {
-    return getters.players[getters.nextPlayerPos];
+    return getters.players[getters.nextPlayerPos('player')];
   },
 
   minStack: (state, getters) =>

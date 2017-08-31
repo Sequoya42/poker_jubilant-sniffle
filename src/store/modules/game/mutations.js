@@ -91,7 +91,7 @@ module.exports = {
     state.currentPlayerPos = state.dealer;
   },
 
-  newHand: (state, { players, numberOfPlayers, smallBlind }) => {
+  newHand: (state, { players, numberOfPlayers, smallBlind, dealer }) => {
     function putBlind(small, big, nPlayers) {
       players[(state.dealer + big) % nPlayers].bet += smallBlind * 2;
       players[(state.dealer + small) % nPlayers].bet += smallBlind;
@@ -107,7 +107,7 @@ module.exports = {
       e.bet = 0;
     });
     state.playersInHand = players.filter(e => !e.lost).length;
-    state.dealer = (state.dealer + 1) % state.playersInHand;
+    state.dealer = dealer;
     state.cards = 0;
     state.lastOne = state.playersInHand - 1;
     state.currentPlayerPos = (state.dealer + 3) % state.playersInHand;

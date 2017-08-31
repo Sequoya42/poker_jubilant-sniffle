@@ -25,6 +25,8 @@ const actions = {
 
   reset_game: ({ commit, dispatch }) => {
     commit('resetGame');
+    commit('setPlayersStack');
+    return dispatch('new_hand');
   },
 
   change_name: ({ commit, getters }, d) => {
