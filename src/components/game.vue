@@ -92,15 +92,8 @@ border-radius: 22%;
 // TODO
 /*
 
-all all in, will freeze.
-middle player is okey and wont.
+transition effect change buttons
 
-No negative stack
-
-lastone to play, need to be fix when multiple raise
-
-do not rotate players, have a dealer and
-dealer = dealer === numberOfPlayers - 1 ? 0 : dealer + 1
 
 // ******** ********    ******** ********
 

@@ -31,8 +31,6 @@ const actions = {
 
   change_name: ({ commit, getters }, d) => {
     let name = d.$event;
-    console.log('name', name);
-    console.log(getters.players.some(e => e.name === name));
     if (getters.players.some(e => e.name === name)) d.$event += '_2';
     commit('changeName', d);
   }

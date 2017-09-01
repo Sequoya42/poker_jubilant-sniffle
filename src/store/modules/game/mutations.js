@@ -1,32 +1,44 @@
 module.exports = {
-  chooseWinner: (state, { winners, players, reset }) => {
+  chooseWinner: (state, { players }) => {
+    winners = state.winners;
     if (state.separatePot.every((el, i, arr) => el === arr[0])) {
-      console.log('IFWIN');
       //all bet the same amount
       const amount = state.pot / winners.length;
-      winners.forEach(w => (players[w].stack += amount));
-    } else {
-      console.log('ELSEWIN', winners);
       winners.forEach(w => {
-        let x = 0;
+        players[w].stack += amount;
+      });
+      state.pot = 0;
+      state.end = false;
+    } else {
+      console.log('else');
+      winners.forEach(w => {
+        let maxWinPlayer = 0;
         let a = state.separatePot[w];
-        state.separatePot.forEach((e, it) => {
-          let part = e >= a ? a / winners.length : e / winners.length;
-          x += part;
-          e -= part;
+        if (a === 0) {
+          winners.splice(w, 1);
+        }
+        state.separatePot.forEach((playerPot, it) => {
+          let part =
+            playerPot >= a ? a / winners.length : playerPot / winners.length;
+          maxWinPlayer += part;
+          playerPot -= part;
         });
-        players[w].stack += x;
+        players[w].stack += maxWinPlayer;
       });
       // if lost but bet more, get money back
-      state.separatePot.forEach((e, i) => (players[i].stack += e));
+      // state.separatePot.forEach((e, i) => (players[i].stack += e));
     }
-    state.pot = 0;
-    state.end = false;
   },
 
   endGame: state => (state.end = true),
 
   oneWin: (state, p) => (state.oneWin = p.name),
+
+  addWinner: (state, nextPos) => {
+    if (state.winners.includes(nextPos))
+      state.winners.splice(state.winners.indexOf(nextPos), 1);
+    else state.winners.push(nextPos);
+  },
 
   updateAmount: (state, p) => {
     if (p.amount > state.betAmount) {

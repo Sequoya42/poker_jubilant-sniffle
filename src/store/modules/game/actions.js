@@ -1,7 +1,6 @@
 module.exports = {
-  chooseWinner: ({ dispatch, commit, getters }, winners) => {
-    console.log('CHOOSE WINNEr');
-    commit('chooseWinner', { winners, players: getters.players });
+  chooseWinner: ({ dispatch, commit, getters }) => {
+    commit('chooseWinner', { players: getters.players });
 
     let x = getters.players.filter(e => e.stack > getters.smallBlind);
     console.log('x', x.length);
@@ -47,11 +46,12 @@ module.exports = {
   },
 
   next_player: ({ dispatch, commit, state, getters }, p) => {
-    let test = getters.nextPlayerPos;
+    let nextPos = getters.nextPlayerPos();
     if (state.playersInHand < 2) {
       console.log('BEFORE TIMEOUT');
-      setTimeout(() => commit('oneWin', getters.players[test]), 300);
-      return dispatch('chooseWinner', [getters.nextPlayerPos]);
+      setTimeout(() => commit('oneWin', getters.players[nextPos]), 300);
+      commit('addWinner', nextPos);
+      return dispatch('chooseWinner');
     }
     if (state.currentPlayerPos === state.lastOne) {
       dispatch('next_card');
