@@ -9,25 +9,32 @@ module.exports = {
       });
       state.pot = 0;
       state.end = false;
+      state.winners = [];
     } else {
-      console.log('else');
       winners.forEach(w => {
         let maxWinPlayer = 0;
         let a = state.separatePot[w];
-        if (a === 0) {
-          winners.splice(w, 1);
-        }
-        state.separatePot.forEach((playerPot, it) => {
-          let part =
-            playerPot >= a ? a / winners.length : playerPot / winners.length;
+        state.separatePot.forEach((spot, it) => {
+          let part = spot >= a ? a / winners.length : spot / winners.length;
           maxWinPlayer += part;
-          playerPot -= part;
+          spot -= part;
         });
         players[w].stack += maxWinPlayer;
+        if (a === 0) {
+          state.winners.splice(w, 1);
+        }
       });
+      // ******** ********  test  ******** ********
+      // ******** ********  test  ******** ********
+
       // if lost but bet more, get money back
       // state.separatePot.forEach((e, i) => (players[i].stack += e));
     }
+  },
+
+  getMoneyBack: (state, players) => {
+    state.separatePot.forEach((e, i) => (players[i].stack += e));
+    state.end = false;
   },
 
   endGame: state => (state.end = true),
@@ -72,7 +79,9 @@ module.exports = {
   bet: (state, { pos, player, amount }) => {
     const playerBet = player.bet;
     let newAmount = amount;
-
+    state.lastOne = state.separatePot.indexOf(
+      state.separatePot.reduce((a, b) => (a > b ? a : b))
+    );
     if (amount > playerBet && amount < player.stack) {
       newAmount -= playerBet;
     } else if (amount >= player.stack) {

@@ -7,7 +7,8 @@
 <div v-for="(player, index) in players" :key="player.folded">
   <v-btn :class="clicked(index)" v-if="!player.folded" @click="addWinner(index)"> {{player.name}} </v-btn>
 </div>
-<v-btn @click="chooseWinner(winners)">submit</v-btn>
+<v-btn @click="chooseWinner(winners)">submit winner</v-btn>
+<v-btn @click="getMoneyBack">Done [no more winers]</v-btn>
 
 
 </div>
@@ -29,7 +30,7 @@ export default {
     ...mapGetters(['players', 'separatePot', 'winners'])
   },
   methods: {
-    ...mapActions(['chooseWinner']),
+    ...mapActions(['chooseWinner', 'getMoneyBack']),
     ...mapMutations(['addWinner']),
     clicked: function(index) {
       return {
