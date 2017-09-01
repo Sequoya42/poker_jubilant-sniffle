@@ -11,11 +11,16 @@ module.exports = {
     }
   },
 
+  getMoneyBack: ({ commit, getters, dispatch }) => {
+    commit('getMoneyBack', getters.players);
+    return dispatch('new_hand');
+  },
   update_amount: ({ commit, getters }, amount) => {
     console.log('amount', amount);
     commit('updateAmount', {
       amount: amount,
-      numberOfPlayers: getters.nPlayers
+      numberOfPlayers: getters.nPlayers,
+      bet: getters.currentPlayer.bet
     });
   },
 
