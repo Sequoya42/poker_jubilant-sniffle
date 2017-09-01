@@ -7,6 +7,7 @@ const state = {
   currentPlayerPos: 1,
   pot: 0,
   separatePot: [],
+  winners: [],
   lastOne: 0, //last one to talk before next card
   dealer: -1,
   betAmount: 0
@@ -14,6 +15,7 @@ const state = {
 
 const getters = {
   separatePot: state => state.separatePot,
+  winners: state => state.winners,
   oneWin: state => state.oneWin,
   dealer: state => state.dealer,
   pot: state => state.pot,
@@ -30,7 +32,6 @@ const getters = {
     let players = getters.players;
     from = from === 'dealer' ? state.dealer : state.currentPlayerPos;
     let pos = (from + 1) % getters.nPlayers;
-    console.log('players', players);
     while (players[pos].lost || getters.players[pos].folded) {
       pos = (pos + 1) % getters.nPlayers;
     }

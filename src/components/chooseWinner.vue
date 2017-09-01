@@ -1,8 +1,9 @@
 <!-- plugin for validation -->
 <template>
-  <div class="visible">
-    <h6>Choose winner(s)</h6>
+  <div v-model="winners" class="visible">
+    <h6>Choose winner(s) </h6>
     {{winners}}
+    {{separatePot}}
 <div v-for="(player, index) in players" :key="player.folded">
   <v-btn :class="clicked(index)" v-if="!player.folded" @click="addWinner(index)"> {{player.name}} </v-btn>
 </div>
@@ -13,7 +14,7 @@
 </template>
 
 <script>
-import { mapGetters, mapActions } from 'vuex';
+import { mapGetters, mapActions, mapMutations } from 'vuex';
 
 export default {
   // props: ['players'],
@@ -21,24 +22,19 @@ export default {
 
   data: function() {
     return {
-      winners: [],
       snackbar: true
     };
   },
   computed: {
-    ...mapGetters(['players'])
+    ...mapGetters(['players', 'separatePot', 'winners'])
   },
   methods: {
     ...mapActions(['chooseWinner']),
+    ...mapMutations(['addWinner']),
     clicked: function(index) {
       return {
         clicked: this.winners.includes(index)
       };
-    },
-    addWinner: function(index) {
-      if (this.winners.includes(index))
-        this.winners.splice(this.winners.indexOf(index), 1);
-      else this.winners.push(index);
     }
   },
   components: {}
