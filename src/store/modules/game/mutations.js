@@ -68,9 +68,9 @@ module.exports = {
   },
   // ******** ********  bet stuff  ******** ********
 
-  fold: (state, { player, pos, nPlayers }) => {
+  fold: (state, { player, pos, lastOne }) => {
     if (state.lastOne === pos) {
-      state.lastOne = state.lastOne === 0 ? nPlayers - 1 : state.lastOne - 1;
+      state.lastOne = lastOne;
     }
     player.folded = true;
     state.playersInHand -= 1;
@@ -79,9 +79,6 @@ module.exports = {
   bet: (state, { pos, player, amount }) => {
     const playerBet = player.bet;
     let newAmount = amount;
-    state.lastOne = state.separatePot.indexOf(
-      state.separatePot.reduce((a, b) => (a > b ? a : b))
-    );
     if (amount > playerBet && amount < player.stack) {
       newAmount -= playerBet;
     } else if (amount >= player.stack) {
@@ -96,12 +93,8 @@ module.exports = {
 
   // ******** ********  next_card stuff  ******** ********
   nextCard: (state, p) => {
-    console.log('next card');
     state.cards += p.cards;
-    state.betAmount = p.smallBlind;
-    p.players.forEach((e, i) => {
-      e.bet = 0;
-    });
+    p.players.map(e => (e.bet = 0));
     state.currentPlayerPos = state.dealer;
     while (p.players[state.currentPlayerPos].folded) {
       state.currentPlayerPos += 1 % p.nPlayers;
@@ -112,7 +105,7 @@ module.exports = {
     state.currentPlayerPos = state.dealer;
   },
 
-  newHand: (state, { players, numberOfPlayers, smallBlind, dealer }) => {
+  newHand: (state, { players, numberOfPlayers, smallBlind, dealer, lastOne }) => {
     function putBlind(small, big, nPlayers) {
       players[(state.dealer + big) % nPlayers].bet += smallBlind * 2;
       players[(state.dealer + small) % nPlayers].bet += smallBlind;
@@ -130,7 +123,7 @@ module.exports = {
     state.playersInHand = players.filter(e => !e.lost).length;
     state.dealer = dealer;
     state.cards = 0;
-    state.lastOne = state.playersInHand - 1;
+    state.lastOne = lastOne;
     state.currentPlayerPos = (state.dealer + 3) % state.playersInHand;
     state.betAmount = smallBlind * 2;
     state.separatePot = new Array(3).fill(0);

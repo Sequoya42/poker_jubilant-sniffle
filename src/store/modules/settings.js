@@ -71,21 +71,9 @@ const mutations = {
       lost: false
     }));
     state.reset = false;
-    // let i = 0;
-    // let x = [];
-    // while (i < state.numberOfPlayers) {
-    //   x.push({
-    //     name: `Player_${+i + 1}`,
-    //     stack: state.stack,
-    //     bet: 0,
-    //     folded: false,
-    //     lost: false
-    //   });
-    // }
-    // state.players = x;
   },
 
-  setPlayersStack: (state, d) => {
+  setPlayersStack: state => {
     state.players.forEach(e => {
       e.stack = state.stack;
     });
