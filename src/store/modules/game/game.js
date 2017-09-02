@@ -30,7 +30,7 @@ const getters = {
   },
   nextPlayerPos: (state, getters) => (from = 'player') => {
     let players = getters.players;
-    from = from === 'dealer' ? state.dealer : state.currentPlayerPos;
+    from = from === 'player' ? state.currentPlayerPos : from;
     let pos = (from + 1) % getters.nPlayers;
     while (players[pos].lost || getters.players[pos].folded) {
       pos = (pos + 1) % getters.nPlayers;

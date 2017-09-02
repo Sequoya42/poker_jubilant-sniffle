@@ -4,7 +4,7 @@
     {{player.name}}
   </div>
   <div class="stack" :class="{allIn: !player.stack}">
-    {{player.stack || "ALL IN" }}
+    {{player.lost ? "finished" : player.stack || "ALL IN" }}
   </div>
   <!--  game.js in function clearHand : we reorder the array of players, dealer always on top -->
     <v-icon v-if="index === dealer">people</v-icon>
@@ -32,9 +32,11 @@ export default {
         // background: 'linear-gradient(120deg, rgb(215, 188, 41), green)',
         border: 'solid 1.5px rgb(25, 24, 52)',
         height: '60px',
-        backgroundColor: this.player.folded
-          ? '#A53860'
-          : this.index === this.currentPlayerPos ? '#44647A' : '#2D4571',
+        backgroundColor: this.player.lost
+          ? 'rgb(42, 23, 38)'
+          : this.player.folded
+            ? '#A53860'
+            : this.index === this.currentPlayerPos ? '#44647A' : '#2D4571',
         top: topPos,
         left: leftPos
       };
