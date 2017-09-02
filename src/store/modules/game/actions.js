@@ -1,14 +1,15 @@
 module.exports = {
-  chooseWinner: ({ dispatch, commit, getters }) => {
+  chooseWinner: ({ state, dispatch, commit, getters }) => {
     commit('chooseWinner', { players: getters.players });
 
-    let x = getters.players.filter(e => e.stack > getters.smallBlind);
-    console.log('x', x.length);
-    if (x.length === 1) {
-      commit('reset');
-    } else {
+    // let x = getters.players.filter(e => e.stack > getters.smallBlind);
+    // console.log('x', x.length);
+    // if (x.length === 1) {
+    //   commit('reset');
+    // } else {
+    if (state.separatePot.every((el, i, arr) => el === 0))
       return dispatch('new_hand');
-    }
+    // }
   },
 
   getMoneyBack: ({ commit, getters, dispatch }) => {
@@ -32,7 +33,7 @@ module.exports = {
         cards: state.cards === 0 ? 3 : 1,
         players: getters.players,
         smallBlind: getters.bigBlind,
-        nPlayers: getters.nPlayers
+        lastOne: getters.prevPlayerPos(state.dealer + 1)
       });
       commit('updateAmount', {
         amount: getters.bigBlind,
@@ -70,7 +71,7 @@ module.exports = {
       console.log('state.currentPlayerPos', state.currentPlayerPos);
       console.log('lastOne', pos);
 
-      commit('updateLast', getters.prevPlayerPos);
+      commit('updateLast', getters.prevPlayerPos());
     }
     if (p.type === 'fold') commit('fold', { player, pos, lastOne });
     else if (p.type === 'bet') commit('bet', { player, pos, amount });
