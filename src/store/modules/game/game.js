@@ -37,9 +37,9 @@ const getters = {
     return pos;
   },
 
-  prevPlayerPos: (state, getters) => {
-    let pos = state.currentPlayerPos;
-    pos = pos === 0 ? getters.nPlayers - 1 : pos - 1;
+  prevPlayerPos: (state, getters) => (from = 'player') => {
+    from = from === 'player' ? state.currentPlayerPos : from;
+    let pos = from === 0 ? getters.nPlayers - 1 : from - 1;
     while (getters.players[pos].lost || getters.players[pos].folded) {
       pos = pos === 0 ? getters.nPlayers : pos - 1;
     }

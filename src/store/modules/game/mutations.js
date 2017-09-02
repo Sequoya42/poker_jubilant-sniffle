@@ -10,21 +10,26 @@ module.exports = {
       state.pot = 0;
       state.end = false;
       state.winners = [];
+      state.separatePot = [0];
     } else {
+      console.log('in the else winners');
+      // there's an order
       winners.forEach(w => {
         let maxWinPlayer = 0;
         let a = state.separatePot[w];
-        state.separatePot.forEach((spot, it) => {
+        state.separatePot = state.separatePot.map((spot, it) => {
           let part = spot >= a ? a / winners.length : spot / winners.length;
           maxWinPlayer += part;
           spot -= part;
+          return spot;
         });
         players[w].stack += maxWinPlayer;
         if (a === 0) {
           state.winners.splice(w, 1);
         }
       });
-      // ******** ********  test  ******** ********
+      console.log('winners', winners);
+      // ******** ********  test  **** **** ********
       // ******** ********  test  ******** ********
 
       // if lost but bet more, get money back
@@ -86,7 +91,6 @@ module.exports = {
       newAmount -= playerBet;
     } else if (amount >= player.stack) {
       newAmount = player.stack;
-      // state.playersInHand -= 1;
     }
     state.separatePot.splice(pos, 1, state.separatePot[pos] + newAmount);
     player.bet = amount;
@@ -98,12 +102,8 @@ module.exports = {
   nextCard: (state, p) => {
     state.cards += p.cards;
     p.players.map(e => (e.bet = 0));
-    state.currentPlayerPos = state.dealer;
-    while (p.players[state.currentPlayerPos].folded) {
-      state.currentPlayerPos += 1 % p.nPlayers;
-    }
 
-    state.lastOne = state.currentPlayerPos;
+    state.lastOne = p.lastOne;
     // state current player pos will be state.dealer + 1 since next player is calledafter
     state.currentPlayerPos = state.dealer;
   },
@@ -129,7 +129,7 @@ module.exports = {
     state.lastOne = lastOne;
     state.currentPlayerPos = (state.dealer + 3) % state.playersInHand;
     state.betAmount = smallBlind * 2;
-    state.separatePot = new Array(3).fill(0);
+    state.separatePot = Array(numberOfPlayers).fill(0);
 
     if (state.playersInHand === 2) {
       putBlind(2, 1, state.playersInHand);
@@ -138,5 +138,6 @@ module.exports = {
     }
     state.pot = smallBlind * 3;
     state.oneWin = false;
+    state.end = false;
   }
 };
