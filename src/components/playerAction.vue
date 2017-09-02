@@ -74,11 +74,11 @@ export default {
   methods: {
     ...mapActions(['next_action', 'update_amount']),
     bet: function(e) {
-      if (e > this.betAmount) {
-        this.$store.dispatch('update_amount', e);
-        console.log('this.lastBet', this.lastBet);
-        this.lastBet = e;
-      }
+      // if (e > this.betAmount) {
+      this.$store.dispatch('update_amount', e);
+      console.log('this.lastBet', this.lastBet);
+      this.lastBet = e;
+      // }
       this.next_action({ type: 'bet', amount: e });
     }
   },

@@ -29,14 +29,23 @@ const getters = {
     return getters.players[state.currentPlayerPos];
   },
   nextPlayerPos: (state, getters) => (from = 'player') => {
-    let players = getters.players;
     from = from === 'player' ? state.currentPlayerPos : from;
     let pos = (from + 1) % getters.nPlayers;
-    while (players[pos].lost || getters.players[pos].folded) {
+    while (getters.players[pos].lost || getters.players[pos].folded) {
       pos = (pos + 1) % getters.nPlayers;
     }
     return pos;
   },
+
+  prevPlayerPos: (state, getters) => {
+    let pos = state.currentPlayerPos;
+    pos = pos === 0 ? getters.nPlayers - 1 : pos - 1;
+    while (getters.players[pos].lost || getters.players[pos].folded) {
+      pos = pos === 0 ? getters.nPlayers : pos - 1;
+    }
+    return pos;
+  },
+
   nextPlayer: (state, getters) => {
     return getters.players[getters.nextPlayerPos('player')];
   },

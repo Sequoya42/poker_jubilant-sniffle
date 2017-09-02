@@ -41,6 +41,9 @@ module.exports = {
 
   oneWin: (state, p) => (state.oneWin = p.name),
 
+  playerOneDeals: state => (state.dealer = -1),
+
+  updateLast: (state, lastOne) => (state.lastOne = lastOne),
   addWinner: (state, nextPos) => {
     if (state.winners.includes(nextPos))
       state.winners.splice(state.winners.indexOf(nextPos), 1);
