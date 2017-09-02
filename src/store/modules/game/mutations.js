@@ -23,6 +23,7 @@ module.exports = {
           spot -= part;
           return spot;
         });
+        console.log('maxWinPlayer', maxWinPlayer);
         players[w].stack += maxWinPlayer;
         if (a === 0) {
           state.winners.splice(w, 1);

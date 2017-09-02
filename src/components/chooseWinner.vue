@@ -5,7 +5,7 @@
     {{winners}}
     {{separatePot}}
 <div v-for="(player, index) in players" :key="player.folded">
-  <v-btn :class="clicked(index)" v-if="!player.folded" @click="addWinner(index)"> {{player.name}} </v-btn>
+  <v-btn :class="clicked(index)" v-if="canWin(player, index)" @click="addWinner(index)"> {{player.name}} </v-btn>
 </div>
 <v-btn @click="chooseWinner(winners)">submit winner</v-btn>
 <v-btn @click="getMoneyBack">Done [no more winers]</v-btn>
@@ -36,6 +36,11 @@ export default {
       return {
         clicked: this.winners.includes(index)
       };
+    },
+    canWin: function(player, index) {
+      if (player.folded) return false;
+      if (this.separatePot[index] === 0) return false;
+      return true;
     }
   },
   components: {}
