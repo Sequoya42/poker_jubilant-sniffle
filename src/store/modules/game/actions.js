@@ -15,8 +15,8 @@ module.exports = {
     commit('getMoneyBack', getters.players);
     return dispatch('new_hand');
   },
-  update_amount: ({ commit, getters }, amount) => {
-    console.log('amount', amount);
+
+  update_amount: ({ state, commit, getters }, amount) => {
     commit('updateAmount', {
       amount: amount,
       numberOfPlayers: getters.nPlayers,
@@ -64,7 +64,14 @@ module.exports = {
       lastOne = getters.nextPlayerPos(pos),
       amount = p.amount;
 
-    // if (player.stack > 0) {
+    if (amount && state.separatePot.every((a, i, arr) => a === arr[0])) {
+      console.log('NOW');
+      console.log('amount', amount);
+      console.log('state.currentPlayerPos', state.currentPlayerPos);
+      console.log('lastOne', pos);
+
+      commit('updateLast', getters.prevPlayerPos);
+    }
     if (p.type === 'fold') commit('fold', { player, pos, lastOne });
     else if (p.type === 'bet') commit('bet', { player, pos, amount });
     // }
