@@ -2,14 +2,13 @@ module.exports = {
   chooseWinner: ({ state, dispatch, commit, getters }) => {
     commit('chooseWinner', { players: getters.players });
 
-    // let x = getters.players.filter(e => e.stack > getters.smallBlind);
-    // console.log('x', x.length);
-    // if (x.length === 1) {
-    //   commit('reset');
-    // } else {
-    if (state.separatePot.every((el, i, arr) => el === 0))
+    let x = getters.players.filter(e => e.stack > getters.smallBlind);
+    console.log('x', x.length);
+    if (x.length === 1) {
+      commit('reset');
+    } else if (state.separatePot.every((el, i, arr) => el === 0)) {
       return dispatch('new_hand');
-    // }
+    }
   },
 
   getMoneyBack: ({ commit, getters, dispatch }) => {
@@ -44,15 +43,18 @@ module.exports = {
 
   next_player: ({ dispatch, commit, state, getters }, p) => {
     let nextPos = getters.nextPlayerPos();
-    if (state.playersInHand < 2) {
+    if (!getters.players.filter(e => !e.folded && e.stack).length) {
+      console.log('if end game');
+      return commit('endGame');
+    } else if (state.playersInHand < 2) {
       console.log('BEFORE TIMEOUT');
       setTimeout(() => commit('oneWin', getters.players[nextPos]), 300);
       commit('addWinner', nextPos);
       return dispatch('chooseWinner');
-    }
-    if (state.currentPlayerPos === state.lastOne) {
+    } else if (state.currentPlayerPos === state.lastOne) {
       dispatch('next_card');
     }
+
     commit('nextPlayer', {
       nPlayers: getters.nPlayers,
       players: getters.players
@@ -78,6 +80,10 @@ module.exports = {
     // }
     let x = getters.players.map(e => e.stack).filter(e => e > 0);
     if (x.length === 0) {
+      return commit('endGame');
+    }
+    if (!getters.players.filter(e => !e.folded || e.stack === 0).length) {
+      console.log('if end game');
       return commit('endGame');
     }
     return dispatch('next_player');
