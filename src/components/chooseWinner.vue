@@ -7,7 +7,7 @@
 <div v-for="(player, index) in players" :key="player.folded">
   <v-btn :class="clicked(index)" v-if="canWin(player, index)" @click="addWinner(index)"> {{player.name}} </v-btn>
 </div>
-<v-btn @click="chooseWinner(winners)">submit winner</v-btn>
+<v-btn @click="chooseWinner">submit winner</v-btn>
 <v-btn @click="getMoneyBack">Done [no more winers]</v-btn>
 
 

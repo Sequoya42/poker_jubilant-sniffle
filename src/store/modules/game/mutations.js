@@ -1,41 +1,16 @@
 module.exports = {
   chooseWinner: (state, { players }) => {
-    winners = state.winners;
-    if (state.separatePot.every((el, i, arr) => el === arr[0])) {
-      //all bet the same amount
-      const amount = state.pot / winners.length;
-      winners.forEach(w => {
-        players[w].stack += amount;
-      });
-      state.pot = 0;
-      state.end = false;
-      state.winners = [];
-      state.separatePot = [0];
-    } else {
-      console.log('in the else winners');
-      // there's an order
-      winners.forEach(w => {
-        let maxWinPlayer = 0;
-        let a = state.separatePot[w];
-        state.separatePot = state.separatePot.map((spot, it) => {
-          let part = spot >= a ? a / winners.length : spot / winners.length;
-          maxWinPlayer += part;
-          spot -= part;
-          return spot;
-        });
-        console.log('maxWinPlayer', maxWinPlayer);
-        players[w].stack += maxWinPlayer;
-        if (a === 0) {
-          state.winners.splice(w, 1);
-        }
-      });
-      console.log('winners', winners);
-      // ******** ********  test  **** **** ********
-      // ******** ********  test  ******** ********
-
-      // if lost but bet more, get money back
-      // state.separatePot.forEach((e, i) => (players[i].stack += e));
-    }
+    let winners = state.winners;
+    let totWin = winners.reduce((a, b) => a + state.separatePot[b], 0);
+    winners.forEach(w => {
+      players[w].stack += Math.floor(
+        (1 + (state.pot / totWin - 1)) * state.separatePot[w]
+      );
+    });
+    state.pot = 0;
+    state.end = false;
+    state.winners = [];
+    state.separatePot = [0];
   },
 
   getMoneyBack: (state, players) => {
@@ -64,6 +39,7 @@ module.exports = {
           : state.currentPlayerPos - 1;
     }
     state.betAmount = p.amount;
+    console.log('amount updated');
   },
 
   nextPlayer: (state, { nPlayers, players }) => {
@@ -72,6 +48,7 @@ module.exports = {
       players[state.currentPlayerPos].folded ||
       players[state.currentPlayerPos].stack === 0
     ) {
+      console.log('whilenextpalyer');
       state.currentPlayerPos = (state.currentPlayerPos + 1) % nPlayers;
     }
   },
@@ -121,6 +98,7 @@ module.exports = {
     }
 
     players.forEach((e, i) => {
+      console.log('inforeach');
       e.folded = e.stack <= 0 ? (e.lost = true) : false;
       e.bet = 0;
     });
@@ -140,5 +118,6 @@ module.exports = {
     state.pot = smallBlind * 3;
     state.oneWin = false;
     state.end = false;
+    console.log('new handdone supposedly');
   }
 };
