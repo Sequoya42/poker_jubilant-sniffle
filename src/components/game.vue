@@ -10,23 +10,9 @@
   <playerAction v-else-if="!end"></playerAction>
 
   <chooseWinner v-else></chooseWinner>
-<!--
-<v-btn  @click="showStack=!showStack">
-  {{showStack ? 'hide infos' : 'show infos' }}
-</v-btn>
-  <playerStack v-if="showStack" v-model="players"></playerStack> -->
-  <!-- <playerStack v-model="players"></playerStack> -->
 </v-container>
-<!-- <div v-model="players" v-for="player in players">
-  <div class="">
 
-    {{player}}
-  </div>
-</div> -->
-<!-- <v-flex>
-  {{players.map((e, i)=>({[i]: e.bet}))}}
-</v-flex> -->
-
+<listActions></listActions>
 <v-flex :value="separatePot">
   {{separatePot}}
 </v-flex>
@@ -66,6 +52,7 @@ export default {
     chooseWinner: require('./chooseWinner.vue'),
     playerAction: require('./playerAction'),
     resetGame: require('./reset'),
+    listActions: require('./listActions'),
     popup: require('./popup')
   }
 };

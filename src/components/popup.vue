@@ -6,7 +6,6 @@
   v-model="snackbar"
   >
   <p>
-
   <b>{{ winner }}</b>   won the hand
   </p>
     <v-btn flat class="blue--text" @click.native="snackbar = false">Close</v-btn>

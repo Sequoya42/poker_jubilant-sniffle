@@ -24,7 +24,7 @@
   @keyup.75="next_action({type: 'knock'})">
   check</v-btn>
 
-  <v-btn v-else label="follow" @click.prevent="bet(betAmount)">Follow</v-btn>
+  <v-btn v-else label="follow" @click.prevent="bet(betAmount, 'follow')">Follow</v-btn>
 
   <v-btn v-if="currentPlayer.stack > lastBet" :value="betAmount" @click.prevent="bet(lastBet)" >Bet</v-btn>
   <v-btn v-if="currentPlayer.stack" label="allIn" @click.prevent="bet(currentPlayer.stack)">AllIn</v-btn>
@@ -73,13 +73,13 @@ export default {
   },
   methods: {
     ...mapActions(['next_action', 'update_amount']),
-    bet: function(e) {
+    bet: function(e, type = 'bet') {
       // if (e > this.betAmount) {
       this.$store.dispatch('update_amount', e);
       console.log('this.lastBet', this.lastBet);
       this.lastBet = e;
       // }
-      this.next_action({ type: 'bet', amount: e });
+      this.next_action({ type: type, amount: e });
     }
   },
   components: {
