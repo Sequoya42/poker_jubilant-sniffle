@@ -1,6 +1,6 @@
 const state = {
   end: false,
-
+  listActions: [],
   oneWin: false,
   cards: 0,
   playersInHand: 0,
@@ -15,6 +15,7 @@ const state = {
 
 const getters = {
   separatePot: state => state.separatePot,
+  listActions: state => state.listActions,
   winners: state => state.winners,
   oneWin: state => state.oneWin,
   dealer: state => state.dealer,
@@ -31,9 +32,11 @@ const getters = {
   nextPlayerPos: (state, getters) => (from = 'player') => {
     from = from === 'player' ? state.currentPlayerPos : from;
     let pos = (from + 1) % getters.nPlayers;
+    console.log('pos', pos);
     while (getters.players[pos].lost || getters.players[pos].folded) {
       pos = (pos + 1) % getters.nPlayers;
     }
+    console.log('Next pos', pos);
     return pos;
   },
 
@@ -63,3 +66,13 @@ export default {
   actions,
   mutations
 };
+
+/*
+//TODO
+
+
+Alin failed [chip lead] when one is finished
+when one is done, order player is fucked up [lastOne]
+
+Redo last one completely, and dealer
+*/

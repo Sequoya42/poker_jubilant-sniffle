@@ -66,36 +66,34 @@ module.exports = {
       pos = getters.currentPlayerPos,
       lastOne = getters.nextPlayerPos(pos),
       amount = p.amount;
+    commit('listActions', { player, amount: p.amount, pos: pos, type: p.type });
 
     if (amount && state.separatePot.every((a, i, arr) => a === arr[0])) {
-      console.log('NOW');
-      console.log('amount', amount);
-      console.log('state.currentPlayerPos', state.currentPlayerPos);
-      console.log('lastOne', pos);
-
       commit('updateLast', getters.prevPlayerPos());
     }
+
     if (p.type === 'fold') commit('fold', { player, pos, lastOne });
-    else if (p.type === 'bet') commit('bet', { player, pos, amount });
-    // }
+    else if (p.type === 'bet' || p.type === 'follow')
+      commit('bet', { player, pos, amount });
+
     let x = getters.players.map(e => e.stack).filter(e => e > 0);
     if (x.length === 0) {
+      // Every player is allIn
       return commit('endGame');
-    }
-    if (!getters.players.filter(e => !e.folded || e.stack === 0).length) {
+    } else if (!getters.players.filter(e => !e.folded || e.stack === 0).length) {
       console.log('if end game');
       return commit('endGame');
-    }
-    return dispatch('next_player');
+    } else return dispatch('next_player');
   },
 
   new_hand: ({ commit, getters }, first) => {
+    commit('clearPlayer', getters.players);
     commit('newHand', {
       players: getters.players,
       numberOfPlayers: getters.nPlayers,
       smallBlind: getters.smallBlind,
       dealer: getters.nextPlayerPos(+getters.dealer),
-      lastOne: getters.nextPlayerPos(getters.dealer + 2)
+      lastOne: getters.nextPlayerPos(+getters.dealer + 2)
     });
   }
 };

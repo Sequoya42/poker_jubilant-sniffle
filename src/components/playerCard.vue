@@ -9,6 +9,7 @@
   <!--  game.js in function clearHand : we reorder the array of players, dealer always on top -->
     <v-icon v-if="index === dealer">people</v-icon>
     <v-icon v-if="player.folded">visibility_off</v-icon>
+    <v-chip  class="pot"> {{player.bet}} </v-chip>
 </v-chip>
 </template>
 
@@ -36,7 +37,9 @@ export default {
           ? 'rgb(42, 23, 38)'
           : this.player.folded
             ? '#A53860'
-            : this.index === this.currentPlayerPos ? '#44647A' : '#2D4571',
+            : this.index === this.currentPlayerPos
+              ? 'rgb(22, 166, 149)'
+              : '#2D4571',
         top: topPos,
         left: leftPos
       };
@@ -46,7 +49,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 .mainDiv {
   display          : inline-block;
   height           : 100px;
@@ -79,4 +82,14 @@ export default {
     color : red;
 }
 
+.pot{
+text-align: center;
+/*margin-left: -100%;*/
+padding: 9px;
+border: 4px solid #ffc107 !important;
+margin-top: 70%;
+/*position: relative;*/
+/*width: auto;*/
+/*text-align: center;*/
+}
 </style>
