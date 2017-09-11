@@ -89,7 +89,7 @@ module.exports = {
       numberOfPlayers: getters.nPlayers,
       smallBlind: getters.smallBlind,
       dealer: getters.nextPlayerPos(+getters.dealer),
-      lastOne: getters.nextPlayerPos(+getters.dealer, 2)
+      lastOne: getters.nextPlayerPos(+getters.dealer, 3)
     });
   }
 };

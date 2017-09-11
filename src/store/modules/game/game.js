@@ -31,21 +31,26 @@ const getters = {
   },
   nextPlayerPos: (state, getters) => (from = 'player', count = 1) => {
     from = from === 'player' ? state.currentPlayerPos : from;
-    let pos = (from + 1) % getters.nPlayers;
+    let pos = from % getters.nPlayers;
     while (count) {
+      pos = (pos + 1) % getters.nPlayers;
       while (getters.players[pos].lost || getters.players[pos].folded) {
         pos = (pos + 1) % getters.nPlayers;
       }
+      console.log('count, pos', count, pos);
       count--;
     }
     return pos;
   },
 
-  prevPlayerPos: (state, getters) => (from = 'player') => {
+  prevPlayerPos: (state, getters) => (from = 'player', count = 1) => {
     from = from === 'player' ? state.currentPlayerPos : from;
     let pos = from === 0 ? getters.nPlayers - 1 : from - 1;
-    while (getters.players[pos].lost || getters.players[pos].folded) {
-      pos = pos === 0 ? getters.nPlayers : pos - 1;
+    while (count) {
+      while (getters.players[pos].lost || getters.players[pos].folded) {
+        pos = pos === 0 ? getters.nPlayers : pos - 1;
+      }
+      count--;
     }
     return pos;
   },

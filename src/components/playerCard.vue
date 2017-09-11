@@ -9,7 +9,7 @@
   <!--  game.js in function clearHand : we reorder the array of players, dealer always on top -->
     <v-icon v-if="index === dealer">people</v-icon>
     <v-icon v-if="player.folded">visibility_off</v-icon>
-    <v-chip  class="pot"> {{player.bet}} </v-chip>
+    <v-chip  v-if="player.bet" class="pot"> {{player.bet}} </v-chip>
 </v-chip>
 </template>
 
