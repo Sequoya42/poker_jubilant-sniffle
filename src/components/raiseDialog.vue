@@ -49,7 +49,6 @@ export default {
         return this.dialog;
       },
       set: function() {
-        console.log('this', this.dialog, this.realDialog);
         this.$emit('closeDialog');
       }
     }

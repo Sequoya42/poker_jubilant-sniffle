@@ -3,7 +3,6 @@ module.exports = {
     commit('chooseWinner', { players: getters.players });
 
     let x = getters.players.filter(e => e.stack > getters.smallBlind);
-    console.log('x', x.length);
     if (x.length === 1) {
       commit('reset');
     } else if (state.separatePot.every((el, i, arr) => el === 0)) {
@@ -44,10 +43,8 @@ module.exports = {
   next_player: ({ dispatch, commit, state, getters }, p) => {
     let nextPos = getters.nextPlayerPos();
     if (!getters.players.filter(e => !e.folded && e.stack).length) {
-      console.log('if end game');
       return commit('endGame');
     } else if (state.playersInHand < 2) {
-      console.log('BEFORE TIMEOUT');
       setTimeout(() => commit('oneWin', getters.players[nextPos]), 300);
       commit('addWinner', nextPos);
       return dispatch('chooseWinner');
@@ -81,7 +78,6 @@ module.exports = {
       // Every player is allIn
       return commit('endGame');
     } else if (!getters.players.filter(e => !e.folded || e.stack === 0).length) {
-      console.log('if end game');
       return commit('endGame');
     } else return dispatch('next_player');
   },
@@ -93,7 +89,7 @@ module.exports = {
       numberOfPlayers: getters.nPlayers,
       smallBlind: getters.smallBlind,
       dealer: getters.nextPlayerPos(+getters.dealer),
-      lastOne: getters.nextPlayerPos(+getters.dealer + 2)
+      lastOne: getters.nextPlayerPos(+getters.dealer, 2)
     });
   }
 };

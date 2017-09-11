@@ -29,14 +29,15 @@ const getters = {
   currentPlayer: (state, getters) => {
     return getters.players[state.currentPlayerPos];
   },
-  nextPlayerPos: (state, getters) => (from = 'player') => {
+  nextPlayerPos: (state, getters) => (from = 'player', count = 1) => {
     from = from === 'player' ? state.currentPlayerPos : from;
     let pos = (from + 1) % getters.nPlayers;
-    console.log('pos', pos);
-    while (getters.players[pos].lost || getters.players[pos].folded) {
-      pos = (pos + 1) % getters.nPlayers;
+    while (count) {
+      while (getters.players[pos].lost || getters.players[pos].folded) {
+        pos = (pos + 1) % getters.nPlayers;
+      }
+      count--;
     }
-    console.log('Next pos', pos);
     return pos;
   },
 
