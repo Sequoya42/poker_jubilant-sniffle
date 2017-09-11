@@ -8,6 +8,7 @@ import App from './App';
 import popup from './components/popup';
 import router from './router';
 import store from './store';
+// import ScrollBar from './directives/scrollBar.js';
 
 Vue.config.productionTip = false;
 
@@ -17,6 +18,17 @@ require('../node_modules//vuetify/dist/vuetify.min.css');
 
 Vue.use(Vuex);
 Vue.use(Vuetify);
+// Vue.directive('scrollBar', {
+//   // bind: function(el) {
+//   //   console.log('');
+//   //   this.$el.scrollTop = this.el.scrollHeight;
+//   // },
+//
+//   update: function(newValue, oldValue) {
+//     this.el.scrollTop = this.el.scrollHeight;
+//   }
+// });
+
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
