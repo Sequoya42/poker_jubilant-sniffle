@@ -80,7 +80,6 @@ const mutations = {
   },
 
   updatePlayersOrders: (state, d) => {
-    console.log(d);
     state.players = d;
   },
 

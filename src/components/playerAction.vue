@@ -49,7 +49,6 @@ export default {
   },
   watch: {
     cards: function(value) {
-      console.log('value in watch', value);
       this.lastBet = this.smallBlind;
     }
   },
@@ -76,7 +75,6 @@ export default {
     bet: function(e, type = 'bet') {
       // if (e > this.betAmount) {
       this.$store.dispatch('update_amount', e);
-      console.log('this.lastBet', this.lastBet);
       this.lastBet = e;
       // }
       this.next_action({ type: type, amount: e });
