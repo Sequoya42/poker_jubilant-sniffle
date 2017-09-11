@@ -15,23 +15,13 @@ export default {
   data: function() {
     return {};
   },
-  updated() {
-    var elem = this.$el;
-    elem.scrollTop = elem.clientHeight;
-  },
   computed: {
     ...mapGetters(['listActions'])
   },
   directives: {
     scrollBar: {
-      bind: function(el) {
-        console.log('el', el.scrollTop);
-        console.log(el.style.Height);
+      update: function(el, value) {
         el.scrollTop = el.scrollHeight;
-        console.log('el', el.scrollHeight);
-      },
-      update: function(el, nel) {
-        el.scrollTop = nel.scrollHeight;
       }
     }
   },
