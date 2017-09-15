@@ -83,13 +83,21 @@ module.exports = {
   },
 
   new_hand: ({ commit, getters }, first) => {
+    let pastDealer = getters.dealer;
+    let position = {
+      dealer: getters.nextPlayerPos(pastDealer),
+      small: getters.nextPlayerPos(pastDealer, 2),
+      big: getters.nextPlayerPos(pastDealer, 3),
+      last: getters.nextPlayerPos(pastDealer, 3)
+    };
     commit('clearPlayer', getters.players);
     commit('newHand', {
       players: getters.players,
       numberOfPlayers: getters.nPlayers,
       smallBlind: getters.smallBlind,
-      dealer: getters.nextPlayerPos(+getters.dealer),
-      lastOne: getters.nextPlayerPos(+getters.dealer, 3)
+      position: position
+      // dealer: getters.nextPlayerPos(+getters.dealer),
+      // lastOne: getters.nextPlayerPos(+getters.dealer, 3)
     });
   }
 };

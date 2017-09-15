@@ -102,31 +102,31 @@ module.exports = {
     );
   },
 
-  newHand: (state, { players, numberOfPlayers, smallBlind, dealer, lastOne }) => {
+  newHand: (state, { players, numberOfPlayers, smallBlind, position }) => {
     function putBlind(small, big, nPlayers) {
-      players[(dealer + big) % nPlayers].bet += smallBlind * 2;
-      players[(dealer + small) % nPlayers].bet += smallBlind;
-      players[(dealer + big) % nPlayers].stack -= smallBlind * 2;
-      players[(dealer + small) % nPlayers].stack -= smallBlind;
+      players[big].bet += smallBlind * 2;
+      players[small].bet += smallBlind;
+      players[big].stack -= smallBlind * 2;
+      players[small].stack -= smallBlind;
 
-      state.separatePot[(dealer + small) % nPlayers] = smallBlind;
-      state.separatePot[(dealer + big) % nPlayers] = smallBlind * 2;
+      state.separatePot[small] = smallBlind;
+      state.separatePot[big] = smallBlind * 2;
     }
 
     state.playersInHand = players.filter(e => !e.lost).length;
-    state.dealer = dealer;
+    state.dealer = position.dealer;
     state.cards = 0;
-    state.lastOne = lastOne;
+    state.lastOne = position.last;
     state.currentPlayerPos = (state.dealer + 3) % state.playersInHand;
     state.betAmount = smallBlind * 2;
     state.separatePot = Array(numberOfPlayers).fill(0);
 
     if (state.playersInHand === 2) {
-      state.lastOne = (dealer + 1) % 2;
-      state.currentPlayerPos = dealer;
-      putBlind(2, 1, state.playersInHand);
+      state.lastOne = (position.dealer + 1) % 2;
+      state.currentPlayerPos = position.dealer;
+      putBlind(position.big, position.small, state.playersInHand);
     } else {
-      putBlind(1, 2, state.playersInHand);
+      putBlind(position.small, position.big, state.playersInHand);
     }
     state.pot = smallBlind * 3;
     state.listActions = [];

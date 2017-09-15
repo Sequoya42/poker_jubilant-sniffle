@@ -58,7 +58,7 @@ const mutations = {
       } else if (d < state.numberOfPlayers) {
         state.players.splice(d, +(state.numberOfPlayers - d));
       }
-      state.numberOfPlayers = d;
+      state.numberOfPlayers = +d;
     }
   },
 
@@ -76,6 +76,9 @@ const mutations = {
   setPlayersStack: state => {
     state.players.forEach(e => {
       e.stack = state.stack;
+      e.bet = 0;
+      e.folded = false;
+      e.lost = false;
     });
   },
 
