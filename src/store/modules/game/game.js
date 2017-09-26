@@ -37,7 +37,6 @@ const getters = {
       while (getters.players[pos].lost || getters.players[pos].folded) {
         pos = (pos + 1) % getters.nPlayers;
       }
-      console.log('count, pos', count, pos);
       count--;
     }
     return pos;
@@ -53,10 +52,6 @@ const getters = {
       count--;
     }
     return pos;
-  },
-
-  nextPlayer: (state, getters) => {
-    return getters.players[getters.nextPlayerPos('player')];
   },
 
   minStack: (state, getters) =>
