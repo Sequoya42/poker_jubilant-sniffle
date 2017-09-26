@@ -122,7 +122,6 @@ module.exports = {
     state.separatePot = Array(numberOfPlayers).fill(0);
 
     if (state.playersInHand === 2) {
-      state.lastOne = (position.dealer + 1) % 2;
       state.currentPlayerPos = position.dealer;
       putBlind(position.big, position.small, state.playersInHand);
     } else {
