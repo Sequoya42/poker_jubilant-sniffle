@@ -3,8 +3,8 @@
   <div class="name">
     {{player.name}}
   </div>
-  <div class="stack" :class="{allIn: !player.stack}">
-    {{player.lost ? "finished" : player.stack || "ALL IN" }}
+  <div class="stack" :class="{allIn: player.allIn}">
+    {{player.lost ? "finished" : player.allIn ? "ALL IN" : player.stack}}
   </div>
   <!--  game.js in function clearHand : we reorder the array of players, dealer always on top -->
     <v-icon v-if="index === dealer">people</v-icon>

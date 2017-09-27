@@ -51,7 +51,7 @@ module.exports = {
   next_player: ({ dispatch, commit, state, getters }, p) => {
     console.log('NEXT PLAYER POS FROM NEXT PLAYER');
     let nextPos = getters.nextPlayerPos();
-    if (!getters.players.filter(e => !e.folded && e.stack).length) {
+    if (!getters.players.filter(e => !e.folded && !e.allIn).length) {
       return commit('endGame');
     } else if (state.playersInHand < 2) {
       setTimeout(() => commit('oneWin', getters.players[nextPos]), 300);
@@ -66,7 +66,9 @@ module.exports = {
       players: getters.players
     });
   },
-
+  all_in: ({ commit, state, getters }) => {
+    commit('allIn', getters.currentPlayer);
+  },
   next_action: ({ dispatch, commit, state, getters }, p) => {
     console.log('NEXT PLAYER POS FROM NEXT ACTION');
     const player = getters.currentPlayer,
