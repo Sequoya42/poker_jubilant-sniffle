@@ -35,10 +35,7 @@ module.exports = {
 
   updateAmount: (state, p) => {
     if (p.amount > state.betAmount) {
-      state.lastOne =
-        state.currentPlayerPos === 0
-          ? p.numberOfPlayers - 1
-          : state.currentPlayerPos - 1;
+      state.lastOne = p.updateLast;
     }
     state.betAmount = p.amount;
   },

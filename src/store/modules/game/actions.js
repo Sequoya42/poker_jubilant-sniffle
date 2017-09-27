@@ -18,13 +18,15 @@ module.exports = {
   },
 
   update_amount: ({ state, commit, getters }, amount) => {
-    let realAmount = getters.players.reduce((a, b) => (a.stack < b.stack ? a : b))
-      .stack;
+    let realAmount = getters.players
+      .filter(p => p != getters.currentPlayer)
+      .reduce((a, b) => (a.stack > b.stack ? a : b)).stack;
     amount = amount > realAmount ? realAmount : amount;
-    console.log('realAmount', realAmount);
+    console.log('amount', amount);
     commit('updateAmount', {
       amount: amount,
       numberOfPlayers: getters.nPlayers,
+      updateLast: getters.prevPlayerPos(),
       bet: getters.currentPlayer.bet
     });
   },
@@ -98,7 +100,7 @@ module.exports = {
       dealer: getters.nextPlayerPos(pastDealer),
       small: getters.nextPlayerPos(pastDealer, 2),
       big: getters.nextPlayerPos(pastDealer, 3),
-      last: getters.nextPlayerPos(pastDealer, 4)
+      last: getters.prevPlayerPos(getters.nextPlayerPos(pastDealer))
     };
     commit('newHand', {
       players: getters.players,

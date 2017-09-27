@@ -74,8 +74,9 @@ export default {
     ...mapActions(['next_action', 'update_amount']),
     bet: function(e, type = 'bet') {
       // if (e > this.betAmount) {
+      console.log('e', e);
       this.$store.dispatch('update_amount', e);
-      this.lastBet = e;
+      // this.lastBet = e;
       // }
       this.next_action({ type: type, amount: e });
     }
