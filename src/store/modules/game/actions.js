@@ -1,6 +1,8 @@
 module.exports = {
   chooseWinner: ({ state, dispatch, commit, getters }) => {
-    commit('chooseWinner', { players: getters.players });
+    if (state.winners.length) {
+      commit('chooseWinner', { players: getters.players });
+    }
 
     let x = getters.players.filter(e => e.stack > getters.smallBlind);
     if (x.length === 1) {
@@ -16,6 +18,10 @@ module.exports = {
   },
 
   update_amount: ({ state, commit, getters }, amount) => {
+    let realAmount = getters.players.reduce((a, b) => (a.stack < b.stack ? a : b))
+      .stack;
+    amount = amount > realAmount ? realAmount : amount;
+    console.log('realAmount', realAmount);
     commit('updateAmount', {
       amount: amount,
       numberOfPlayers: getters.nPlayers,
