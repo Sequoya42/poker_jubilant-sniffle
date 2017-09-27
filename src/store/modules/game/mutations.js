@@ -76,6 +76,9 @@ module.exports = {
     player.stack -= newAmount;
   },
 
+  allIn: (state, currentPlayer) => {
+    currentPlayer.allIn = true;
+  },
   // ******** ********  next_card stuff  ******** ********
   nextCard: (state, p) => {
     state.cards += p.cards;
@@ -89,6 +92,7 @@ module.exports = {
   clearPlayer: (state, players) => {
     players.map((e, i) => {
       e.folded = e.stack <= 0 ? (e.lost = true) : false;
+      e.allIn = false;
       e.bet = 0;
     });
   },

@@ -27,11 +27,10 @@
   <v-btn v-else label="follow" @click.prevent="bet(betAmount, 'follow')">Follow</v-btn>
 
   <v-btn v-if="currentPlayer.stack > lastBet" :value="betAmount" @click.prevent="bet(lastBet)" >Bet</v-btn>
-  <v-btn v-if="currentPlayer.stack" label="allIn" @click.prevent="bet(currentPlayer.stack)">AllIn</v-btn>
+  <v-btn v-if="!currentPlayer.allIn" label="allIn" @click.prevent="bet(currentPlayer.stack, 'AllIn')">AllIn</v-btn>
 
    <br/>
    <br/>
-   <!-- <v-btn  class="primary green darken-3" :value="betAmount" @click.prevent="bet(pot)" >pot: {{pot}}</v-btn> -->
 
 </div>
 </template>
@@ -73,16 +72,13 @@ export default {
   methods: {
     ...mapActions(['next_action', 'update_amount']),
     bet: function(e, type = 'bet') {
-      // if (e > this.betAmount) {
-      console.log('e', e);
+      if (type == 'AllIn' || e >= this.currentPlayer.stack) {
+        type = 'bet';
+        this.$store.dispatch('all_in');
+      }
       this.$store.dispatch('update_amount', e);
-      // this.lastBet = e;
-      // }
-      this.next_action({ type: type, amount: e });
+      this.$store.dispatch('next_action', { type: type, amount: e });
     }
-  },
-  components: {
-    // raiseDialog: require('./raiseDialog.vue'),
   }
 };
 </script>

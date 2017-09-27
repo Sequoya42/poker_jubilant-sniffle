@@ -1,12 +1,25 @@
+const generate_player = name => ({
+  name,
+  stack: 0,
+  bet: 0,
+  folded: false,
+  lost: false,
+  allIn: false
+});
+
+const generate_players = size => {
+  let players = [];
+  let i = 1;
+  while (size--) {
+    players.push(generate_player(`Player_${i++}`));
+  }
+  return players;
+};
 const state = {
   stack: 500,
   reset: false,
   numberOfPlayers: 3,
-  players: [
-    { name: 'Player_1', stack: 0, bet: 0, folded: false, lost: false },
-    { name: 'Player_2', stack: 0, bet: 0, folded: false, lost: false },
-    { name: 'Player_3', stack: 0, bet: 0, folded: false, lost: false }
-  ],
+  players: generate_players(3),
   smallBlind: 10,
   bigBlind: 20
 };
@@ -48,13 +61,11 @@ const mutations = {
   setPlayers: (state, d) => {
     if (d > 0) {
       if (d > state.numberOfPlayers) {
-        state.players.splice(d, 1, {
-          name: `Player_${+state.numberOfPlayers + 1}`,
-          stack: 0,
-          bet: 0,
-          folded: false,
-          lost: false
-        });
+        state.players.splice(
+          d,
+          1,
+          generate_player(`Player_${+state.numberOfPlayers + 1}`)
+        );
       } else if (d < state.numberOfPlayers) {
         state.players.splice(d, +(state.numberOfPlayers - d));
       }
