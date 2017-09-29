@@ -1,15 +1,44 @@
+const newPot = (separatePot, amount) => {
+  return separatePot.map(p => {
+    if (p > 0) {
+      p -= amount;
+    }
+    if (p < 0) {
+      p = 0;
+    }
+    return p;
+  });
+};
+
 module.exports = {
   chooseWinner: (state, { players }) => {
-    //TODO temporary, to fix
     winners = state.winners;
-    const amount = state.pot / winners.length;
-    winners.forEach(w => {
-      players[w].stack += amount;
+    let winerPot = 0;
+    let validPlayers = state.separatePot.filter(e => e != 0).length;
+    state.winners.map(w => (winerPot += state.separatePot[w]));
+    let money = winerPot > state.pot ? state.pot : winerPot;
+    money *= validPlayers;
+    winners.map(w => {
+      players[w].stack += Math.floor(state.separatePot[w] / winerPot * money);
     });
-    state.pot = 0;
-    state.end = false;
+    state.separatePot = newPot(state.separatePot, money / validPlayers);
+    state.pot -= money;
+    console.log('state.pot', state.pot);
+    validPlayers = state.separatePot.filter(e => e != 0).length;
+    if (validPlayers == 1) {
+      winner = state.separatePot.reduce((a, b, i) => {
+        if (b != 0) a = i;
+        return a;
+      }, 0);
+      players[winner].stack += state.pot;
+      state.pot = 0;
+    }
+    if (state.pot <= 0) {
+      state.pot = 0;
+      state.end = false;
+      state.separatePot = [0];
+    }
     state.winners = [];
-    state.separatePot = [0];
   },
 
   getMoneyBack: (state, players) => {

@@ -70,7 +70,6 @@ module.exports = {
     commit('allIn', getters.currentPlayer);
   },
   next_action: ({ dispatch, commit, state, getters }, p) => {
-    console.log('NEXT PLAYER POS FROM NEXT ACTION');
     const player = getters.currentPlayer,
       pos = getters.currentPlayerPos,
       lastOne = getters.nextPlayerPos(pos),
