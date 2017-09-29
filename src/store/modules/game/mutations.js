@@ -1,3 +1,26 @@
+// state.winners.map(w => (winerPot += state.separatePot[w]));
+// let validPlayers = state.separatePot.filter(e => e != 0).length;
+// let money = winerPot > state.pot - winerPot ? state.pot : winerPot;
+//
+// console.log('money', money);
+// winners.map(w => {
+//   let ratio = state.separatePot[w] / winerPot;
+//   console.log('ratio', ratio);
+//   console.log('money', money);
+//   let amount = Math.floor(ratio * money);
+//   console.log('amount', amount);
+//   players[w].stack += amount;
+// });
+//
+// console.log('state.winners.length', state.winners.length);
+//
+// console.log('money / state.winners.length', money / state.winners.length);
+// leArgh =
+// state.separatePot = newPot(state.separatePot, leArgh);
+// state.pot -= money;
+//
+// console.log('state.pot', state.pot);
+// ******** ********   stack + fric  ******** ********
 const newPot = (separatePot, amount) => {
   return separatePot.map(p => {
     if (p > 0) {
@@ -12,28 +35,28 @@ const newPot = (separatePot, amount) => {
 
 module.exports = {
   chooseWinner: (state, { players }) => {
-    winners = state.winners;
-    let winerPot = 0;
-    let validPlayers = state.separatePot.filter(e => e != 0).length;
-    state.winners.map(w => (winerPot += state.separatePot[w]));
-    let money = winerPot > state.pot ? state.pot : winerPot;
-    money *= validPlayers;
-    winners.map(w => {
-      players[w].stack += Math.floor(state.separatePot[w] / winerPot * money);
+    const validPlayers = state.separatePot.filter(e => e > 0).length;
+    const winners = state.winners.map((w, i) => {
+      return { index: w, pot: state.separatePot[w] };
     });
-    state.separatePot = newPot(state.separatePot, money / validPlayers);
-    state.pot -= money;
-    console.log('state.pot', state.pot);
-    validPlayers = state.separatePot.filter(e => e != 0).length;
-    if (validPlayers == 1) {
-      winner = state.separatePot.reduce((a, b, i) => {
-        if (b != 0) a = i;
-        return a;
-      }, 0);
-      players[winner].stack += state.pot;
-      state.pot = 0;
-    }
+
+    winners.sort((a, b) => a.pot > b.pot);
+    console.log('winners', winners);
+    winners.map(w => {
+      console.log('inside foreach', w);
+      let amount = Math.floor(w.pot * validPlayers / winners.length);
+      amount = amount > state.pot ? state.pot : amount;
+      players[w.index].stack += amount;
+      state.separatePot = state.separatePot.map(p => {
+        p -= w.pot;
+        if (p < 0) p = 0;
+        state.pot -= w.pot;
+        return p;
+      });
+    });
+    // ******** ********  lesbails  ******** ********
     if (state.pot <= 0) {
+      console.log('LE RESET');
       state.pot = 0;
       state.end = false;
       state.separatePot = [0];
