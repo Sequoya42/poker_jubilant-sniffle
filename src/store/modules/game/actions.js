@@ -5,7 +5,7 @@ module.exports = {
     }
 
     let x = getters.players.filter(e => e.stack > getters.smallBlind);
-    if (x.length === 1) {
+    if (x.length === 1 && !state.pot) {
       commit('reset');
     } else if (state.separatePot.every((el, i, arr) => el === 0)) {
       return dispatch('new_hand');
@@ -85,7 +85,7 @@ module.exports = {
     else if (p.type === 'bet' || p.type === 'follow')
       commit('bet', { player, pos, amount });
 
-    let x = getters.players.map(e => e.stack).filter(e => e > 0);
+    let x = getters.players.filter(e => !e.allIn);
     if (x.length === 0) {
       // Every player is allIn
       return commit('endGame');
