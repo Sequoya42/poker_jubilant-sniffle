@@ -34,7 +34,11 @@ const getters = {
     let pos = from % getters.nPlayers;
     while (count) {
       pos = (pos + 1) % getters.nPlayers;
-      while (getters.players[pos].lost || getters.players[pos].folded) {
+      while (
+        getters.players[pos].lost ||
+        getters.players[pos].folded ||
+        getters.players[pos].allIn
+      ) {
         pos = (pos + 1) % getters.nPlayers;
       }
       count--;
