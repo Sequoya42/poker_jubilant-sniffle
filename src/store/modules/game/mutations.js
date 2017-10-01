@@ -1,38 +1,3 @@
-// state.winners.map(w => (winerPot += state.separatePot[w]));
-// let validPlayers = state.separatePot.filter(e => e != 0).length;
-// let money = winerPot > state.pot - winerPot ? state.pot : winerPot;
-//
-// console.log('money', money);
-// winners.map(w => {
-//   let ratio = state.separatePot[w] / winerPot;
-//   console.log('ratio', ratio);
-//   console.log('money', money);
-//   let amount = Math.floor(ratio * money);
-//   console.log('amount', amount);
-//   players[w].stack += amount;
-// });
-//
-// console.log('state.winners.length', state.winners.length);
-//
-// console.log('money / state.winners.length', money / state.winners.length);
-// leArgh =
-// state.separatePot = newPot(state.separatePot, leArgh);
-// state.pot -= money;
-//
-// console.log('state.pot', state.pot);
-// ******** ********   stack + fric  ******** ********
-const newPot = (separatePot, amount) => {
-  return separatePot.map(p => {
-    if (p > 0) {
-      p -= amount;
-    }
-    if (p < 0) {
-      p = 0;
-    }
-    return p;
-  });
-};
-
 module.exports = {
   chooseWinner: (state, { players }) => {
     const validPlayers = state.separatePot.filter(e => e > 0).length;
@@ -46,7 +11,21 @@ module.exports = {
       console.log('inside foreach', w);
       let amount = Math.floor(w.pot * validPlayers / winners.length);
       amount = amount > state.pot ? state.pot : amount;
-      players[w.index].stack += amount;
+      console.log('amount', amount);
+      console.log(
+        'players[w.index].stack',
+        players[w.index].name,
+        players[w.index].stack
+      );
+      winners.map(w => {
+        players[w.index].stack += amount;
+      });
+      // players[w.index].stack += amount;
+      console.log(
+        'AFTER players[w.index].stack',
+        players[w.index].name,
+        players[w.index].stack
+      );
       state.separatePot = state.separatePot.map(p => {
         p -= w.pot;
         if (p < 0) p = 0;
