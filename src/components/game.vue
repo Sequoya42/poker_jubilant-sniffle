@@ -79,7 +79,7 @@ border-radius: 22%;
 
 // TODO
 /*
-
+:: allin and folded, problem
 transition effect change buttons
 
 

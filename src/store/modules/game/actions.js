@@ -52,7 +52,7 @@ module.exports = {
       setTimeout(() => commit('oneWin', getters.players[nextPos]), 300);
       commit('addWinner', nextPos);
       return dispatch('chooseWinner');
-    } else if (!getters.players.filter(e => !e.folded && !e.allIn)) {
+    } else if (!getters.players.filter(e => !e.folded && !e.allIn).length) {
       return commit('endGame');
     } else if (state.currentPlayerPos === state.lastOne) {
       dispatch('next_card');

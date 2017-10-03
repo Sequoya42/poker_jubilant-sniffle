@@ -1,41 +1,29 @@
 module.exports = {
   chooseWinner: (state, { players }) => {
     const validPlayers = state.separatePot.filter(e => e > 0).length;
-    const winners = state.winners.map((w, i) => {
+    let maxBet = 0;
+    const winners = state.winners.map(w => {
+      players[w].stack += state.separatePot[w];
+      state.pot -= state.separatePot[w];
+      if (state.separatePot[w] > maxBet) {
+        maxBet = state.separatePot[w];
+      }
       return { index: w, pot: state.separatePot[w] };
     });
 
     winners.sort((a, b) => a.pot > b.pot);
-    console.log('winners', winners);
-    winners.map(w => {
-      console.log('inside foreach', w);
-      let amount = Math.floor(w.pot * validPlayers / winners.length);
-      amount = amount > state.pot ? state.pot : amount;
-      console.log('amount', amount);
-      console.log(
-        'players[w.index].stack',
-        players[w.index].name,
-        players[w.index].stack
-      );
-      winners.map(w => {
-        players[w.index].stack += amount;
-      });
-      // players[w.index].stack += amount;
-      console.log(
-        'AFTER players[w.index].stack',
-        players[w.index].name,
-        players[w.index].stack
-      );
-      state.separatePot = state.separatePot.map(p => {
-        p -= w.pot;
-        if (p < 0) p = 0;
-        state.pot -= w.pot;
-        return p;
-      });
+    let add = 0;
+    let toShare = state.pot / winners.length;
+    let prevPot = 0;
+    winners.forEach(w => {
+      let value = toShare * ((state.separatePot[w.index] - prevPot) / maxBet);
+      prevPot = state.separatePot[w.index];
+      add += value;
+      players[w.index].stack += add;
+      state.pot -= add;
     });
-    // ******** ********  lesbails  ******** ********
+    // ******** ********  Start next hand  ******** ********
     if (state.pot <= 0) {
-      console.log('LE RESET');
       state.pot = 0;
       state.end = false;
       state.separatePot = [0];
