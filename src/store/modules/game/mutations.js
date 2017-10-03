@@ -71,17 +71,8 @@ module.exports = {
     state.betAmount = p.amount;
   },
 
-  nextPlayer: (state, { nPlayers, players }) => {
-    let i = 0;
-    state.currentPlayerPos = (state.currentPlayerPos + 1) % nPlayers;
-    while (
-      players[state.currentPlayerPos].folded ||
-      players[state.currentPlayerPos].stack === 0
-    ) {
-      i++;
-      if (i > players.length * 2) break;
-      state.currentPlayerPos = (state.currentPlayerPos + 1) % nPlayers;
-    }
+  nextPlayer: (state, { nextPos }) => {
+    state.currentPlayerPos = nextPos;
   },
   // ******** ********  bet stuff  ******** ********
 
@@ -116,8 +107,9 @@ module.exports = {
     p.players.map(e => (e.bet = 0));
 
     state.lastOne = p.lastOne;
+    state.currentPlayerPos = p.firstOne;
     // state current player pos will be state.dealer + 1 since next player is calledafter
-    state.currentPlayerPos = state.dealer;
+    // state.currentPlayerPos = state.dealer;
   },
 
   clearPlayer: (state, players) => {
