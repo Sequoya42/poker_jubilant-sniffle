@@ -5,22 +5,25 @@ module.exports = {
     const winners = state.winners.map(w => {
       players[w].stack += state.separatePot[w];
       state.pot -= state.separatePot[w];
-      if (state.separatePot[w] > maxBet) {
-        maxBet = state.separatePot[w];
-      }
+      maxBet = maxBet > state.separatePot[w] ? maxBet : state.separatePot[w];
       return { index: w, pot: state.separatePot[w] };
     });
 
     winners.sort((a, b) => a.pot > b.pot);
     let add = 0;
-    let toShare = state.pot / winners.length;
+    let oldPot = state.pot;
     let prevPot = 0;
-    winners.forEach(w => {
-      let value = toShare * ((state.separatePot[w.index] - prevPot) / maxBet);
-      prevPot = state.separatePot[w.index];
+    winners.map(w => {
+      let toShare = (oldPot - oldPot % w.pot) / winners.length;
+      let value = toShare * ((w.pot - prevPot) / maxBet);
+      prevPot = w.pot;
       add += value;
       players[w.index].stack += add;
+      players[w.index].allIn = false;
       state.pot -= add;
+      state.separatePot = state.separatePot.map(
+        e => (e -= prevPot / winners.length)
+      );
     });
     // ******** ********  Start next hand  ******** ********
     if (state.pot <= 0) {
@@ -102,6 +105,7 @@ module.exports = {
     players.map((e, i) => {
       e.folded = e.stack <= 0 ? (e.lost = true) : false;
       e.allIn = false;
+      e.stack = Math.floor(e.stack);
       e.bet = 0;
     });
   },
