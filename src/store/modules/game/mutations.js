@@ -108,8 +108,6 @@ module.exports = {
 
     state.lastOne = p.lastOne;
     state.currentPlayerPos = p.firstOne;
-    // state current player pos will be state.dealer + 1 since next player is calledafter
-    // state.currentPlayerPos = state.dealer;
   },
 
   clearPlayer: (state, players) => {
@@ -125,7 +123,7 @@ module.exports = {
       `${p.player.name} ${p.type} ${p.type === 'bet' ? p.amount : ''}`
     );
   },
-
+  // ******** ********  new hand  ******** ********
   newHand: (state, { players, numberOfPlayers, smallBlind, position }) => {
     function putBlind(small, big, nPlayers) {
       players[big].bet += smallBlind * 2;
@@ -147,6 +145,7 @@ module.exports = {
 
     if (state.playersInHand === 2) {
       state.currentPlayerPos = position.dealer;
+      state.lastOne = position.small;
       putBlind(position.big, position.small, state.playersInHand);
     } else {
       putBlind(position.small, position.big, state.playersInHand);
