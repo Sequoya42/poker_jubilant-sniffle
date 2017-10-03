@@ -1,3 +1,5 @@
+const np = 5;
+
 const generate_player = name => ({
   name,
   stack: 0,
@@ -18,8 +20,8 @@ const generate_players = size => {
 const state = {
   stack: 500,
   reset: false,
-  numberOfPlayers: 3,
-  players: generate_players(3),
+  numberOfPlayers: np,
+  players: generate_players(np),
   smallBlind: 10,
   bigBlind: 20
 };
@@ -54,7 +56,10 @@ const mutations = {
 
   reset: state => (state.reset = !state.reset),
 
-  setSmallBlind: (state, d) => (state.smallBlind = d),
+  setSmallBlind: (state, d) => {
+    state.smallBlind = d;
+    state.bigBlind = 2 * d;
+  },
 
   setBigBlind: (state, d) => (state.bigBlind = d),
 

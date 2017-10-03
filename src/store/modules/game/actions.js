@@ -101,7 +101,7 @@ module.exports = {
       dealer: getters.nextPlayerPos(pastDealer),
       small: getters.nextPlayerPos(pastDealer, 2),
       big: getters.nextPlayerPos(pastDealer, 3),
-      last: getters.prevPlayerPos(getters.nextPlayerPos(pastDealer))
+      last: getters.nextPlayerPos(pastDealer, 2)
     };
     commit('newHand', {
       players: getters.players,

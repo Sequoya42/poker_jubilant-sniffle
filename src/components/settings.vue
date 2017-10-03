@@ -4,6 +4,8 @@
 <v-text-field
   label="Money Stack"
   type="number"
+  min="10"
+  max="50000"
   :value="stack"
   @input="setStack"
   prepend-icon="account_balance"
@@ -28,12 +30,9 @@
 ></v-text-field>
 <v-text-field
   label="big Blind"
-  min="2"
-  max="2000"
-  type="number"
   :value="bigBlind"
-  @input="setBigBlind"
   prepend-icon="attach_money"
+  disabled
 ></v-text-field>
 </v-container>
 
