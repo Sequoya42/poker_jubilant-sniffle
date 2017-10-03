@@ -30,15 +30,19 @@ const getters = {
     return getters.players[state.currentPlayerPos];
   },
   nextPlayerPos: (state, getters) => (from = 'player', count = 1) => {
+    console.log('next player pos');
     from = from === 'player' ? state.currentPlayerPos : from;
     let pos = from % getters.nPlayers;
     while (count) {
+      let i = 0;
       pos = (pos + 1) % getters.nPlayers;
       while (
-        getters.players[pos].lost ||
-        getters.players[pos].folded ||
-        getters.players[pos].allIn
+        (getters.players[pos].lost ||
+          getters.players[pos].folded ||
+          getters.players[pos].allIn) &&
+        i++ < 50
       ) {
+        console.log('INSIDE WHILE');
         pos = (pos + 1) % getters.nPlayers;
       }
       count--;
@@ -50,7 +54,14 @@ const getters = {
     from = from === 'player' ? state.currentPlayerPos : from;
     let pos = from === 0 ? getters.nPlayers - 1 : from - 1;
     while (count) {
-      while (getters.players[pos].lost || getters.players[pos].folded) {
+      let i = 0;
+      while (
+        i++ < 50 &&
+        (getters.players[pos].lost ||
+          getters.players[pos].folded ||
+          getters.players[pos.folded])
+      ) {
+        console.log('INSIDE WHILE PREV');
         pos = pos === 0 ? getters.nPlayers : pos - 1;
       }
       count--;

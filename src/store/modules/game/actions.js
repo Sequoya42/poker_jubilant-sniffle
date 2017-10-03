@@ -19,8 +19,8 @@ module.exports = {
 
   update_amount: ({ state, commit, getters }, amount) => {
     let realAmount = getters.players
-      .filter(p => p != getters.currentPlayer)
-      .reduce((a, b) => (a.stack > b.stack ? a : b)).stack;
+      .filter(p => !p.folded && !p.allIn)
+      .reduce((a, b) => (a.stack > b.stack ? a : b), []).stack;
     amount = amount > realAmount ? realAmount : amount;
     console.log('amount', amount);
     commit('updateAmount', {
@@ -30,7 +30,7 @@ module.exports = {
       bet: getters.currentPlayer.bet
     });
   },
-
+  // ******** ********  next card  ******** ********
   next_card: ({ commit, state, getters }) => {
     if (state.cards === 5) {
       commit('endGame');
@@ -39,7 +39,8 @@ module.exports = {
         cards: state.cards === 0 ? 3 : 1,
         players: getters.players,
         smallBlind: getters.bigBlind,
-        lastOne: getters.prevPlayerPos(state.dealer + 1)
+        lastOne: getters.prevPlayerPos(state.dealer + 1),
+        firstOne: getters.nextPlayerPos(state.dealer)
       });
       commit('updateAmount', {
         amount: getters.bigBlind,
@@ -47,32 +48,28 @@ module.exports = {
       });
     }
   },
-
+  // ******** ********  next player  ******** ********
   next_player: ({ dispatch, commit, state, getters }, p) => {
-    console.log('NEXT PLAYER POS FROM NEXT PLAYER');
     let nextPos = getters.nextPlayerPos();
-    if (getters.players.filter(e => !e.folded && !e.allIn).length <= 1) {
-      return commit('endGame');
-    } else if (state.playersInHand < 2) {
+    if (getters.players.filter(e => !e.folded).length < 2) {
       setTimeout(() => commit('oneWin', getters.players[nextPos]), 300);
       commit('addWinner', nextPos);
       return dispatch('chooseWinner');
+    } else if (!getters.players.filter(e => !e.folded && !e.allIn)) {
+      return commit('endGame');
     } else if (state.currentPlayerPos === state.lastOne) {
       dispatch('next_card');
+    } else {
+      commit('nextPlayer', { nextPos });
     }
-
-    commit('nextPlayer', {
-      nPlayers: getters.nPlayers,
-      players: getters.players
-    });
   },
   all_in: ({ commit, state, getters }) => {
     commit('allIn', getters.currentPlayer);
   },
+  // ******** ********  next action  ******** ********
   next_action: ({ dispatch, commit, state, getters }, p) => {
     const player = getters.currentPlayer,
       pos = getters.currentPlayerPos,
-      lastOne = getters.nextPlayerPos(pos),
       amount = p.amount;
 
     commit('listActions', { player, amount: p.amount, pos: pos, type: p.type });
@@ -81,19 +78,19 @@ module.exports = {
       commit('updateLast', getters.prevPlayerPos());
     }
 
-    if (p.type === 'fold') commit('fold', { player, pos, lastOne });
+    if (p.type === 'fold')
+      commit('fold', { player, pos, lastOne: getters.nextPlayerPos(pos) });
     else if (p.type === 'bet' || p.type === 'follow')
       commit('bet', { player, pos, amount });
 
     let x = getters.players.filter(e => !e.allIn);
     if (x.length === 0) {
-      // Every player is allIn
       return commit('endGame');
     } else if (!getters.players.filter(e => !e.folded || e.stack === 0).length) {
       return commit('endGame');
     } else return dispatch('next_player');
   },
-
+  // ******** ********  new hand  ******** ********
   new_hand: ({ commit, getters }, first) => {
     let pastDealer = getters.dealer;
     commit('clearPlayer', getters.players);
@@ -101,7 +98,7 @@ module.exports = {
       dealer: getters.nextPlayerPos(pastDealer),
       small: getters.nextPlayerPos(pastDealer, 2),
       big: getters.nextPlayerPos(pastDealer, 3),
-      last: getters.nextPlayerPos(pastDealer, 2)
+      last: getters.nextPlayerPos(pastDealer, 3)
     };
     commit('newHand', {
       players: getters.players,

@@ -72,6 +72,8 @@ export default {
   methods: {
     ...mapActions(['next_action', 'update_amount']),
     bet: function(e, type = 'bet') {
+      console.log('type', type);
+      console.log('e', e);
       if (type == 'AllIn' || e >= this.currentPlayer.stack) {
         type = 'bet';
         this.$store.dispatch('all_in');
