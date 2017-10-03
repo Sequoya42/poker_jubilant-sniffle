@@ -125,21 +125,22 @@ module.exports = {
   },
   // ******** ********  new hand  ******** ********
   newHand: (state, { players, numberOfPlayers, smallBlind, position }) => {
-    function putBlind(small, big, nPlayers) {
-      players[big].bet += smallBlind * 2;
-      players[small].bet += smallBlind;
-      players[big].stack -= smallBlind * 2;
-      players[small].stack -= smallBlind;
+    function putMoney(pos, amount) {
+      players[pos].bet += amount;
+      players[pos].stack -= amount;
+      state.separatePot[pos] = amount;
+    }
 
-      state.separatePot[small] = smallBlind;
-      state.separatePot[big] = smallBlind * 2;
+    function putBlind(small, big, nPlayers) {
+      putMoney(big, smallBlind * 2);
+      putMoney(small, smallBlind);
     }
 
     state.playersInHand = players.filter(e => !e.lost).length;
     state.dealer = position.dealer;
     state.cards = 0;
-    state.lastOne = position.last;
-    state.currentPlayerPos = (state.dealer + 3) % state.playersInHand;
+    state.lastOne = position.big;
+    state.currentPlayerPos = position.first;
     state.betAmount = smallBlind * 2;
     state.separatePot = Array(numberOfPlayers).fill(0);
 

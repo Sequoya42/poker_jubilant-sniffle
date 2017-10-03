@@ -11,7 +11,7 @@ module.exports = {
       return dispatch('new_hand');
     }
   },
-
+  // ******** ********  debug purposes [choose winner: no more winners]  ******** ********
   getMoneyBack: ({ commit, getters, dispatch }) => {
     commit('getMoneyBack', getters.players);
     return dispatch('new_hand');
@@ -22,12 +22,9 @@ module.exports = {
       .filter(p => !p.folded && !p.allIn)
       .reduce((a, b) => (a.stack > b.stack ? a : b), []).stack;
     amount = amount > realAmount ? realAmount : amount;
-    console.log('amount', amount);
     commit('updateAmount', {
-      amount: amount,
-      numberOfPlayers: getters.nPlayers,
-      updateLast: getters.prevPlayerPos(),
-      bet: getters.currentPlayer.bet
+      amount,
+      updateLast: getters.prevPlayerPos()
     });
   },
   // ******** ********  next card  ******** ********
@@ -63,6 +60,7 @@ module.exports = {
       commit('nextPlayer', { nextPos });
     }
   },
+  // ******** ********  all in  ******** ********
   all_in: ({ commit, state, getters }) => {
     commit('allIn', getters.currentPlayer);
   },
@@ -72,39 +70,38 @@ module.exports = {
       pos = getters.currentPlayerPos,
       amount = p.amount;
 
-    commit('listActions', { player, amount: p.amount, pos: pos, type: p.type });
+    commit('listActions', { player, pos, amount, type: p.type });
 
     if (amount && state.separatePot.every((a, i, arr) => a === arr[0])) {
       commit('updateLast', getters.prevPlayerPos());
     }
 
-    if (p.type === 'fold')
+    if (p.type === 'fold') {
       commit('fold', { player, pos, lastOne: getters.nextPlayerPos(pos) });
-    else if (p.type === 'bet' || p.type === 'follow')
+    } else if (p.type == 'bet' || p.type == 'follow') {
       commit('bet', { player, pos, amount });
+    }
 
-    let x = getters.players.filter(e => !e.allIn);
-    if (x.length === 0) {
+    if (!getters.players.filter(e => !e.folded || !e.allIn).length) {
       return commit('endGame');
-    } else if (!getters.players.filter(e => !e.folded || e.stack === 0).length) {
-      return commit('endGame');
-    } else return dispatch('next_player');
+    } else {
+      return dispatch('next_player');
+    }
   },
   // ******** ********  new hand  ******** ********
   new_hand: ({ commit, getters }, first) => {
     let pastDealer = getters.dealer;
     commit('clearPlayer', getters.players);
-    let position = {
-      dealer: getters.nextPlayerPos(pastDealer),
-      small: getters.nextPlayerPos(pastDealer, 2),
-      big: getters.nextPlayerPos(pastDealer, 3),
-      last: getters.nextPlayerPos(pastDealer, 3)
-    };
     commit('newHand', {
       players: getters.players,
       numberOfPlayers: getters.nPlayers,
       smallBlind: getters.smallBlind,
-      position: position
+      position: {
+        dealer: getters.nextPlayerPos(pastDealer),
+        small: getters.nextPlayerPos(pastDealer, 2),
+        big: getters.nextPlayerPos(pastDealer, 3),
+        first: getters.nextPlayerPos(pastDealer, 4)
+      }
     });
   }
 };
