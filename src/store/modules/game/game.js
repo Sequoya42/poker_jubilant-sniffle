@@ -62,7 +62,7 @@ const getters = {
           getters.players[pos.folded])
       ) {
         console.log('INSIDE WHILE PREV');
-        pos = pos === 0 ? getters.nPlayers : pos - 1;
+        pos = pos === 0 ? getters.nPlayers - 1 : pos - 1;
       }
       count--;
     }
