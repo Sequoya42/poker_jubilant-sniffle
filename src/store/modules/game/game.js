@@ -74,10 +74,4 @@ export default {
 
 /*
 //TODO
-
-
-Alin failed [chip lead] when one is finished
-when one is done, order player is fucked up [lastOne]
-
-Redo last one completely, and dealer
 */
