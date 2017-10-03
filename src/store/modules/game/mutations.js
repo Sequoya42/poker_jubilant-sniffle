@@ -21,9 +21,11 @@ module.exports = {
       players[w.index].stack += add;
       players[w.index].allIn = false;
       state.pot -= add;
-      state.separatePot = state.separatePot.map(
-        e => (e -= prevPot / winners.length)
-      );
+      state.separatePot = state.separatePot.map(e => {
+        e -= prevPot / winners.length;
+        if (e < 0) e = 0;
+        return e;
+      });
     });
     // ******** ********  Start next hand  ******** ********
     if (state.pot <= 0) {
