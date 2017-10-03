@@ -52,9 +52,7 @@ export default {
   order: 2;
   border: 6px solid ;
   border-radius: 150px;
-  /*background-color: #6D5959;*/
-  background: url('../assets/wood2.jpg');
-  /*background-color: #008413;*/
+  background-color: #8b6548;
   display: inline-block;
   position: relative;
   min-height: 300px;
