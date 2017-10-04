@@ -54,9 +54,9 @@ module.exports = {
   },
 
   updateAmount: (state, p) => {
-    if (p.amount > state.betAmount) {
-      state.lastOne = p.updateLast;
-    }
+    // if (p.amount > state.betAmount) {
+    //   state.lastOne = p.updateLast;
+    // }
     state.betAmount = p.amount;
   },
 
@@ -66,9 +66,9 @@ module.exports = {
   // ******** ********  bet stuff  ******** ********
 
   fold: (state, { player, pos, lastOne }) => {
-    if (state.lastOne === pos) {
-      state.lastOne = lastOne;
-    }
+    // if (state.lastOne === pos) {
+    //   state.lastOne = lastOne;
+    // }
     player.folded = true;
     state.playersInHand -= 1;
   },

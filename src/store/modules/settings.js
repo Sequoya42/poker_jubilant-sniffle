@@ -1,8 +1,9 @@
 const np = 5;
 
-const generate_player = name => ({
-  name,
+const generate_player = i => ({
+  name: `player_${i + 1}`,
   stack: 0,
+  index: i,
   bet: 0,
   folded: false,
   lost: false,
@@ -11,9 +12,9 @@ const generate_player = name => ({
 
 const generate_players = size => {
   let players = [];
-  let i = 1;
+  let i = 0;
   while (size--) {
-    players.push(generate_player(`Player_${i++}`));
+    players.push(generate_player(i++));
   }
   return players;
 };

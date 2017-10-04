@@ -70,11 +70,13 @@ const getters = {
     }
     return pos;
   },
-
-  minStack: (state, getters) => {
-    getters.players.map(e => e.stack).reduce((a, b) => (a < b ? a : b));
+  // ******** ********  current Bets  ******** ********
+  leadBet: (state, getters) => {
+    return getters.players
+      .filter(e => !e.folded)
+      .sort((a, b) => a.bet < b.bet)
+      .map(e => ({ bet: e.bet, index: e.index })); //[0].index;
   },
-
   allEven: (state, getters) => {
     return state.separatePot
       .filter((e, i) => !getters.players[i].allIn && !getters.players[i].folded)

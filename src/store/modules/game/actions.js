@@ -75,14 +75,18 @@ module.exports = {
 
     commit('listActions', { player, pos, amount, type: p.type });
 
-    // if (amount && getters.allEven) {
-    //   commit('updateLast', getters.prevPlayerPos());
-    // }
-
     if (p.type === 'fold') {
       commit('fold', { player, pos, lastOne: getters.nextPlayerPos(pos) });
-    } else if (p.type == 'bet' || p.type == 'follow') {
+    } else if (p.type == 'bet' || p.type == 'follow' || p.type == 'allIn') {
       commit('bet', { player, pos, amount });
+    }
+    if (
+      p.type == 'bet' ||
+      (p.type == 'allIn' &&
+        getters.players.filter(p => p.bet >= player.bet).length == 1)
+    ) {
+      console.log('MAGIC MAGIC');
+      commit('updateLast', getters.prevPlayerPos());
     }
 
     if (!getters.players.filter(e => !e.folded || !e.allIn).length) {

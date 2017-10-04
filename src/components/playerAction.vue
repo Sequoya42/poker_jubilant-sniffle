@@ -26,8 +26,8 @@
 
   <v-btn v-else label="follow" @click.prevent="bet(betAmount, 'follow')">Follow</v-btn>
 
-  <v-btn v-if="currentPlayer.stack > lastBet" :value="betAmount" @click.prevent="bet(lastBet)" >Bet</v-btn>
-  <v-btn v-if="!currentPlayer.allIn" label="allIn" @click.prevent="bet(currentPlayer.stack, 'AllIn')">AllIn</v-btn>
+  <v-btn v-if="currentPlayer.stack > lastBet && lastBet > betAmount" :value="betAmount" @click.prevent="bet(lastBet)" >Bet</v-btn>
+  <v-btn v-if="!currentPlayer.allIn" label="allIn" @click.prevent="bet(currentPlayer.stack, 'allIn')">AllIn</v-btn>
 
    <br/>
    <br/>
@@ -72,12 +72,11 @@ export default {
   methods: {
     ...mapActions(['next_action', 'update_amount']),
     bet: function(e, type = 'bet') {
-      console.log('type', type);
-      console.log('e', e);
-      if (type == 'AllIn' || e >= this.currentPlayer.stack) {
-        type = 'bet';
+      if (type == 'allIn' || e >= this.currentPlayer.stack) {
+        type = 'allIn';
         this.$store.dispatch('all_in');
       }
+
       this.$store.dispatch('update_amount', e);
       this.$store.dispatch('next_action', { type: type, amount: e });
     }
