@@ -75,7 +75,8 @@ const getters = {
     return (
       type == 'bet' ||
       (type == 'allIn' &&
-        getters.players.filter(p => p.bet >= player.bet).length == 1)
+        getters.players.filter(p => p.bet >= getters.currentPlayer.bet).length ==
+          1)
     );
   }
 };

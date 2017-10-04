@@ -48,6 +48,9 @@ export default {
   watch: {
     cards: function(value) {
       this.amount = this.smallBlind;
+    },
+    currentPlayer: function(value) {
+      this.amount = this.betAmount;
     }
   },
   computed: {
@@ -78,7 +81,10 @@ export default {
   methods: {
     ...mapActions(['next_action', 'update_amount']),
     bet: function(e, type = 'bet') {
-      if (type == 'allIn' || e >= this.currentPlayer.stack) {
+      if (
+        type == 'allIn' ||
+        e - this.currentPlayer.bet >= this.currentPlayer.stack
+      ) {
         type = 'allIn';
         this.$store.dispatch('all_in');
       }

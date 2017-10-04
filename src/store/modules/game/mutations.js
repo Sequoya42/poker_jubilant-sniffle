@@ -19,6 +19,7 @@ module.exports = {
       amount = add / (winners.length - i);
       while (j < winners.length) {
         players[winners[j].index].stack += amount;
+        players[winners[j].index].allIn = false;
         winners[j].pot -= state.separatePot[w.index];
         j++;
       }
@@ -69,12 +70,12 @@ module.exports = {
 
   bet: (state, { pos, player, amount }) => {
     const playerBet = player.bet;
-    console.log('amount', amount);
-    let newAmount = amount;
-    if (amount > playerBet && amount < player.stack) {
-      console.log('player bet ^^');
-      newAmount -= playerBet;
-    } else if (amount >= player.stack) {
+    let newAmount = amount - playerBet;
+    // if (amount > playerBet && amount < player.stack) {
+    //   console.log('player bet ^^');
+    //   newAmount -= playerBet;
+    // } else
+    if (newAmount >= player.stack) {
       console.log('amount > playerstack');
       newAmount = player.stack;
     }
