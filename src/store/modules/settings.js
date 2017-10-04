@@ -52,13 +52,13 @@ const actions = {
 };
 
 const mutations = {
-  setStack: (state, d) => (state.stack = d),
+  setStack: (state, d) => (state.stack = +d),
 
   reset: state => (state.reset = !state.reset),
 
   setSmallBlind: (state, d) => {
-    state.smallBlind = d;
-    state.bigBlind = 2 * d;
+    state.smallBlind = +d;
+    state.bigBlind = 2 * +d;
   },
 
   setBigBlind: (state, d) => (state.bigBlind = d),
