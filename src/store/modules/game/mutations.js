@@ -1,31 +1,27 @@
 module.exports = {
   chooseWinner: (state, { players }) => {
-    const validPlayers = state.separatePot.filter(e => e > 0).length;
-    let maxBet = 0;
-    const winners = state.winners.map(w => {
-      players[w].stack += state.separatePot[w];
-      state.pot -= state.separatePot[w];
-      maxBet = maxBet > state.separatePot[w] ? maxBet : state.separatePot[w];
-      return { index: w, pot: state.separatePot[w] };
-    });
+    const winners = state.winners.map(w => ({
+      index: w,
+      pot: state.separatePot[w]
+    }));
 
     winners.sort((a, b) => a.pot > b.pot);
-    let add = 0;
-    let oldPot = state.pot;
-    let prevPot = 0;
-    winners.map(w => {
-      let toShare = (oldPot - oldPot % w.pot) / winners.length;
-      let value = toShare * ((w.pot - prevPot) / maxBet);
-      prevPot = w.pot;
-      add += value;
-      players[w.index].stack += add;
-      players[w.index].allIn = false;
-      state.pot -= add;
-      state.separatePot = state.separatePot.map(e => {
-        e -= prevPot / winners.length;
-        if (e < 0) e = 0;
-        return e;
+    winners.map((w, i) => {
+      let add = 0;
+      state.separatePot = state.separatePot.map(p => {
+        add += state.separatePot[w.index] < p ? state.separatePot[w.index] : p;
+        p -= state.separatePot[w.index];
+        if (p < 0) p = 0;
+        return p;
       });
+      let j = i;
+      state.pot -= add;
+      amount = add / (winners.length - i);
+      while (j < winners.length) {
+        players[winners[j].index].stack += amount;
+        winners[j].pot -= state.separatePot[w.index];
+        j++;
+      }
     });
     // ******** ********  Start next hand  ******** ********
     if (state.pot <= 0) {

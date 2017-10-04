@@ -31,6 +31,8 @@ module.exports = {
   next_card: ({ commit, state, getters }) => {
     if (state.cards === 5) {
       commit('endGame');
+    } else if (getters.players.filter(e => !e.folded && !e.allIn).length < 2) {
+      return commit('endGame');
     } else {
       commit('nextCard', {
         cards: state.cards === 0 ? 3 : 1,
