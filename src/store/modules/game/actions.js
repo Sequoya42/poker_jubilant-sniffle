@@ -75,9 +75,9 @@ module.exports = {
 
     commit('listActions', { player, pos, amount, type: p.type });
 
-    if (amount && getters.allEven) {
-      commit('updateLast', getters.prevPlayerPos());
-    }
+    // if (amount && getters.allEven) {
+    //   commit('updateLast', getters.prevPlayerPos());
+    // }
 
     if (p.type === 'fold') {
       commit('fold', { player, pos, lastOne: getters.nextPlayerPos(pos) });

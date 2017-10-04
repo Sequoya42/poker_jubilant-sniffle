@@ -29,6 +29,7 @@ const getters = {
   currentPlayer: (state, getters) => {
     return getters.players[state.currentPlayerPos];
   },
+  // ******** ********  next player  ******** ********
   nextPlayerPos: (state, getters) => (from = 'player', count = 1) => {
     from = from === 'player' ? state.currentPlayerPos : from;
     let pos = from % getters.nPlayers;
@@ -50,7 +51,7 @@ const getters = {
     }
     return pos;
   },
-
+  // ******** ********  Prev player  ******** ********
   prevPlayerPos: (state, getters) => (from = 'player', count = 1) => {
     from = from === 'player' ? state.currentPlayerPos : from;
     let pos = from === 0 ? getters.nPlayers - 1 : from - 1;
