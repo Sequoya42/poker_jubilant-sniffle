@@ -13,9 +13,6 @@
 </v-container>
 
 <listActions></listActions>
-<v-flex :value="separatePot">
-  {{separatePot}}
-</v-flex>
 
 </div>
 </template>

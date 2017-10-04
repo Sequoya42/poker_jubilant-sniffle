@@ -30,7 +30,6 @@ const getters = {
     return getters.players[state.currentPlayerPos];
   },
   nextPlayerPos: (state, getters) => (from = 'player', count = 1) => {
-    console.log('next player pos');
     from = from === 'player' ? state.currentPlayerPos : from;
     let pos = from % getters.nPlayers;
     while (count) {
@@ -42,8 +41,10 @@ const getters = {
           getters.players[pos].allIn) &&
         i++ < 50
       ) {
-        console.log('INSIDE WHILE');
         pos = (pos + 1) % getters.nPlayers;
+      }
+      if (i == 51) {
+        pos = getters.players.findIndex(e => e.allIn);
       }
       count--;
     }
