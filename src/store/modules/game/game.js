@@ -70,8 +70,15 @@ const getters = {
     return pos;
   },
 
-  minStack: (state, getters) =>
-    getters.players.map(e => e.stack).reduce((a, b) => (a < b ? a : b))
+  minStack: (state, getters) => {
+    getters.players.map(e => e.stack).reduce((a, b) => (a < b ? a : b));
+  },
+
+  allEven: (state, getters) => {
+    return state.separatePot
+      .filter((e, i) => !getters.players[i].allIn && !getters.players[i].folded)
+      .every((el, i, arr) => el === arr[0]);
+  }
 };
 
 const actions = require('./actions');

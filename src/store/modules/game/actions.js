@@ -75,7 +75,7 @@ module.exports = {
 
     commit('listActions', { player, pos, amount, type: p.type });
 
-    if (amount && state.separatePot.every((a, i, arr) => a === arr[0])) {
+    if (amount && getters.allEven) {
       commit('updateLast', getters.prevPlayerPos());
     }
 

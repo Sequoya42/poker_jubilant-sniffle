@@ -11,7 +11,11 @@
 
   <chooseWinner v-else></chooseWinner>
 </v-container>
+<div>
 
+  {{this.separatePot}}
+</div>
+<!-- // ******** ********  move list action to a side panel  ******** ******** -->
 <listActions></listActions>
 
 </div>
