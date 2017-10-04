@@ -1,7 +1,7 @@
 <template>
 <div>
   <v-chip class="green white--text"> {{currentPlayer.name}}</v-chip>
-  <v-chip class="amber">{{lastBet}}  </v-chip>
+  <v-chip class="amber">{{amount}}  </v-chip>
   <v-chip class="red darken-4">{{betAmount}}  </v-chip>
 
   <v-slider
@@ -9,12 +9,11 @@
   snap
   thumb-label
   class="sliderDesign"
-  v-model="lastBet"
+  v-model="amount"
   :min="betAmount"
   :max="currentPlayer.stack"
   ></v-slider>
 
-  <!-- v-if="lastBet > betAmount" -->
   <v-btn label="Fold" @click.prevent="next_action({type: 'fold'})">Fold</v-btn>
 
   <v-btn
@@ -26,7 +25,7 @@
 
   <v-btn v-else label="follow" @click.prevent="bet(betAmount, 'follow')">Follow</v-btn>
 
-  <v-btn v-if="currentPlayer.stack > lastBet && lastBet > betAmount" :value="betAmount" @click.prevent="bet(lastBet)" >Bet</v-btn>
+  <v-btn v-if="canBet" :value="betAmount" @click.prevent="bet(amount)" >Bet</v-btn>
   <v-btn v-if="!currentPlayer.allIn" label="allIn" @click.prevent="bet(currentPlayer.stack, 'allIn')">AllIn</v-btn>
 
    <br/>
@@ -43,12 +42,12 @@ export default {
 
   data: function() {
     return {
-      lastBet: this.$store.state.game.betAmount
+      amount: this.$store.state.game.betAmount
     };
   },
   watch: {
     cards: function(value) {
-      this.lastBet = this.smallBlind;
+      this.amount = this.smallBlind;
     }
   },
   computed: {
@@ -65,8 +64,15 @@ export default {
       let x = this.$store.getters.players
         .filter(e => !e.folded && !e.lost)
         .every((el, i, arr) => el.bet === arr[0].bet);
-      if (x) this.lastBet = this.bigBlind;
+      if (x) this.amount = this.bigBlind;
       return x;
+    },
+    canBet: function() {
+      return (
+        (this.currentPlayer.stack > this.amount &&
+          this.amount > this.betAmount) ||
+        this.$store.getters.players.every(e => e.bet == 0)
+      );
     }
   },
   methods: {

@@ -80,12 +80,7 @@ module.exports = {
     } else if (p.type == 'bet' || p.type == 'follow' || p.type == 'allIn') {
       commit('bet', { player, pos, amount });
     }
-    if (
-      p.type == 'bet' ||
-      (p.type == 'allIn' &&
-        getters.players.filter(p => p.bet >= player.bet).length == 1)
-    ) {
-      console.log('MAGIC MAGIC');
+    if (getters.changeLast(p.type)) {
       commit('updateLast', getters.prevPlayerPos());
     }
 

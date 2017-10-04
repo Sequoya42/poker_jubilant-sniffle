@@ -54,9 +54,6 @@ module.exports = {
   },
 
   updateAmount: (state, p) => {
-    // if (p.amount > state.betAmount) {
-    //   state.lastOne = p.updateLast;
-    // }
     state.betAmount = p.amount;
   },
 
@@ -66,19 +63,19 @@ module.exports = {
   // ******** ********  bet stuff  ******** ********
 
   fold: (state, { player, pos, lastOne }) => {
-    // if (state.lastOne === pos) {
-    //   state.lastOne = lastOne;
-    // }
     player.folded = true;
     state.playersInHand -= 1;
   },
 
   bet: (state, { pos, player, amount }) => {
     const playerBet = player.bet;
+    console.log('amount', amount);
     let newAmount = amount;
     if (amount > playerBet && amount < player.stack) {
+      console.log('player bet ^^');
       newAmount -= playerBet;
     } else if (amount >= player.stack) {
+      console.log('amount > playerstack');
       newAmount = player.stack;
     }
     state.separatePot.splice(pos, 1, state.separatePot[pos] + newAmount);

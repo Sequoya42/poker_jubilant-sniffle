@@ -70,17 +70,13 @@ const getters = {
     }
     return pos;
   },
-  // ******** ********  current Bets  ******** ********
-  leadBet: (state, getters) => {
-    return getters.players
-      .filter(e => !e.folded)
-      .sort((a, b) => a.bet < b.bet)
-      .map(e => ({ bet: e.bet, index: e.index })); //[0].index;
-  },
-  allEven: (state, getters) => {
-    return state.separatePot
-      .filter((e, i) => !getters.players[i].allIn && !getters.players[i].folded)
-      .every((el, i, arr) => el === arr[0]);
+  // ******** ********  change last one to play  ******** ********
+  changeLast: (state, getters) => type => {
+    return (
+      type == 'bet' ||
+      (type == 'allIn' &&
+        getters.players.filter(p => p.bet >= player.bet).length == 1)
+    );
   }
 };
 
