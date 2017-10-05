@@ -81,12 +81,14 @@ export default {
   methods: {
     ...mapActions(['next_action', 'update_amount']),
     bet: function(e, type = 'bet') {
+      console.log('e', e);
       if (
         type == 'allIn' ||
         e - this.currentPlayer.bet >= this.currentPlayer.stack
       ) {
         type = 'allIn';
         this.$store.dispatch('all_in');
+        if (e < this.betAmount) e += this.currentPlayer.bet;
       }
 
       this.$store.dispatch('update_amount', e);

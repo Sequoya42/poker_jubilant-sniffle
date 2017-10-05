@@ -1,7 +1,8 @@
 <template>
   <div class="wrapperTable">
   <div class="pokerTable">
-    <v-chip class="primary green darken-2 pot">{{pot}}</v-chip>
+    <v-chip v-if="pot" class="primary green darken-2 pot">{{pot}}</v-chip>
+    <v-chip v-else class="primary green"> DONE</v-chip>
  <div  class="playingCard Deck">
     </div>
     <transition-group name="list">

@@ -7,6 +7,7 @@ module.exports = {
     let x = getters.players.filter(e => e.stack > getters.smallBlind);
     if (x.length === 1 && !state.pot) {
       commit('reset');
+      return dispatch('new_hand');
     } else if (state.separatePot.every((el, i, arr) => el === 0)) {
       return dispatch('new_hand');
     }
@@ -18,14 +19,7 @@ module.exports = {
   },
 
   update_amount: ({ state, commit, getters }, amount) => {
-    let realAmount = getters.players
-      .filter(p => !p.folded && !p.allIn)
-      .reduce((a, b) => (a.stack > b.stack ? a : b), []).stack;
-    amount = amount > realAmount ? realAmount : amount;
-    commit('updateAmount', {
-      amount,
-      updateLast: getters.prevPlayerPos()
-    });
+    commit('updateAmount', { amount });
   },
   // ******** ********  next card  ******** ********
   next_card: ({ commit, state, getters }) => {
@@ -77,7 +71,9 @@ module.exports = {
 
     if (p.type === 'fold') {
       commit('fold', { player, pos, lastOne: getters.nextPlayerPos(pos) });
-    } else if (p.type == 'bet' || p.type == 'follow' || p.type == 'allIn') {
+    } else if (p.type == 'follow') {
+      commit('follow', { player, pos, amount });
+    } else if (p.type == 'bet' || p.type == 'allIn') {
       commit('bet', { player, pos, amount });
     }
     if (getters.changeLast(p.type)) {

@@ -61,7 +61,7 @@ const getters = {
         i++ < 50 &&
         (getters.players[pos].lost ||
           getters.players[pos].folded ||
-          getters.players[pos.folded])
+          getters.players[pos].allIn)
       ) {
         console.log('INSIDE WHILE PREV');
         pos = pos === 0 ? getters.nPlayers - 1 : pos - 1;

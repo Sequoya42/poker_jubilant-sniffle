@@ -26,6 +26,7 @@ module.exports = {
     });
     // ******** ********  Start next hand  ******** ********
     if (state.pot <= 0) {
+      // players.forEach(e => (e.allIn = false));
       state.pot = 0;
       state.end = false;
       state.separatePot = [0];
@@ -68,19 +69,29 @@ module.exports = {
     state.playersInHand -= 1;
   },
 
-  bet: (state, { pos, player, amount }) => {
-    const playerBet = player.bet;
-    let newAmount = amount - playerBet;
-    // if (amount > playerBet && amount < player.stack) {
-    //   console.log('player bet ^^');
-    //   newAmount -= playerBet;
-    // } else
+  follow: (state, { pos, player, amount }) => {
+    let newAmount = amount - player.bet;
+    console.log('newAmount', newAmount);
+    console.log('amount', amount);
     if (newAmount >= player.stack) {
       console.log('amount > playerstack');
       newAmount = player.stack;
     }
     state.separatePot.splice(pos, 1, state.separatePot[pos] + newAmount);
-    player.bet = amount;
+    player.bet += newAmount;
+    state.pot += newAmount;
+    player.stack -= newAmount;
+  },
+
+  bet: (state, { pos, player, amount, type }) => {
+    const playerBet = player.bet;
+    let newAmount = amount - player.bet;
+    if (newAmount >= player.stack) {
+      console.log('amount > playerstack');
+      newAmount = player.stack;
+    }
+    state.separatePot.splice(pos, 1, state.separatePot[pos] + newAmount);
+    player.bet += newAmount;
     state.pot += newAmount;
     player.stack -= newAmount;
   },
@@ -101,7 +112,7 @@ module.exports = {
     players.map((e, i) => {
       e.folded = e.stack <= 0 ? (e.lost = true) : false;
       e.allIn = false;
-      e.stack = Math.floor(e.stack);
+      e.stack = Math.round(e.stack);
       e.bet = 0;
     });
   },
