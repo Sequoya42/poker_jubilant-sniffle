@@ -1,7 +1,7 @@
 <template>
 <div class="vador" v-scrollBar>
   <v-card  v-for="(action, index) in listActions" :key="index">
-  <v-flex :class="{odd: index % 2, even : !(index % 2)}">{{action}}</v-flex>
+  <v-flex :style="chooseColor(action, index)">{{action}}</v-flex>
 </v-card>
 </div>
 </template>
@@ -24,7 +24,32 @@ export default {
       }
     }
   },
-  methods: {},
+  methods: {
+    chooseColor: (action, index) => {
+      let ret = {};
+      if (index % 2) {
+        ret.backgroundColor = '#E5E5E5';
+      } else {
+        ret.backgroundColor = '#EAEAEA';
+      }
+      if (action.indexOf('bet') !== -1) {
+        ret.color = '#DDAE7E';
+      } else if (action.indexOf('fold') !== -1) {
+        ret.color = '#99B0BE';
+      } else if (action.indexOf('allIn') !== -1) {
+        ret.color = '#A8201A';
+      } else if (action.indexOf('check') !== -1) {
+        ret.color = '#116611';
+      }
+
+      if (index % 2) {
+        ret.fontWeight = 'bold';
+      } else {
+        ret.fontWeight = 'normal';
+      }
+      return ret;
+    }
+  },
   components: {}
 };
 </script>
@@ -38,11 +63,4 @@ export default {
     overflow: scroll;
 }
 
-.odd {
-  background-color: rgb(151, 181, 232);
-}
-
-.even {
-  background-color: rgb(160, 224, 178);
-}
 </style>
