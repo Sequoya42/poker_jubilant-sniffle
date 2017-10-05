@@ -2,7 +2,7 @@
   <div >
   <popup :winner="oneWin"></popup>
     <!-- {{reset}} -->
-    <pokerTable class="topSpace"></pokerTable>
+    <pokerTable></pokerTable>
 <v-container class="choices">
   <!-- <gameInfos></gameInfos> -->
   <resetGame v-if="reset"></resetGame>
@@ -13,9 +13,8 @@
 </v-container>
 <div>
 
-  {{this.separatePot}}
 </div>
-<!-- // ******** ********  move list action to a side panel  ******** ******** -->
+<!-- //TODO ******** ********  move list action to a side panel  ******** ******** -->
 <listActions></listActions>
 
 </div>
@@ -43,9 +42,7 @@ export default {
   computed: {
     ...mapGetters(['end', 'players', 'reset', 'separatePot', 'oneWin'])
   },
-  methods: {
-    // ...mapActions([])
-  },
+  methods: {},
   components: {
     playerStack: require('./playerStack.vue'),
     pokerTable: require('./pokerTable.vue'),
@@ -61,10 +58,6 @@ export default {
 
 <style>
 .choices {
-  /*border-style:none;*/
-  /*box-shadow: 4px 2px 10px rgba(0, 0, 0, .5) inset;*/
-  /*border: 1px solid blck;*/
-  /*padding: 4%;*/
 border-radius: 22%;
   margin: 2%;
   display: inline-block;
@@ -72,31 +65,5 @@ border-radius: 22%;
   width: 60%;
 }
 
-  .topSpace {
-    /*margin-top: 100px !important;*/
-}
 
 </style>
-
-// TODO
-/*
-:: allin and folded, problem
-transition effect change buttons
-
-
-// ******** ********    ******** ********
-
-separate pot when multiple all in with different values
-a way to choose order of winners
-
-put color folded before choose winner when only one player left
-
-refactor !
-
-css
-
-ui
-
-find atom package to order object property by name
-
-*/

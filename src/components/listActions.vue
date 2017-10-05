@@ -19,7 +19,7 @@ export default {
   },
   directives: {
     scrollBar: {
-      update: function(el, value) {
+      componentUpdated: function(el, value) {
         el.scrollTop = el.scrollHeight;
       }
     }
