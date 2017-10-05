@@ -11,7 +11,7 @@
   class="sliderDesign"
   v-model="amount"
   :min="betAmount"
-  :max="currentPlayer.stack"
+  :max="Math.max(currentPlayer.stack, betAmount)"
   ></v-slider>
 
   <v-btn label="Fold" @click.prevent="next_action({type: 'fold'})">Fold</v-btn>
@@ -82,17 +82,18 @@ export default {
     ...mapActions(['next_action', 'update_amount']),
     bet: function(e, type = 'bet') {
       console.log('e', e);
+      let amount = e;
       if (
         type == 'allIn' ||
         e - this.currentPlayer.bet >= this.currentPlayer.stack
       ) {
         type = 'allIn';
         this.$store.dispatch('all_in');
-        if (e < this.betAmount) e += this.currentPlayer.bet;
+        if (amount < this.betAmount) amount += this.currentPlayer.bet;
       }
 
-      this.$store.dispatch('update_amount', e);
-      this.$store.dispatch('next_action', { type: type, amount: e });
+      this.$store.dispatch('update_amount', +amount);
+      this.$store.dispatch('next_action', { type, amount });
     }
   }
 };
