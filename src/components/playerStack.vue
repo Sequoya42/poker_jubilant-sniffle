@@ -6,7 +6,7 @@
   hide-actions
   >
 
-  <template  slot="items" scope="props">
+  <template  slot="items" scope-slot="props">
     <!-- Line below does not update directly, why? -->
     <!-- <tr :class="{folded: props.item.folded}" v-model="props.item.selected"> -->
        <td class="text-xs-left">{{ props.item.name }}</td>

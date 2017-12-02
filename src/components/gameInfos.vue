@@ -6,7 +6,7 @@
   hide-actions
   >
 
-    <template slot="items" scope="props">
+    <template slot="items" scope-slot="props">
 
     <!-- <v-icon>eur</v-icon> -->
        <td class="text-xs-left">{{ cards }}</td>

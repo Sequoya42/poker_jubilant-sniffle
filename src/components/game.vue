@@ -30,6 +30,7 @@ export default {
   },
   data: function() {
     return {
+      drawer: true,
       showStack: true,
       snackbar: false
     };
@@ -44,14 +45,14 @@ export default {
   },
   methods: {},
   components: {
-    playerStack: require('./playerStack.vue'),
-    pokerTable: require('./pokerTable.vue'),
-    gameInfos: require('./gameInfos.vue'),
-    chooseWinner: require('./chooseWinner.vue'),
-    playerAction: require('./playerAction'),
-    resetGame: require('./reset'),
-    listActions: require('./listActions'),
-    popup: require('./popup')
+    playerStack: () => import('./playerStack.vue'),
+    pokerTable: () => import('./pokerTable.vue'),
+    gameInfos: () => import('./gameInfos.vue'),
+    chooseWinner: () => import('./chooseWinner.vue'),
+    playerAction: () => import('./playerAction'),
+    resetGame: () => import('./reset'),
+    listActions: () => import('./listActions'),
+    popup: () => import('./popup')
   }
 };
 </script>
@@ -65,5 +66,9 @@ border-radius: 22%;
   width: 60%;
 }
 
+/*
+TODO
+vh vw, virtual bail magie putot que %
 
+*/
 </style>

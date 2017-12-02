@@ -1,9 +1,7 @@
 <template>
-  <v-app>
-  <div id="app" class="test">
+  <v-app dark>
     <my-header></my-header>
       <router-view></router-view>
-  </div>
 </v-app>
 </template>
 
@@ -11,7 +9,7 @@
 export default {
   name: 'app',
   components: {
-    myHeader: require('./components/header.vue')
+    myHeader: () => import('./components/header.vue')
   }
 };
 </script>

@@ -1,10 +1,16 @@
 <template>
-<div class="vador" v-scrollBar>
-  <v-card  v-for="(action, index) in listActions" :key="index">
-  <v-flex :style="chooseColor(action, index)">{{action}}</v-flex>
+	<v-navigation-drawer absolute clipped permanent dark v-model="drawer">
+  <v-flex v-for="(action, index) in listActions" :key="index">
+	<v-card>
+	  <v-card-text class="px-0" :style="chooseColor(action, index)">
+	  {{action}}
+  </v-card-text>
 </v-card>
-</div>
+
+</v-flex>
+</v-navigation-drawer>
 </template>
+
 <script>
 import { mapGetters, mapActions } from 'vuex';
 
@@ -12,7 +18,9 @@ export default {
   name: 'listActions',
 
   data: function() {
-    return {};
+    return {
+      drawer: true
+    };
   },
   computed: {
     ...mapGetters(['listActions'])
@@ -28,9 +36,9 @@ export default {
     chooseColor: (action, index) => {
       let ret = {};
       if (index % 2) {
-        ret.backgroundColor = '#E5E5E5';
+        ret.backgroundColor = '#a63838';
       } else {
-        ret.backgroundColor = '#EAEAEA';
+        ret.backgroundColor = '#710e0e';
       }
       if (action.indexOf('bet') !== -1) {
         ret.color = '#DDAE7E';

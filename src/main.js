@@ -2,7 +2,6 @@
 // (runtime-only or standalone) has been set in webpack.base.conf with an alias.
 import Vue from 'vue';
 import Vuex from 'vuex';
-import VueMaterial from 'vue-material';
 import Vuetify from 'vuetify';
 import App from './App';
 import popup from './components/popup';
@@ -14,7 +13,12 @@ Vue.config.productionTip = false;
 require('../node_modules//vuetify/dist/vuetify.min.css');
 
 Vue.use(Vuex);
-Vue.use(Vuetify);
+Vue.use(Vuetify, {
+  theme: {
+    primary: '#232b2b',
+    secondary: '#33673B'
+  }
+});
 
 /* eslint-disable no-new */
 new Vue({

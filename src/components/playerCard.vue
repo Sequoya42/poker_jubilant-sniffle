@@ -1,16 +1,16 @@
 <template>
-<v-chip  :style="orderPlayer">
-  <div class="name">
+<v-flex  :style="orderPlayer">
+  <span class="name">
     {{player.name}}
-  </div>
-  <div class="stack" :class="{allIn: player.allIn}">
-    {{player.lost ? "finished" : player.allIn ? "ALL IN" : player.stack}}
-  </div>
-  <!--  game.js in function clearHand : we reorder the array of players, dealer always on top -->
+</span>
+<br />
+  <span class="stack" :class="{allIn: player.allIn}">
+	  {{player.lost ? "finished" : player.allIn ? "ALL IN" : player.stack}}
+  </span>
     <v-icon v-if="index === dealer">people</v-icon>
     <v-icon v-if="player.folded">visibility_off</v-icon>
-    <v-chip  v-if="player.bet" class="pot"> {{player.bet}} </v-chip>
-</v-chip>
+    <span  v-if="player.bet" class="pot"> {{player.bet}} </span>
+</v-flex>
 </template>
 
 <script>
@@ -29,10 +29,8 @@ export default {
       let topPos = ` ${Math.sin(p) * 150 + 150 - 50}px`;
       return {
         position: 'absolute',
-        flexDirection: 'column',
-        // background: 'linear-gradient(120deg, rgb(215, 188, 41), green)',
-        border: 'solid 1.5px rgb(25, 24, 52)',
-        height: '60px',
+        // border: 'solid 1.5px rgb(25, 24, 52)',
+        borderRadius: '25%',
         backgroundColor: this.player.lost
           ? 'rgb(42, 23, 38)'
           : this.player.folded
@@ -69,13 +67,13 @@ export default {
   color       : white;
   width: 100%;
   font-weight : 900;
-  line-height : 2;
+  /*line-height : 2;*/
 }
 
 .stack {
   color       : white;
   font-weight : 900;
-  line-height : 2;
+  /*line-height : 2;*/
 }
 
 .allIn {

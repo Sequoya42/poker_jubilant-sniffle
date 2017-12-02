@@ -1,5 +1,5 @@
 <template>
-  <v-toolbar   class=" headerStuff primary green customGreen">
+  <v-toolbar class="primary">
     <!-- <v-menu> -->
   <!-- <v-btn class="darkGreen" slot="activator">
    <v-icon>home</v-icon>
@@ -17,9 +17,9 @@
 <!-- </v-menu> -->
 
 <div class="title chipStuff">
-  <v-chip class="primary light-green darken-1" @click="redirect('Game')"> Play </v-chip>
-  <v-chip class="primary light-green darken-2" @click="redirect('Home')"> le home </v-chip>
-  <v-chip class="primary light-green darken-3" @click="redirect('Settings')"> Settings </v-chip>
+  <v-chip class="secondary" @click="redirect('Game')"> Play </v-chip>
+  <v-chip class="secondary" @click="redirect('Home')"> le home </v-chip>
+  <v-chip class="secondary" @click="redirect('Settings')"> Settings </v-chip>
 
 </div>
 

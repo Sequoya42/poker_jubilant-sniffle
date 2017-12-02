@@ -16,12 +16,13 @@
 
 <script>
 import { mapGetters, mapMutations } from 'vuex';
+import playerCard from './playerCard.vue';
 
 export default {
   name: 'pokerTable',
 
   components: {
-    playerCard: require('./playerCard.vue')
+    playerCard
   },
   computed: {
     ...mapGetters(['nPlayers', 'players', 'cards', 'pot'])
