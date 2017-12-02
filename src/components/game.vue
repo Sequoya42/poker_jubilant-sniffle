@@ -14,7 +14,6 @@
 <div>
 
 </div>
-<!-- //TODO ******** ********  move list action to a side panel  ******** ******** -->
 <listActions></listActions>
 
 </div>

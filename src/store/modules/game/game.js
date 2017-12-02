@@ -93,4 +93,15 @@ export default {
 
 /*
 //TODO
+
+
+
+-Side panel activation [list user action]
+
+POKER TABLE:
+Place players around in a better way
+Better card, and layout for money, try to use tooltips
+
+Make the whole thing O.K on small devices [use the thing where you hide things by default
+below a certain screen size]
 */
