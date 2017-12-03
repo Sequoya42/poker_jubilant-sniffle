@@ -1,5 +1,7 @@
 <template>
-	<v-navigation-drawer absolute clipped permanent dark v-model="drawer">
+	<div>
+
+	<v-navigation-drawer width="200" app hide-overlay fixed permanent>
   <v-flex v-for="(action, index) in listActions" :key="index">
 	<v-card>
 	  <v-card-text class="px-0" :style="chooseColor(action, index)">
@@ -9,6 +11,7 @@
 
 </v-flex>
 </v-navigation-drawer>
+</div>
 </template>
 
 <script>

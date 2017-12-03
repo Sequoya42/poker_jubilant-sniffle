@@ -3,12 +3,13 @@
   <div class="pokerTable">
     <v-chip v-if="pot" class="primary green darken-2 pot">{{pot}}</v-chip>
     <v-chip v-else class="primary green"> End of game</v-chip>
- <div  class="playingCard Deck">
-    </div>
+
+ <div  class="playingCard Deck"> </div>
     <transition-group name="list">
       <div v-for="card in cards" class="playingCard" :key="card">
       </div>
     </transition-group>
+
 </div>
 <playerCard v-for="(player, index) in players" :key="index" :player="player" :index="index"></playerCard>
 </div>
@@ -42,7 +43,7 @@ export default {
   flex-direction: row;
   justify-content: center;
   min-height: 300px;
-  /*background-color: ;*/
+  background-color:green ;
   max-width: 900px;
   padding: 20px;
   margin: 0 auto;
@@ -52,8 +53,8 @@ export default {
 
 .pokerTable {
   order: 2;
-  border: 6px solid ;
-  border-radius: 150px;
+  border: 6px solid black;
+  border-radius: 250px/150px;
   background-color: #8b6548;
   display: inline-block;
   position: relative;

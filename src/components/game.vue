@@ -1,5 +1,6 @@
 <template>
-  <div >
+  <v-content>
+	  <listActions></listActions>
   <popup :winner="oneWin"></popup>
     <!-- {{reset}} -->
     <pokerTable></pokerTable>
@@ -11,12 +12,8 @@
 
   <chooseWinner v-else></chooseWinner>
 </v-container>
-<div>
 
-</div>
-<listActions></listActions>
-
-</div>
+</v-content>
 </template>
 <script>
 import { mapGetters, mapMutations, mapActions } from 'vuex';
