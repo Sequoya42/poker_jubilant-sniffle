@@ -1,8 +1,8 @@
 <template>
-<div>
-  <v-chip class="green white--text"> {{currentPlayer.name}}</v-chip>
+<v-flex>
+  <!-- <v-chip class="green white--text"> {{currentPlayer.name}}</v-chip> -->
   <v-chip class="amber">{{amount}}  </v-chip>
-  <v-chip class="red darken-4">{{betAmount}}  </v-chip>
+  <!-- <v-chip class="red darken-4">{{betAmount}}  </v-chip> -->
 
   <v-slider
   :step="betAmount"
@@ -31,7 +31,7 @@
    <br/>
    <br/>
 
-</div>
+</v-flex>
 </template>
 
 <script>
@@ -100,14 +100,5 @@ export default {
 </script>
 
 <style>
-.debug{
-border: 5px solid black;
-margin-bottom: 100px;
-}
 
-.sliderDesign {
-  /*background-color: #cccccc !important;*/
-  box-shadow: 1px;
-    /*background: red;*/
-}
 </style>

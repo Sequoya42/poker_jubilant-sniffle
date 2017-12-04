@@ -1,7 +1,7 @@
 <template>
-  <v-app dark>
+  <v-app  dark>
     <my-header></my-header>
-      <router-view></router-view>
+      <router-view app></router-view>
 </v-app>
 </template>
 
@@ -23,15 +23,12 @@ export default {
   /*background-color: #335C67;*/
   /*background: url('./assets/pattern.jpg') no-repeat center center fixed;*/
   /*background: linear-gradient( ) no-repeat center center fixed;*/
-  -webkit-background-size: cover;
- -moz-background-size: cover;
- -o-background-size: cover;
- background-size: cover;
-position:absolute;
-top:0px;
+/*position:absolute;*/
+/*top:0px;
 left:0px;
 right:0px;
-bottom:0px;
+bottom:0px;*/
+/*width: 200%;*/
 }
 /*.test,
 .test > div {

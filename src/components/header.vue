@@ -33,7 +33,7 @@ export default {
 }
 
 .routes {
-  padding: 10px;
+  padding: 10%;
 }
 
 .title {

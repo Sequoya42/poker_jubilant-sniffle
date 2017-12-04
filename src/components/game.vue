@@ -1,20 +1,21 @@
 <template>
-  <v-content>
-	  <listActions></listActions>
+  <v-container class="pink">
+	  <listActions class="hidden-sm-and-down"></listActions>
   <popup :winner="oneWin"></popup>
-    <!-- {{reset}} -->
     <pokerTable></pokerTable>
-<v-container class="choices">
-  <!-- <gameInfos></gameInfos> -->
+
+<v-container class="blue">
+	<v-flex>
   <resetGame v-if="reset"></resetGame>
-
   <playerAction v-else-if="!end"></playerAction>
-
   <chooseWinner v-else></chooseWinner>
+</v-flex>
 </v-container>
 
-</v-content>
+</v-container>
 </template>
+
+
 <script>
 import { mapGetters, mapMutations, mapActions } from 'vuex';
 export default {
@@ -54,17 +55,4 @@ export default {
 </script>
 
 <style>
-.choices {
-border-radius: 22%;
-  margin: 2%;
-  display: inline-block;
-  min-width: 360px;
-  width: 60%;
-}
-
-/*
-TODO
-vh vw, virtual bail magie putot que %
-
-*/
 </style>

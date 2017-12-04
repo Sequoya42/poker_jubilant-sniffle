@@ -1,18 +1,7 @@
 <template>
-  <div class="wrapperTable">
-  <div class="pokerTable">
-    <v-chip v-if="pot" class="primary green darken-2 pot">{{pot}}</v-chip>
-    <v-chip v-else class="primary green"> End of game</v-chip>
-
- <div  class="playingCard Deck"> </div>
-    <transition-group name="list">
-      <div v-for="card in cards" class="playingCard" :key="card">
-      </div>
-    </transition-group>
-
-</div>
-<playerCard v-for="(player, index) in players" :key="index" :player="player" :index="index"></playerCard>
-</div>
+	<v-container class="red">
+			<v-layout class="pokerTable">poker table stuff</v-layout>
+		</v-container>
 </template>
 
 <script>
@@ -32,36 +21,17 @@ export default {
 };
 </script>
 
-<style>
-* {
-    box-sizing: border-box;
-}
-
-.wrapperTable {
-  position: relative;
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  min-height: 300px;
-  background-color:green ;
-  max-width: 900px;
-  padding: 20px;
-  margin: 0 auto;
-  margin-top: 6%;
-  align-items: center;
-}
+<style scoped>
 
 .pokerTable {
   order: 2;
   border: 6px solid black;
-  border-radius: 250px/150px;
+  border-radius: 200px;
   background-color: #8b6548;
   display: inline-block;
   position: relative;
-  min-height: 300px;
-  max-width: 500px;
-  width: 90%;
-  height: 100%;
+  width: 50vw;
+  height: 30vh;
 }
 
 .playingCard {

@@ -1,22 +1,22 @@
 <template>
-<div id="space">
+<v-flex>
   <v-data-table
   :headers="headers"
   :items="[1]"
   hide-actions
   >
 
-    <template slot="items" scope-slot="props">
+    <template slot="items" slot-scope="props">
 
     <!-- <v-icon>eur</v-icon> -->
-       <td class="text-xs-left">{{ cards }}</td>
+       <td >{{ cards }}</td>
        <td class="text-xs-right">{{ players[0].name }}</td>
        <td class="text-xs-right">{{ currentPlayer.name }}</td>
        <td class="text-xs-right">{{playersInHand}} </td>
        <td  v-model="betAmount" class="text-xs-right">{{ betAmount }}</td>
      </template>
   </v-data-table>
-</div>
+</v-flex>
 </template>
 
 <script>
@@ -67,9 +67,5 @@ export default {
 </script>
 
 <style>
-#space{
-  overflow: scroll;
-  width: 120%;
-  margin-bottom: 10%;
-}
+
 </style>
