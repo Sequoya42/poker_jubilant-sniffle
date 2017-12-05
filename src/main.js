@@ -26,5 +26,5 @@ new Vue({
   router,
   store,
   template: '<App/>',
-  components: { App, popup }
+  components: { App }
 });

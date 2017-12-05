@@ -1,7 +1,7 @@
 <template>
-<v-flex>
+<v-flex column wrap justify-space-between>
   <!-- <v-chip class="green white--text"> {{currentPlayer.name}}</v-chip> -->
-  <v-chip class="amber">{{amount}}  </v-chip>
+  <!-- <v-chip class="amber">{{amount}}  </v-chip> -->
   <!-- <v-chip class="red darken-4">{{betAmount}}  </v-chip> -->
 
   <v-slider
@@ -27,9 +27,6 @@
 
   <v-btn v-if="canBet" :value="betAmount" @click.prevent="bet(amount)" >Bet</v-btn>
   <v-btn v-if="!currentPlayer.allIn" label="allIn" @click.prevent="bet(currentPlayer.stack, 'allIn')">AllIn</v-btn>
-
-   <br/>
-   <br/>
 
 </v-flex>
 </template>
@@ -100,5 +97,9 @@ export default {
 </script>
 
 <style>
-
+.sliderDesign {
+	margin: 0;
+	padding: 0;
+	height: 10px;
+}
 </style>

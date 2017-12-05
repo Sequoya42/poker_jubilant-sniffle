@@ -1,18 +1,18 @@
 <template>
-  <v-container class="pink">
-	  <listActions class="hidden-sm-and-down"></listActions>
+	<!-- <listActions class="hidden-sm-and-down"></listActions> -->
+<v-layout column>
+
+
   <popup :winner="oneWin"></popup>
-    <pokerTable></pokerTable>
+	  <pokerTable></pokerTable>
 
-<v-container class="blue">
-	<v-flex>
-  <resetGame v-if="reset"></resetGame>
-  <playerAction v-else-if="!end"></playerAction>
-  <chooseWinner v-else></chooseWinner>
-</v-flex>
-</v-container>
 
-</v-container>
+<v-footer>
+	<resetGame v-if="reset"></resetGame>
+	<playerAction v-else-if="!end"></playerAction>
+	<chooseWinner v-else></chooseWinner>
+</v-footer>
+</v-layout>
 </template>
 
 
@@ -55,4 +55,6 @@ export default {
 </script>
 
 <style>
+
+
 </style>

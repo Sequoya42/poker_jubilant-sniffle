@@ -1,7 +1,12 @@
+
+/*
+https://stackoverflow.com/questions/5445491/height-equal-to-dynamic-width-css-fluid-layout
+*/
+
 <template>
-	<v-container class="red">
-			<v-layout class="pokerTable">poker table stuff</v-layout>
-		</v-container>
+	<v-flex class="pokerTable">
+
+	</v-flex>
 </template>
 
 <script>
@@ -24,14 +29,12 @@ export default {
 <style scoped>
 
 .pokerTable {
-  order: 2;
-  border: 6px solid black;
-  border-radius: 200px;
+  border-radius: 66.666%;
   background-color: #8b6548;
-  display: inline-block;
-  position: relative;
-  width: 50vw;
-  height: 30vh;
+  /*display: inline-block;*/
+  /*position: relative;*/
+  /*width: 50vw;*/
+  /*height: inherit;*/
 }
 
 .playingCard {
