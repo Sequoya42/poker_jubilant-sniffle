@@ -3,6 +3,7 @@ import Router from 'vue-router';
 import Home from '@/components/home';
 import Game from '@/components/game';
 import Settings from '@/components/settings';
+import Test from '@/components/test';
 
 Vue.use(Router);
 
@@ -22,6 +23,11 @@ export default new Router({
       path: '/settings',
       name: 'Settings',
       component: Settings
+    },
+    {
+      path: '/test',
+      name: 'Test',
+      component: Test
     }
   ]
 });

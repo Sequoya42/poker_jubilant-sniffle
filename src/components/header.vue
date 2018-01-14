@@ -5,6 +5,7 @@
   <v-chip class="secondary" @click="redirect('Game')"> Play </v-chip>
   <v-chip class="secondary" @click="redirect('Home')"> le home </v-chip>
   <v-chip class="secondary" @click="redirect('Settings')"> Settings </v-chip>
+  <v-chip class="secondary" @click="redirect('Test')"> Test </v-chip>
 
 </div>
 

@@ -1,21 +1,24 @@
 <template>
-	<!-- <listActions class="hidden-sm-and-down"></listActions> -->
-<v-layout column>
-
-
+  <div >
   <popup :winner="oneWin"></popup>
-	  <pokerTable></pokerTable>
+    <!-- {{reset}} -->
+    <pokerTable></pokerTable>
+<v-container class="choices">
+  <!-- <gameInfos></gameInfos> -->
+  <resetGame v-if="reset"></resetGame>
 
+  <playerAction v-else-if="!end"></playerAction>
 
-<v-footer>
-	<resetGame v-if="reset"></resetGame>
-	<playerAction v-else-if="!end"></playerAction>
-	<chooseWinner v-else></chooseWinner>
-</v-footer>
-</v-layout>
+  <chooseWinner v-else></chooseWinner>
+</v-container>
+<div>
+
+</div>
+<!-- //TODO ******** ********  move list action to a side panel  ******** ******** -->
+<listActions></listActions>
+
+</div>
 </template>
-
-
 <script>
 import { mapGetters, mapMutations, mapActions } from 'vuex';
 export default {
@@ -27,7 +30,6 @@ export default {
   },
   data: function() {
     return {
-      drawer: true,
       showStack: true,
       snackbar: false
     };
@@ -55,6 +57,11 @@ export default {
 </script>
 
 <style>
-
-
+.choices {
+border-radius: 22%;
+  margin: 2%;
+  display: inline-block;
+  min-width: 360px;
+  width: 60%;
+}
 </style>

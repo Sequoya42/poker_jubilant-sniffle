@@ -1,9 +1,5 @@
 <template>
-<v-flex column wrap justify-space-between>
-  <!-- <v-chip class="green white--text"> {{currentPlayer.name}}</v-chip> -->
-  <!-- <v-chip class="amber">{{amount}}  </v-chip> -->
-  <!-- <v-chip class="red darken-4">{{betAmount}}  </v-chip> -->
-
+<v-flex>
   <v-slider
   :step="betAmount"
   snap
@@ -98,8 +94,10 @@ export default {
 
 <style>
 .sliderDesign {
-	margin: 0;
+	margin:0;
+	/* align-self: center; */
+	width: 60vw;
 	padding: 0;
-	height: 10px;
+	height: 15vmin;
 }
 </style>
