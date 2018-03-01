@@ -1,5 +1,9 @@
 # material_poker
 
+Have cards and no poker chips?
+
+No problem !
+Keep track of your game thanks to [poker jubilant sniffle](https://sequoya42.github.io/poker_jubilant-sniffle/#/)
 > A Vue.js project
 
 ## Build Setup
