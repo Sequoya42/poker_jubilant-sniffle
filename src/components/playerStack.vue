@@ -1,14 +1,11 @@
 <template>
 <div>
-  <v-data-table
-  :headers="headers"
-  :items="players"
-  hide-actions
-  >
+  <v-data-table :headers="headers"
+    :items="players"
+    hide-actions>
 
-  <template  slot="items" scope-slot="props">
-    <!-- Line below does not update directly, why? -->
-    <!-- <tr :class="{folded: props.item.folded}" v-model="props.item.selected"> -->
+    <template slot="items"
+      scope-slot="props">
        <td class="text-xs-left">{{ props.item.name }}</td>
        <td class="text-xs-right">{{ props.item.stack }}</td>
        <td class="text-xs-right">
@@ -16,21 +13,22 @@
            donut_small
        </v-icon>
        </td>
-     <!-- </tr> -->
      </template>
   </v-data-table>
 </div>
 </template>
 
 <script>
-import { mapGetters, mapMutations } from 'vuex';
+import {
+  mapGetters,
+  mapMutations
+} from 'vuex';
 
 export default {
   name: 'playerStack',
   data: function() {
     return {
-      headers: [
-        {
+      headers: [{
           text: 'name',
           align: 'left',
           sortable: false,

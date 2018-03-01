@@ -12,12 +12,6 @@ module.exports = {
       return dispatch('new_hand');
     }
   },
-  // ******** ********  debug purposes [choose winner: no more winners]  ******** ********
-  getMoneyBack: ({ commit, getters, dispatch }) => {
-    commit('getMoneyBack', getters.players);
-    return dispatch('new_hand');
-  },
-
   update_amount: ({ state, commit, getters }, amount) => {
     commit('updateAmount', { amount });
   },
@@ -44,7 +38,6 @@ module.exports = {
   // ******** ********  next player  ******** ********
   next_player: ({ dispatch, commit, state, getters }, p) => {
     let nextPos = getters.nextPlayerPos();
-    console.log('nextPos', nextPos);
     if (getters.players.filter(e => !e.folded).length < 2) {
       setTimeout(() => commit('oneWin', getters.players[nextPos]), 300);
       commit('addWinner', nextPos);

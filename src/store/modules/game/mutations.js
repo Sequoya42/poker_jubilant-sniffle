@@ -71,10 +71,7 @@ module.exports = {
 
   follow: (state, { pos, player, amount }) => {
     let newAmount = amount - player.bet;
-    console.log('newAmount', newAmount);
-    console.log('amount', amount);
     if (newAmount >= player.stack) {
-      console.log('amount > playerstack');
       newAmount = player.stack;
     }
     state.separatePot.splice(pos, 1, state.separatePot[pos] + newAmount);
@@ -87,7 +84,6 @@ module.exports = {
     const playerBet = player.bet;
     let newAmount = amount - player.bet;
     if (newAmount >= player.stack) {
-      console.log('amount > playerstack');
       newAmount = player.stack;
     }
     state.separatePot.splice(pos, 1, state.separatePot[pos] + newAmount);

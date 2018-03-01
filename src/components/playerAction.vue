@@ -1,34 +1,41 @@
 <template>
 <v-flex>
-  <v-slider
-  :step="betAmount"
-  snap
-  thumb-label
-  class="sliderDesign"
-  v-model="amount"
-  :min="betAmount"
-  :max="Math.max(currentPlayer.stack, betAmount)"
-  ></v-slider>
+  <v-slider :step="betAmount"
+    snap
+    thumb-label
+    class="sliderDesign"
+    v-model="amount"
+    :min="betAmount"
+    :max="Math.max(currentPlayer.stack, betAmount)"></v-slider>
 
-  <v-btn label="Fold" @click.prevent="next_action({type: 'fold'})">Fold</v-btn>
+  <v-btn label="Fold"
+    @click.prevent="next_action({type: 'fold'})">Fold</v-btn>
 
-  <v-btn
-  label="knock"
-  v-if="toggle"
-  @click.prevent="next_action({type: 'knock'})"
-  @keyup.75="next_action({type: 'knock'})">
-  check</v-btn>
+  <v-btn label="knock"
+    v-if="toggle"
+    @click.prevent="next_action({type: 'knock'})"
+    @keyup.75="next_action({type: 'knock'})">
+    check</v-btn>
 
-  <v-btn v-else label="follow" @click.prevent="bet(betAmount, 'follow')">Follow</v-btn>
+  <v-btn v-else
+    label="follow"
+    @click.prevent="bet(betAmount, 'follow')">Follow</v-btn>
 
-  <v-btn v-if="canBet" :value="betAmount" @click.prevent="bet(amount)" >Bet</v-btn>
-  <v-btn v-if="!currentPlayer.allIn" label="allIn" @click.prevent="bet(currentPlayer.stack, 'allIn')">AllIn</v-btn>
+  <v-btn v-if="canBet"
+    :value="betAmount"
+    @click.prevent="bet(amount)">Bet</v-btn>
+  <v-btn v-if="!currentPlayer.allIn"
+    label="allIn"
+    @click.prevent="bet(currentPlayer.stack, 'allIn')">AllIn</v-btn>
 
 </v-flex>
 </template>
 
 <script>
-import { mapGetters, mapActions } from 'vuex';
+import {
+  mapGetters,
+  mapActions
+} from 'vuex';
 
 export default {
   name: 'playerAction',
@@ -74,7 +81,6 @@ export default {
   methods: {
     ...mapActions(['next_action', 'update_amount']),
     bet: function(e, type = 'bet') {
-      console.log('e', e);
       let amount = e;
       if (
         type == 'allIn' ||
@@ -86,7 +92,10 @@ export default {
       }
 
       this.$store.dispatch('update_amount', +amount);
-      this.$store.dispatch('next_action', { type, amount });
+      this.$store.dispatch('next_action', {
+        type,
+        amount
+      });
     }
   }
 };
@@ -94,10 +103,10 @@ export default {
 
 <style>
 .sliderDesign {
-	margin:0;
-	/* align-self: center; */
-	width: 60vw;
-	padding: 0;
-	height: 15vmin;
+  margin: 0;
+  /* align-self: center; */
+  width: 60vw;
+  padding: 0;
+  height: 15vmin;
 }
 </style>

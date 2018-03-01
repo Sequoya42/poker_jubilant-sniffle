@@ -1,26 +1,23 @@
 <template>
-  <div >
+<v-container fluid>
+  <listActions></listActions>
   <popup :winner="oneWin"></popup>
-    <!-- {{reset}} -->
-    <pokerTable></pokerTable>
-<v-container class="choices">
-  <!-- <gameInfos></gameInfos> -->
-  <resetGame v-if="reset"></resetGame>
+  <pokerTable></pokerTable>
 
-  <playerAction v-else-if="!end"></playerAction>
+  <v-container class="choices">
+    <resetGame v-if="reset"></resetGame>
+    <playerAction v-else-if="!end"></playerAction>
+    <chooseWinner v-else></chooseWinner>
+  </v-container>
 
-  <chooseWinner v-else></chooseWinner>
 </v-container>
-<div>
-
-</div>
-<!-- //TODO ******** ********  move list action to a side panel  ******** ******** -->
-<listActions></listActions>
-
-</div>
 </template>
 <script>
-import { mapGetters, mapMutations, mapActions } from 'vuex';
+import {
+  mapGetters,
+  mapMutations,
+  mapActions
+} from 'vuex';
 export default {
   name: 'play',
   beforeMount: function() {
@@ -36,6 +33,7 @@ export default {
   },
   watch: {
     oneWin: function() {
+      console.log('Changed', this.oneWin)
       this.snackbar = this.oneWin;
     }
   },
@@ -44,21 +42,27 @@ export default {
   },
   methods: {},
   components: {
-    playerStack: () => import('./playerStack.vue'),
-    pokerTable: () => import('./pokerTable.vue'),
-    gameInfos: () => import('./gameInfos.vue'),
-    chooseWinner: () => import('./chooseWinner.vue'),
-    playerAction: () => import('./playerAction'),
-    resetGame: () => import('./reset'),
-    listActions: () => import('./listActions'),
-    popup: () => import('./popup')
+    playerStack: () =>
+      import ('./playerStack.vue'),
+    pokerTable: () =>
+      import ('./pokerTable.vue'),
+    chooseWinner: () =>
+      import ('./chooseWinner.vue'),
+    playerAction: () =>
+      import ('./playerAction'),
+    resetGame: () =>
+      import ('./reset'),
+    listActions: () =>
+      import ('./listActions'),
+    popup: () =>
+      import ('./popup')
   }
 };
 </script>
 
 <style>
 .choices {
-border-radius: 22%;
+  border-radius: 22%;
   margin: 2%;
   display: inline-block;
   min-width: 360px;

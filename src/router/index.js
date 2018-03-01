@@ -1,18 +1,16 @@
 import Vue from 'vue';
 import Router from 'vue-router';
-import Home from '@/components/home';
-import Game from '@/components/game';
-import Settings from '@/components/settings';
-import Test from '@/components/test';
+import Description from '@/components/Description';
+import Game from '@/components/Game';
+import Settings from '@/components/Settings';
 
 Vue.use(Router);
 
 export default new Router({
-  routes: [
-    {
+  routes: [{
       path: '/description',
-      name: 'Home',
-      component: Home
+      name: 'Description',
+      component: Description
     },
     {
       path: '/',
@@ -24,10 +22,5 @@ export default new Router({
       name: 'Settings',
       component: Settings
     },
-    {
-      path: '/test',
-      name: 'Test',
-      component: Test
-    }
   ]
 });

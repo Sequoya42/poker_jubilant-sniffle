@@ -63,7 +63,6 @@ const getters = {
           getters.players[pos].folded ||
           getters.players[pos].allIn)
       ) {
-        console.log('INSIDE WHILE PREV');
         pos = pos === 0 ? getters.nPlayers - 1 : pos - 1;
       }
       count--;
@@ -76,7 +75,7 @@ const getters = {
       type == 'bet' ||
       (type == 'allIn' &&
         getters.players.filter(p => p.bet >= getters.currentPlayer.bet).length ==
-          1)
+        1)
     );
   }
 };
@@ -90,18 +89,3 @@ export default {
   actions,
   mutations
 };
-
-/*
-//TODO
-
-
-
--Side panel activation [list user action]
-
-POKER TABLE:
-Place players around in a better way
-Better card, and layout for money, try to use tooltips
-
-Make the whole thing O.K on small devices [use the thing where you hide things by default
-below a certain screen size]
-*/
