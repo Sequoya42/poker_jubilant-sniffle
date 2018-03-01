@@ -1,0 +1,2 @@
+webpackJsonp([6],{Jy7u:function(e,t,n){"use strict";Object.defineProperty(t,"__esModule",{value:!0});var a=n("Dd8w"),r=n.n(a),s=n("NYxO"),c={name:"resetGame",methods:r()({},Object(s.b)(["reset_game"]))},i={render:function(){var e=this.$createElement,t=this._self._c||e;return t("v-layout",[this._v("\n  Game over !\n  "),t("v-btn",{on:{click:this.reset_game}},[this._v("Play again")])],1)},staticRenderFns:[]};var u=n("VU/8")(c,i,!1,function(e){n("dxcV")},null,null);t.default=u.exports},dxcV:function(e,t){}});
+//# sourceMappingURL=6.17e269bdc8d0b42fcd7a.js.map
